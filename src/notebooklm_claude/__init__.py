@@ -1,0 +1,1 @@
+# NotebookLM + Claude MCP integration

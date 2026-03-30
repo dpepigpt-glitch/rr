@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "notebooklm": {
+      "command": "python",
+      "args": ["-m", "notebooklm_claude.server"],
+      "env": {}
+    }
+  }
+}

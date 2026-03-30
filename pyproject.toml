@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "notebooklm-claude"
+version = "0.1.0"
+description = "MCP server that integrates Google NotebookLM with Claude"
+requires-python = ">=3.11"
+dependencies = [
+    "notebooklm-py[browser]>=0.4.0",
+    "mcp>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-asyncio"]
+
+[project.scripts]
+notebooklm-mcp = "notebooklm_claude.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/notebooklm_claude"]
