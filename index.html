@@ -23,7 +23,6 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 .btn-danger{background:#c62828;color:#fff;font-size:11px;padding:5px 10px;}
 .btn-sm{padding:5px 10px;font-size:12px;}
 
-/* GRUPOS DE SELEÇÃO VISUAIS */
 .sel-grupo{margin-top:6px;}
 .sel-grupo-titulo{font-size:12px;font-weight:700;color:var(--verde3);margin-bottom:8px;display:block;}
 .sel-cards{display:flex;flex-wrap:wrap;gap:8px;}
@@ -31,17 +30,16 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 .sel-card input[type=radio],.sel-card input[type=checkbox]{position:absolute;opacity:0;width:0;height:0;}
 .sel-card label{display:flex;align-items:center;gap:6px;padding:7px 13px;border:2px solid var(--borda);border-radius:20px;cursor:pointer;font-size:12.5px;font-weight:600;color:#555;background:#fff;transition:.15s;user-select:none;white-space:nowrap;}
 .sel-card label:hover{border-color:var(--verde2);color:var(--verde2);background:var(--verdeClaro);}
-.sel-card input[type=radio]:checked + label,
-.sel-card input[type=checkbox]:checked + label{border-color:var(--verde);background:var(--verde);color:#fff;}
-.sel-card label .icone{font-size:14px;}
+.sel-card input[type=radio]:checked+label,.sel-card input[type=checkbox]:checked+label{border-color:var(--verde);background:var(--verde);color:#fff;}
 
 .sel-divisor{height:1px;background:var(--borda);margin:18px 0 16px;}
 
 #loginScreen{display:flex;justify-content:center;align-items:center;min-height:90vh;}
-.login-box{max-width:460px;width:100%;}
+.login-box{max-width:420px;width:100%;}
 .login-header{background:var(--verde);color:#fff;padding:18px;border-radius:8px 8px 0 0;text-align:center;}
 .login-body{background:#fff;padding:22px;border-radius:0 0 8px 8px;box-shadow:0 4px 12px rgba(0,0,0,0.12);}
 .login-dica{background:var(--verdeClaro);border-left:4px solid var(--verde);padding:10px;margin-bottom:14px;font-size:12px;color:var(--verde3);border-radius:0 4px 4px 0;}
+.erro-senha{color:#c62828;font-size:12px;text-align:center;margin-top:8px;display:none;}
 
 #dashboard{display:none;}
 .top-bar{display:flex;justify-content:space-between;align-items:center;background:#fff;padding:14px 18px;border-radius:8px;margin-bottom:18px;box-shadow:0 2px 6px rgba(0,0,0,0.05);flex-wrap:wrap;gap:12px;border-left:5px solid var(--verde);}
@@ -51,10 +49,8 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 .nav-tab.ativo{background:var(--verde);color:#fff;border-color:var(--verde);}
 .hist-item{background:var(--verdeClaro);border:1px solid var(--verdeMedio);padding:13px;margin-bottom:9px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
 .hist-info h3{font-size:13px;margin-bottom:3px;color:var(--verde3);}
-.hist-info p{font-size:11px;color:#555;margin:1px 0;}
+.hist-info p{font-size:11px;color:#555;}
 .hist-acoes{display:flex;gap:7px;flex-wrap:wrap;}
-.botoes-area{display:flex;flex-direction:column;align-items:center;gap:14px;}
-.botoes-area .btn-principal{width:340px;padding:14px 24px;font-size:14px;border-radius:8px;}
 .secao-limpar{border-top:1px dashed var(--borda);padding-top:20px;margin-top:8px;text-align:center;}
 
 /* IMPRESSÃO */
@@ -64,53 +60,53 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
   .area-print,.area-print *{visibility:visible;}
   .area-print{position:absolute;left:0;top:0;width:100%;display:block!important;padding:0;margin:0;}
   .no-print{display:none!important;}
-  @page{margin:1.5cm 2cm;size:A4;}
+  @page{margin:1.2cm 1.8cm;size:A4;}
   .quebra{page-break-after:always;}
   .quebra:last-child{page-break-after:auto;}
 }
 
-/* FICHA */
-.ficha-wrap{font-family:Arial,sans-serif;font-size:9pt;padding:0;}
-.ficha-topo{display:flex;align-items:center;gap:14px;border-bottom:3px solid #2E7D32;padding-bottom:10px;margin-bottom:10px;}
+/* ===== FICHA ===== */
+.ficha-wrap{font-family:Arial,sans-serif;font-size:8.5pt;padding:0;}
+.ficha-topo{display:flex;align-items:center;gap:12px;border-bottom:3px solid #2E7D32;padding-bottom:8px;margin-bottom:8px;}
+.ficha-topo img{width:70px;height:auto;}
 .ficha-topo-txt{flex:1;text-align:center;}
-.ficha-topo-txt h2{color:#1B5E20;font-size:13pt;margin:0 0 2px;text-transform:uppercase;letter-spacing:.5px;border:none;padding:0;}
-.ficha-topo-txt p{color:#388E3C;font-size:8pt;margin:0;}
-.ficha-sec{background:#2E7D32;color:#fff;padding:3px 8px;font-size:8pt;font-weight:700;text-transform:uppercase;margin:10px 0 5px;border-radius:2px;letter-spacing:.3px;}
-.ficha-linha{display:flex;border-bottom:1px solid #bbb;padding:3px 0;align-items:flex-end;gap:8px;margin-bottom:3px;}
-.ficha-rot{font-size:7.5pt;font-weight:700;text-transform:uppercase;color:#1B5E20;white-space:nowrap;flex-shrink:0;}
-.ficha-val{flex:1;border-bottom:1px dotted #999;min-height:13px;font-size:8.5pt;padding-left:4px;}
-.ficha-opcoes{display:flex;flex-wrap:wrap;gap:8px;margin:5px 0 6px;}
-.ficha-opcao{display:flex;align-items:center;gap:3px;font-size:8pt;}
-.ficha-check{width:9px;height:9px;border:1.5px solid #1B5E20;display:inline-flex;align-items:center;justify-content:center;font-size:7pt;flex-shrink:0;}
-.ficha-assin{display:flex;justify-content:space-between;margin-top:14px;}
-.ficha-sign-box{width:45%;text-align:center;}
-.ficha-sign-linha{border-top:1px solid #000;margin-bottom:3px;}
-.ficha-sign-label{font-size:7.5pt;text-transform:uppercase;color:#333;font-weight:700;}
+.ficha-topo-txt h2{color:#1B5E20;font-size:12pt;margin:0 0 1px;text-transform:uppercase;letter-spacing:.5px;border:none;padding:0;}
+.ficha-topo-txt p{color:#388E3C;font-size:7.5pt;margin:0;}
+.ficha-sec{background:#2E7D32;color:#fff;padding:2px 7px;font-size:7.5pt;font-weight:700;text-transform:uppercase;margin:7px 0 4px;border-radius:2px;}
+.ficha-linha{display:flex;border-bottom:1px solid #bbb;padding:2px 0;align-items:flex-end;gap:6px;margin-bottom:2px;}
+.ficha-rot{font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;white-space:nowrap;flex-shrink:0;}
+.ficha-val{flex:1;border-bottom:1px dotted #999;min-height:12px;font-size:8pt;padding-left:3px;}
+.ficha-opcoes{display:flex;flex-wrap:wrap;gap:7px;margin:4px 0 5px;}
+.ficha-opcao{display:flex;align-items:center;gap:2px;font-size:7.5pt;}
+.ficha-check{width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-flex;align-items:center;justify-content:center;font-size:6.5pt;flex-shrink:0;}
 
 /* DECLARAÇÃO */
-.decl-box{margin-top:12px;padding:10px;border:1.5px solid #2E7D32;font-size:8pt;line-height:1.4;text-align:justify;}
-.decl-titulo{font-weight:700;text-transform:uppercase;text-align:center;margin-bottom:8px;font-size:9pt;color:#1B5E20;}
-.decl-p{margin-bottom:8px;}
-.decl-assin{margin-top:18px;text-align:center;}
-.decl-assin-linha{border-top:1px solid #000;width:65%;margin:0 auto 3px;}
+.decl-box{margin-top:8px;padding:8px;border:1.5px solid #2E7D32;font-size:7.5pt;line-height:1.35;text-align:justify;}
+.decl-titulo{font-weight:700;text-transform:uppercase;text-align:center;margin-bottom:6px;font-size:8.5pt;color:#1B5E20;}
+.decl-p{margin-bottom:6px;}
+.decl-assin-area{margin-top:22px;text-align:center;}
+.decl-assin-linha{border-top:1px solid #000;width:60%;margin:0 auto 3px;}
+.decl-data{text-align:right;margin-top:6px;font-size:7.5pt;}
 
-/* OFÍCIO */
-.oficio-wrap{font-family:Arial,sans-serif;font-size:10.5pt;line-height:1.7;text-align:justify;}
-.oficio-cab{display:flex;align-items:center;gap:14px;border-bottom:2px solid #2E7D32;padding-bottom:10px;margin-bottom:20px;}
-.oficio-cab-txt h3{color:#1B5E20;font-size:12pt;margin:0;text-transform:uppercase;letter-spacing:.3px;}
-.oficio-cab-txt p{color:#388E3C;font-size:8.5pt;margin:0;}
-.oficio-numloc{display:flex;justify-content:space-between;margin-bottom:18px;font-size:10pt;font-weight:700;}
-.oficio-dest{margin-bottom:14px;font-size:10pt;}
-.oficio-assunto{margin-bottom:14px;font-weight:700;font-size:10pt;}
-.oficio-p{margin-bottom:12px;text-indent:35px;}
-.oficio-fund{margin:14px 0;}
-.oficio-fund ol{padding-left:22px;margin-top:7px;}
-.oficio-fund li{margin-bottom:8px;font-size:10pt;}
-.oficio-obs{font-style:italic;padding:7px 0 7px 10px;border-left:3px solid #C8E6C9;margin:10px 0;font-size:10pt;}
-.oficio-assin{margin-top:50px;text-align:center;}
-.oficio-assin-linha{border-top:1px solid #000;width:60%;margin:0 auto 5px;}
-.oficio-assin-nome{font-weight:700;font-size:10.5pt;text-transform:uppercase;}
-.oficio-rodape{border-top:1px solid #ccc;margin-top:30px;padding-top:8px;font-size:8.5pt;color:#555;}
+/* ===== OFÍCIO ===== */
+.oficio-wrap{font-family:Arial,sans-serif;font-size:10pt;line-height:1.6;text-align:justify;}
+.oficio-cab{display:flex;align-items:center;gap:14px;border-bottom:2px solid #2E7D32;padding-bottom:8px;margin-bottom:16px;}
+.oficio-cab img{width:72px;height:auto;}
+.oficio-cab-txt h3{color:#1B5E20;font-size:11pt;margin:0;text-transform:uppercase;letter-spacing:.3px;}
+.oficio-cab-txt p{color:#388E3C;font-size:8pt;margin:0;}
+.oficio-numloc{display:flex;justify-content:space-between;margin-bottom:16px;font-size:9.5pt;font-weight:700;}
+.oficio-dest{margin-bottom:12px;font-size:9.5pt;}
+.oficio-assunto{margin-bottom:12px;font-weight:700;font-size:9.5pt;}
+.oficio-p{margin-bottom:10px;text-indent:30px;font-size:9.5pt;}
+.oficio-fund{margin:12px 0;font-size:9.5pt;}
+.oficio-fund ol{padding-left:20px;margin-top:5px;}
+.oficio-fund li{margin-bottom:6px;}
+.oficio-obs{font-style:italic;padding:5px 0 5px 8px;border-left:3px solid #C8E6C9;margin:8px 0;font-size:9.5pt;}
+.oficio-assin-area{margin-top:38px;text-align:center;}
+.oficio-data-local{text-align:center;font-size:9.5pt;margin-bottom:28px;}
+.oficio-assin-linha{border-top:1px solid #000;width:55%;margin:0 auto 4px;}
+.oficio-assin-nome{font-weight:700;font-size:10pt;text-transform:uppercase;}
+.oficio-rodape{border-top:1px solid #ccc;margin-top:20px;padding-top:6px;font-size:8pt;color:#555;}
 </style>
 </head>
 <body>
@@ -120,15 +116,24 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
   <div class="login-box">
     <div class="login-header">
       <div style="font-size:13px;font-weight:700;letter-spacing:.5px;">DEFENSORIA PÚBLICA DO ESTADO DO PIAUÍ</div>
-      <div style="font-size:11px;margin-top:2px;opacity:.9;">Sistema de Ofícios &amp; Fichas de Atendimento</div>
+      <div style="font-size:11px;margin-top:2px;opacity:.9;">Diretoria de Atendimento Itinerante</div>
     </div>
     <div class="login-body">
-      <div class="login-dica">💡 Seus dados ficam salvos no navegador. Basta logar uma vez por dispositivo.</div>
-      <div class="form-group" style="margin-bottom:10px;"><label>Nome do(a) Defensor(a) Público(a):</label><input type="text" id="lgDefensor" placeholder="Ex: ROBERT RIOS MAGALHÃES JUNIOR" oninput="this.value=this.value.toUpperCase()"></div>
-      <div class="form-group" style="margin-bottom:10px;"><label>Unidade / Defensoria:</label><input type="text" id="lgUnidade" placeholder="Ex: 3ª Defensoria de Teresina — VD"></div>
-      <div class="form-group" style="margin-bottom:14px;"><label>Jornada / Ação Itinerante:</label><input type="text" id="lgJornada" placeholder="Ex: Jornada Itinerante — Simplício Mendes/PI"></div>
-      <button class="btn btn-verde" style="width:100%;margin-top:8px;" onclick="fazerLogin()">🔐 ENTRAR NO SISTEMA</button>
-      <button class="btn btn-outline" style="width:100%;margin-top:10px;font-size:12px;" onclick="limparTudo()">🗑️ Limpar Todos os Dados Salvos</button>
+      <div class="login-dica">🔒 Acesso restrito. Insira a senha de acesso ao sistema.</div>
+      <div class="form-group" style="margin-bottom:10px;">
+        <label>Nome do(a) Defensor(a) Público(a):</label>
+        <input type="text" id="lgDefensor" placeholder="Ex: ROBERT RIOS MAGALHÃES JUNIOR" oninput="this.value=this.value.toUpperCase()">
+      </div>
+      <div class="form-group" style="margin-bottom:10px;">
+        <label>Unidade / Defensoria:</label>
+        <input type="text" id="lgUnidade" placeholder="Ex: 2ª Defensoria Pública Itinerante">
+      </div>
+      <div class="form-group" style="margin-bottom:14px;">
+        <label>Senha de Acesso:</label>
+        <input type="password" id="lgSenha" placeholder="••••••••" onkeydown="if(event.key==='Enter')fazerLogin()">
+      </div>
+      <button class="btn btn-verde" style="width:100%;margin-top:4px;" onclick="fazerLogin()">🔐 ENTRAR NO SISTEMA</button>
+      <div class="erro-senha" id="erroSenha">❌ Senha incorreta. Tente novamente.</div>
     </div>
   </div>
 </div>
@@ -158,10 +163,10 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
       <div class="card">
         <h2>🧑 Dados do(a) Requerente</h2>
         <div style="background:var(--verdeClaro);border-left:4px solid var(--verde);padding:9px 12px;margin-bottom:16px;font-size:12px;color:var(--verde3);border-radius:0 4px 4px 0;">
-          ℹ️ O(A) requerente é quem comparece ao atendimento e assina os documentos. Quando o documento é para um filho menor, os dados aqui são da mãe/pai/responsável.
+          ℹ️ O(A) requerente é quem comparece ao atendimento e assina os documentos. Os dados abaixo vão para a Ficha e para a Declaração de Hipossuficiência.
         </div>
         <div class="form-row">
-          <div class="form-group" style="flex:3;"><label>Nome Completo do(a) Requerente:</label><input type="text" id="r_nome" placeholder="Nome completo" oninput="this.value=this.value.toUpperCase()"></div>
+          <div class="form-group" style="flex:3;"><label>Nome Completo:</label><input type="text" id="r_nome" placeholder="Nome completo do(a) requerente" oninput="this.value=this.value.toUpperCase()"></div>
           <div class="form-group"><label>CPF:</label><input type="text" id="r_cpf" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)"></div>
         </div>
         <div class="form-row">
@@ -188,8 +193,9 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
           <input type="text" id="r_end" placeholder="Rua, Nº, Bairro, Município — UF" oninput="capitalizarPalavras(this)">
         </div>
 
-        <!-- COR/RAÇA -->
         <div class="sel-divisor"></div>
+
+        <!-- COR/RAÇA -->
         <div class="sel-grupo">
           <span class="sel-grupo-titulo">🎨 Cor / Raça — Autodeclaração (IBGE)</span>
           <div class="sel-cards">
@@ -202,27 +208,28 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
           </div>
         </div>
 
-        <!-- AÇÃO PRETENDIDA -->
         <div class="sel-divisor"></div>
+
+        <!-- AÇÃO PRETENDIDA -->
         <div class="sel-grupo">
           <span class="sel-grupo-titulo">⚖️ Ação Pretendida — pode marcar mais de uma</span>
           <div class="sel-cards">
-            <div class="sel-card"><input type="checkbox" name="acao" id="ac1" value="Documentos"><label for="ac1"><span class="icone">📄</span> Documentos</label></div>
-            <div class="sel-card"><input type="checkbox" name="acao" id="ac2" value="Alimentos"><label for="ac2"><span class="icone">🍽️</span> Alimentos</label></div>
-            <div class="sel-card"><input type="checkbox" name="acao" id="ac3" value="Guarda/Filiação"><label for="ac3"><span class="icone">👶</span> Guarda/Filiação</label></div>
-            <div class="sel-card"><input type="checkbox" name="acao" id="ac4" value="Criminal"><label for="ac4"><span class="icone">⚖️</span> Criminal</label></div>
-            <div class="sel-card"><input type="checkbox" name="acao" id="ac5" value="Saúde"><label for="ac5"><span class="icone">🏥</span> Saúde</label></div>
-            <div class="sel-card"><input type="checkbox" name="acao" id="ac6" value="Interdição/Curatela"><label for="ac6"><span class="icone">🔒</span> Interdição/Curatela</label></div>
-            <div class="sel-card"><input type="checkbox" name="acao" id="ac7" value="Previdência/INSS"><label for="ac7"><span class="icone">💰</span> Previdência/INSS</label></div>
-            <div class="sel-card"><input type="checkbox" name="acao" id="ac8" value="Outras"><label for="ac8"><span class="icone">➕</span> Outras</label></div>
+            <div class="sel-card"><input type="checkbox" name="acao" id="ac1" value="Documentos"><label for="ac1">📄 Documentos</label></div>
+            <div class="sel-card"><input type="checkbox" name="acao" id="ac2" value="Alimentos"><label for="ac2">🍽️ Alimentos</label></div>
+            <div class="sel-card"><input type="checkbox" name="acao" id="ac3" value="Guarda/Filiação"><label for="ac3">👶 Guarda/Filiação</label></div>
+            <div class="sel-card"><input type="checkbox" name="acao" id="ac4" value="Criminal"><label for="ac4">⚖️ Criminal</label></div>
+            <div class="sel-card"><input type="checkbox" name="acao" id="ac5" value="Saúde"><label for="ac5">🏥 Saúde</label></div>
+            <div class="sel-card"><input type="checkbox" name="acao" id="ac6" value="Interdição/Curatela"><label for="ac6">🔒 Interdição/Curatela</label></div>
+            <div class="sel-card"><input type="checkbox" name="acao" id="ac7" value="Previdência/INSS"><label for="ac7">💰 Previdência/INSS</label></div>
+            <div class="sel-card"><input type="checkbox" name="acao" id="ac8" value="Outras"><label for="ac8">➕ Outras</label></div>
           </div>
           <input type="text" id="f_outras" placeholder="Especifique 'Outras'..." style="display:none;margin-top:10px;font-size:12px;width:100%;padding:7px 10px;border:1px solid var(--borda);border-radius:4px;">
         </div>
       </div>
 
-      <!-- TITULAR DO DOCUMENTO -->
+      <!-- TITULAR DO DOCUMENTO (só para o ofício) -->
       <div class="card">
-        <h2>📄 Titular do Documento</h2>
+        <h2>📄 Titular do Documento <span style="font-size:12px;font-weight:400;color:#888;">(dados usados apenas no Ofício)</span></h2>
         <div style="background:#fff8e1;border-left:4px solid #f9a825;padding:9px 12px;margin-bottom:14px;font-size:12px;color:#5d4037;border-radius:0 4px 4px 0;">
           ⚠️ Preencha apenas se o titular for diferente do requerente (ex: filho menor). Selecione "Próprio(a)" se for a mesma pessoa.
         </div>
@@ -264,22 +271,19 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
       <!-- OBSERVAÇÕES -->
       <div class="card">
         <h2>📝 Observações para o Ofício (opcional)</h2>
-        <textarea id="f_obs" rows="2" style="width:100%;padding:8px;border:1px solid var(--borda);border-radius:5px;font-size:13px;" placeholder="Ex: Informo que o pedido também foi encaminhado pelo sistema CRC JUD..."></textarea>
+        <textarea id="f_obs" rows="2" style="width:100%;padding:8px;border:1px solid var(--borda);border-radius:5px;font-size:13px;" placeholder="Ex: O pedido também foi encaminhado pelo sistema CRC JUD..."></textarea>
       </div>
 
       <!-- BOTÕES -->
-      <div class="card" style="background:var(--verdeClaro);border:2px dashed var(--verdeMedio);padding:30px 22px;text-align:center;">
+      <div class="card" style="background:var(--verdeClaro);border:2px dashed var(--verdeMedio);padding:28px 22px;text-align:center;">
         <div style="font-weight:700;font-size:15px;color:var(--verde3);margin-bottom:18px;">📋 Gerar Documentos</div>
-        <div class="botoes-area">
-          <button class="btn btn-verde btn-principal" onclick="salvarEGerarPDF()">🖨️ Salvar e Gerar PDF (Ficha + Declaração + Ofício)</button>
-        </div>
+        <button class="btn btn-verde" style="padding:13px 32px;font-size:14px;border-radius:8px;" onclick="salvarEGerarPDF()">🖨️ Salvar e Gerar PDF (Ficha + Declaração + Ofício)</button>
         <div class="secao-limpar">
           <p style="font-size:12px;color:#888;margin-bottom:10px;">Os dados já salvos no histórico não serão perdidos ao limpar.</p>
           <button class="btn btn-outline btn-sm" onclick="novoAtendimento()">🔄 Limpar Formulário para Novo Atendimento</button>
         </div>
       </div>
-
-    </div><!-- /abaNovo -->
+    </div>
 
     <!-- HISTÓRICO -->
     <div id="abaHistorico" style="display:none;">
@@ -297,27 +301,10 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
   <!-- PÁG 1: FICHA + DECLARAÇÃO -->
   <div id="printFicha" class="quebra">
     <div class="ficha-wrap">
+
+      <!-- Cabeçalho com logo PNG real -->
       <div class="ficha-topo">
-        <svg width="62" height="62" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <g fill="#2E7D32">
-            <rect x="97" y="32" width="6" height="128" rx="3"/>
-            <rect x="58" y="158" width="84" height="8" rx="4"/>
-            <rect x="88" y="166" width="24" height="10" rx="3"/>
-            <rect x="28" y="56" width="144" height="5" rx="2.5"/>
-            <ellipse cx="53" cy="102" rx="27" ry="7" fill="none" stroke="#2E7D32" stroke-width="4"/>
-            <line x1="28" y1="61" x2="28" y2="99" stroke="#2E7D32" stroke-width="3"/>
-            <line x1="78" y1="61" x2="78" y2="99" stroke="#2E7D32" stroke-width="3"/>
-            <line x1="36" y1="61" x2="28" y2="99" stroke="#2E7D32" stroke-width="2.5"/>
-            <line x1="70" y1="61" x2="78" y2="99" stroke="#2E7D32" stroke-width="2.5"/>
-            <ellipse cx="147" cy="102" rx="27" ry="7" fill="none" stroke="#2E7D32" stroke-width="4"/>
-            <line x1="122" y1="61" x2="122" y2="99" stroke="#2E7D32" stroke-width="3"/>
-            <line x1="172" y1="61" x2="172" y2="99" stroke="#2E7D32" stroke-width="3"/>
-            <line x1="130" y1="61" x2="122" y2="99" stroke="#2E7D32" stroke-width="2.5"/>
-            <line x1="164" y1="61" x2="172" y2="99" stroke="#2E7D32" stroke-width="2.5"/>
-            <circle cx="100" cy="16" r="10"/>
-            <path d="M84 30 Q100 20 116 30 L112 50 L88 50 Z"/>
-          </g>
-        </svg>
+        <img id="logoFicha" src="" alt="DPE-PI">
         <div class="ficha-topo-txt">
           <h2>Ficha de Atendimento</h2>
           <p>Defensoria Pública do Estado do Piauí &nbsp;·&nbsp; Diretoria de Atendimento Itinerante</p>
@@ -327,16 +314,16 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 
       <div class="ficha-sec">Identificação do(a) Requerente</div>
       <div class="ficha-linha"><span class="ficha-rot">Nome Completo:</span><span class="ficha-val" id="p_rNome"></span></div>
-      <div style="display:flex;gap:10px;">
+      <div style="display:flex;gap:8px;">
         <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">CPF:</span><span class="ficha-val" id="p_rCPF"></span></div></div>
-        <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Data de Nascimento:</span><span class="ficha-val" id="p_rNasc"></span></div></div>
+        <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Data Nascimento:</span><span class="ficha-val" id="p_rNasc"></span></div></div>
         <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Telefone:</span><span class="ficha-val" id="p_rTel"></span></div></div>
       </div>
-      <div style="display:flex;gap:10px;">
+      <div style="display:flex;gap:8px;">
         <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Nome do Pai:</span><span class="ficha-val" id="p_rPai"></span></div></div>
         <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Nome da Mãe:</span><span class="ficha-val" id="p_rMae"></span></div></div>
       </div>
-      <div style="display:flex;gap:10px;">
+      <div style="display:flex;gap:8px;">
         <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Estado Civil:</span><span class="ficha-val" id="p_rCivil"></span></div></div>
         <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Profissão:</span><span class="ficha-val" id="p_rProf"></span></div></div>
         <div style="flex:2;"><div class="ficha-linha"><span class="ficha-rot">Renda Familiar:</span><span class="ficha-val" id="p_rRenda"></span></div></div>
@@ -344,32 +331,20 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
       <div class="ficha-linha"><span class="ficha-rot">Endereço:</span><span class="ficha-val" id="p_rEnd"></span></div>
       <div id="p_sitBloco"><div class="ficha-linha"><span class="ficha-rot">Situação Econômica:</span><span class="ficha-val" id="p_rSit"></span></div></div>
 
-      <div style="margin-top:10px;margin-bottom:2px;">
-        <div style="display:flex;gap:18px;align-items:flex-start;">
-          <!-- Cor/Raça -->
-          <div style="flex:1;">
-            <div style="background:#1B5E20;color:#fff;padding:2px 7px;font-size:7.5pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:5px;">Cor / Raça — Autodeclaração (IBGE)</div>
-            <div id="p_cor" class="ficha-opcoes"></div>
-          </div>
-          <!-- Ação Pretendida -->
-          <div style="flex:2;border-left:2px solid #C8E6C9;padding-left:14px;">
-            <div style="background:#2E7D32;color:#fff;padding:2px 7px;font-size:7.5pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:5px;">Ação Pretendida</div>
-            <div id="p_acoes" class="ficha-opcoes"></div>
-            <div id="p_outras" style="font-size:7.5pt;font-style:italic;margin-top:2px;"></div>
-          </div>
+      <!-- Cor/Raça e Ação lado a lado -->
+      <div style="display:flex;gap:0;margin-top:8px;border:1px solid #C8E6C9;border-radius:3px;overflow:hidden;">
+        <div style="flex:1;padding:5px 8px;border-right:2px solid #C8E6C9;">
+          <div style="background:#1B5E20;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:4px;">Cor / Raça (IBGE)</div>
+          <div id="p_cor" class="ficha-opcoes" style="gap:5px;"></div>
+        </div>
+        <div style="flex:2;padding:5px 8px;">
+          <div style="background:#2E7D32;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:4px;">Ação Pretendida</div>
+          <div id="p_acoes" class="ficha-opcoes" style="gap:5px;"></div>
+          <div id="p_outras" style="font-size:7pt;font-style:italic;margin-top:2px;"></div>
         </div>
       </div>
 
-      <div id="p_titularBloco">
-        <div class="ficha-sec" style="margin-top:10px;">Titular do Documento</div>
-        <div class="ficha-linha"><span class="ficha-rot">Nome do Titular:</span><span class="ficha-val" id="p_tNome"></span></div>
-        <div style="display:flex;gap:10px;">
-          <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Data de Nascimento:</span><span class="ficha-val" id="p_tNasc"></span></div></div>
-          <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Parentesco:</span><span class="ficha-val" id="p_tPar"></span></div></div>
-        </div>
-      </div>
-
-      <!-- DECLARAÇÃO -->
+      <!-- DECLARAÇÃO DE HIPOSSUFICIÊNCIA -->
       <div class="decl-box">
         <div class="decl-titulo">Declaração de Hipossuficiência</div>
         <div class="decl-p">
@@ -379,53 +354,29 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
           Outrossim, declaro estar ciente de que a prestação de informações falsas perante funcionário público poderá tipificar o crime de falsidade ideológica, previsto no art. 299 do Código Penal Brasileiro, cuja pena é de reclusão de 1 (um) a 5 (cinco) anos e multa.
         </div>
         <div class="decl-p">
-          <strong>AUTORIZAÇÃO LGPD</strong> — Conforme a Lei Geral de Proteção de Dados Pessoais (Lei n.º 13.709/2018), <strong>AUTORIZO</strong> a Defensoria Pública do Estado do Piauí a incluir meus dados pessoais nas petições, recursos e demais peças processuais necessárias, bem como em expedientes relacionados à assistência jurídica prestada, para fins exclusivamente legais e processuais, podendo revogar esta autorização a qualquer momento, mediante manifestação escrita à instituição.
+          <strong>AUTORIZAÇÃO LGPD</strong> — Conforme a Lei Geral de Proteção de Dados Pessoais (Lei n.º 13.709/2018), <strong>AUTORIZO</strong> a Defensoria Pública do Estado do Piauí a incluir meus dados pessoais nas peças processuais e expedientes relacionados à assistência jurídica prestada, para fins exclusivamente legais e processuais.
         </div>
-        <div class="decl-assin">
+
+        <!-- Assinatura da requerente — espaço generoso -->
+        <div class="decl-assin-area">
+          <div style="height:32px;"></div>
           <div class="decl-assin-linha"></div>
-          <div style="font-size:8pt;">Assinatura do(a) Requerente / Impressão Digital</div>
+          <div style="font-size:8pt;margin-top:2px;" id="p_nomeAssinHipo"></div>
+          <div style="font-size:7.5pt;color:#555;">Assinatura do(a) Requerente</div>
         </div>
-        <div style="text-align:right;margin-top:10px;font-size:8pt;" id="p_dataFicha"></div>
+        <div class="decl-data" id="p_dataFicha"></div>
       </div>
 
-      <div class="ficha-assin" style="margin-top:18px;">
-        <div class="ficha-sign-box">
-          <div class="ficha-sign-linha"></div>
-          <div class="ficha-sign-label" id="p_defNomeFicha"></div>
-          <div style="font-size:7pt;color:#555;">Defensor(a) Público(a)</div>
-        </div>
-        <div class="ficha-sign-box">
-          <div class="ficha-sign-linha"></div>
-          <div class="ficha-sign-label" id="p_unidFicha"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+    </div><!-- /ficha-wrap -->
+  </div><!-- /printFicha -->
 
   <!-- PÁG 2: OFÍCIO -->
   <div id="printOficio">
     <div class="oficio-wrap">
+
+      <!-- Cabeçalho com logo PNG real -->
       <div class="oficio-cab">
-        <svg width="60" height="60" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <g fill="#2E7D32">
-            <rect x="97" y="32" width="6" height="128" rx="3"/>
-            <rect x="58" y="158" width="84" height="8" rx="4"/>
-            <rect x="88" y="166" width="24" height="10" rx="3"/>
-            <rect x="28" y="56" width="144" height="5" rx="2.5"/>
-            <ellipse cx="53" cy="102" rx="27" ry="7" fill="none" stroke="#2E7D32" stroke-width="4"/>
-            <line x1="28" y1="61" x2="28" y2="99" stroke="#2E7D32" stroke-width="3"/>
-            <line x1="78" y1="61" x2="78" y2="99" stroke="#2E7D32" stroke-width="3"/>
-            <line x1="36" y1="61" x2="28" y2="99" stroke="#2E7D32" stroke-width="2.5"/>
-            <line x1="70" y1="61" x2="78" y2="99" stroke="#2E7D32" stroke-width="2.5"/>
-            <ellipse cx="147" cy="102" rx="27" ry="7" fill="none" stroke="#2E7D32" stroke-width="4"/>
-            <line x1="122" y1="61" x2="122" y2="99" stroke="#2E7D32" stroke-width="3"/>
-            <line x1="172" y1="61" x2="172" y2="99" stroke="#2E7D32" stroke-width="3"/>
-            <line x1="130" y1="61" x2="122" y2="99" stroke="#2E7D32" stroke-width="2.5"/>
-            <line x1="164" y1="61" x2="172" y2="99" stroke="#2E7D32" stroke-width="2.5"/>
-            <circle cx="100" cy="16" r="10"/>
-            <path d="M84 30 Q100 20 116 30 L112 50 L88 50 Z"/>
-          </g>
-        </svg>
+        <img id="logoOficio" src="" alt="DPE-PI">
         <div class="oficio-cab-txt">
           <h3>Defensoria Pública do Estado do Piauí</h3>
           <p id="o_unidade"></p>
@@ -434,8 +385,8 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 
       <div class="oficio-numloc">
         <span id="o_numero"></span>
-        <span id="o_localdata"></span>
       </div>
+
       <div class="oficio-dest" id="o_dest"></div>
       <div class="oficio-assunto"><u>Assunto:</u> Requisição de emissão gratuita da 2.ª via de certidão de nascimento</div>
       <div class="oficio-p" id="o_corpo"></div>
@@ -444,21 +395,24 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
       <div class="oficio-fund">
         <strong>FUNDAMENTAÇÃO LEGAL:</strong>
         <ol>
-          <li><strong>Lei n.º 9.534/1997:</strong> Dispõe sobre a gratuidade das certidões de nascimento para os reconhecidamente pobres, assegurando que documentos essenciais sejam emitidos sem ônus para aqueles que comprovem insuficiência de recursos.</li>
-          <li><strong>Lei n.º 1.060/1950:</strong> Garante a gratuidade de serviços judiciários aos necessitados, assegurando o acesso à justiça a pessoas em situação de vulnerabilidade econômica.</li>
-          <li><strong>Lei Complementar n.º 80/1994, art. 4.º, VII:</strong> Atribui à Defensoria Pública o poder de requisitar documentos e informações necessários à defesa dos direitos dos assistidos.</li>
+          <li><strong>Lei n.º 9.534/1997:</strong> Garante a gratuidade das certidões de nascimento para os reconhecidamente pobres.</li>
+          <li><strong>Lei n.º 1.060/1950:</strong> Assegura o acesso à justiça a pessoas em situação de vulnerabilidade econômica.</li>
+          <li><strong>Lei Complementar n.º 80/1994, art. 4.º, VII:</strong> Atribui à Defensoria Pública o poder de requisitar documentos necessários à defesa dos direitos dos assistidos.</li>
         </ol>
       </div>
 
       <div class="oficio-p" id="o_encer"></div>
       <div id="o_obsWrap" style="display:none;"><div class="oficio-obs" id="o_obs"></div></div>
 
-      <div class="oficio-assin">
+      <!-- Assinatura do defensor — com data centralizada acima -->
+      <div class="oficio-assin-area">
+        <div class="oficio-data-local" id="o_localdata"></div>
         <div class="oficio-assin-linha"></div>
         <div class="oficio-assin-nome" id="o_defNome"></div>
-        <div style="font-size:10pt;">Defensor(a) Público(a)</div>
-        <div style="font-size:10pt;" id="o_defUnidade"></div>
+        <div style="font-size:9.5pt;">Defensor(a) Público(a)</div>
+        <div style="font-size:9.5pt;" id="o_defUnidade"></div>
       </div>
+
       <div class="oficio-rodape" id="o_rodape"></div>
     </div>
   </div>
@@ -467,82 +421,98 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 
 <script>
 var atendAtual = null;
+var LOGO_B64 = '';
+var SENHA_CORRETA = 'DITI2027';
 
-function mascaraCPF(el) {
-  var v = el.value.replace(/\D/g,'');
-  if(v.length>11) v=v.slice(0,11);
-  v=v.replace(/(\d{3})(\d)/,'$1.$2');
-  v=v.replace(/(\d{3})(\d)/,'$1.$2');
-  v=v.replace(/(\d{3})(\d{1,2})$/,'$1-$2');
-  el.value=v;
-}
-function mascaraData(el) {
-  var v=el.value.replace(/\D/g,'');
-  if(v.length>8) v=v.slice(0,8);
-  v=v.replace(/(\d{2})(\d)/,'$1/$2');
-  v=v.replace(/(\d{2})(\d)/,'$1/$2');
-  el.value=v;
-}
-function mascaraTel(el) {
-  var v=el.value.replace(/\D/g,'');
-  if(v.length>11) v=v.slice(0,11);
-  if(v.length<=10){v=v.replace(/(\d{2})(\d)/,'($1) $2');v=v.replace(/(\d{4})(\d)/,'$1-$2');}
-  else{v=v.replace(/(\d{2})(\d)/,'($1) $2');v=v.replace(/(\d{5})(\d)/,'$1-$2');}
-  el.value=v;
-}
-function iniciarRenda(el) {
-  if(!el.value) el.value='R$ ';
-}
-function mascaraRenda(el) {
-  var raw = el.value.replace(/[^\d]/g,'');
-  if(!raw){el.value='R$ ';return;}
-  var num = parseInt(raw,10);
-  var reais = Math.floor(num/100);
-  var cents = num%100;
-  var r = reais.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');
-  el.value = 'R$ ' + r + ',' + (cents<10?'0':'')+cents;
-}
-function capitalizarPalavras(el) {
-  el.value=el.value.replace(/\b\w/g,function(c){return c.toUpperCase();});
+/* ===== MÁSCARAS ===== */
+function mascaraCPF(el){var v=el.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);v=v.replace(/(\d{3})(\d)/,'$1.$2');v=v.replace(/(\d{3})(\d)/,'$1.$2');v=v.replace(/(\d{3})(\d{1,2})$/,'$1-$2');el.value=v;}
+function mascaraData(el){var v=el.value.replace(/\D/g,'');if(v.length>8)v=v.slice(0,8);v=v.replace(/(\d{2})(\d)/,'$1/$2');v=v.replace(/(\d{2})(\d)/,'$1/$2');el.value=v;}
+function mascaraTel(el){var v=el.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);if(v.length<=10){v=v.replace(/(\d{2})(\d)/,'($1) $2');v=v.replace(/(\d{4})(\d)/,'$1-$2');}else{v=v.replace(/(\d{2})(\d)/,'($1) $2');v=v.replace(/(\d{5})(\d)/,'$1-$2');}el.value=v;}
+function iniciarRenda(el){if(!el.value)el.value='R$ ';}
+function mascaraRenda(el){var raw=el.value.replace(/[^\d]/g,'');if(!raw){el.value='R$ ';return;}var num=parseInt(raw,10);var reais=Math.floor(num/100);var cents=num%100;var r=reais.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');el.value='R$ '+r+','+(cents<10?'0':'')+cents;}
+function capitalizarPalavras(el){el.value=el.value.replace(/\b\w/g,function(c){return c.toUpperCase();});}
+
+/* Iniciais em maiúsculo (para nome defensor) */
+function iniciaisNome(nome){
+  return nome.split(' ').map(function(p){
+    if(!p) return '';
+    return p.charAt(0).toUpperCase()+p.slice(1).toLowerCase();
+  }).join(' ');
 }
 
-window.onload = function() {
-  try {
-    var lg=JSON.parse(localStorage.getItem('dpe_login')||'null');
-    if(lg&&lg.nome){
-      document.getElementById('lgDefensor').value=lg.nome;
-      document.getElementById('lgUnidade').value=lg.unidade;
-      document.getElementById('lgJornada').value=lg.jornada;
-      iniciarSistema(lg);
-    }
-  } catch(e){}
+/* ===== LOGO PNG ===== */
+/* Tenta carregar logo salvo; se não houver, mostra campo de upload invisível */
+function carregarLogo(){
+  var saved=localStorage.getItem('dpe_logo');
+  if(saved){LOGO_B64=saved;aplicarLogo();}
+}
+function aplicarLogo(){
+  if(!LOGO_B64) return;
+  document.getElementById('logoFicha').src=LOGO_B64;
+  document.getElementById('logoOficio').src=LOGO_B64;
+}
+
+/* INPUT FILE para capturar o PNG enviado pelo usuário no chat (via clipboard/drag ou campo) */
+/* Como estamos no artifact, vamos usar um campo oculto de upload */
+function solicitarLogo(){
+  var inp=document.createElement('input');
+  inp.type='file';inp.accept='image/*';
+  inp.onchange=function(e){
+    var file=e.target.files[0];if(!file) return;
+    var reader=new FileReader();
+    reader.onload=function(ev){
+      LOGO_B64=ev.target.result;
+      try{localStorage.setItem('dpe_logo',LOGO_B64);}catch(x){}
+      aplicarLogo();
+      document.getElementById('btnLogo').innerText='✅ Logo carregada';
+    };
+    reader.readAsDataURL(file);
+  };
+  inp.click();
+}
+
+/* ===== INICIALIZAÇÃO ===== */
+window.onload=function(){
+  carregarLogo();
+  /* Verifica sessão salva */
+  try{
+    var sess=JSON.parse(localStorage.getItem('dpe_sessao')||'null');
+    if(sess&&sess.nome){iniciarSistema(sess);}
+  }catch(e){}
   document.getElementById('ac8').addEventListener('change',function(){
     document.getElementById('f_outras').style.display=this.checked?'block':'none';
   });
 };
 
-function fazerLogin() {
+/* ===== LOGIN ===== */
+function fazerLogin(){
   var nome=(document.getElementById('lgDefensor').value||'').trim();
   var unidade=(document.getElementById('lgUnidade').value||'').trim();
-  var jornada=(document.getElementById('lgJornada').value||'').trim();
-  if(!nome||!unidade||!jornada){alert('Preencha todos os campos de login.');return;}
-  var lg={nome:nome,unidade:unidade,jornada:jornada};
-  try{localStorage.setItem('dpe_login',JSON.stringify(lg));}catch(e){}
-  iniciarSistema(lg);
+  var senha=(document.getElementById('lgSenha').value||'').trim();
+  var err=document.getElementById('erroSenha');
+  if(!nome||!unidade){alert('Preencha nome e unidade.');return;}
+  if(senha!==SENHA_CORRETA){err.style.display='block';document.getElementById('lgSenha').value='';return;}
+  err.style.display='none';
+  var sess={nome:nome,unidade:unidade};
+  try{localStorage.setItem('dpe_sessao',JSON.stringify(sess));}catch(e){}
+  iniciarSistema(sess);
 }
-function iniciarSistema(lg) {
+function iniciarSistema(sess){
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('dashboard').style.display='block';
-  document.getElementById('infoDefensor').innerText=lg.nome+' | '+lg.unidade;
+  document.getElementById('infoDefensor').innerText=sess.nome+' | '+sess.unidade;
   atualizarBadge();
 }
-function sair(){if(confirm('Sair?')){localStorage.removeItem('dpe_login');location.reload();}}
-function limparTudo(){if(confirm('Apagará TODOS os dados. Continuar?')){localStorage.clear();location.reload();}}
+function sair(){if(confirm('Sair?')){localStorage.removeItem('dpe_sessao');location.reload();}}
+
+/* ===== BADGE ===== */
 function atualizarBadge(){
   var lista=JSON.parse(localStorage.getItem('dpe_atendimentos')||'[]');
   var s=String(lista.length+1);while(s.length<3)s='0'+s;
   document.getElementById('badgeProximo').innerText='Próximo: Ofício nº '+s;
 }
+
+/* ===== ABAS ===== */
 function mostrarAba(aba){
   if(aba==='novo'){
     document.getElementById('abaNovo').style.display='block';
@@ -550,7 +520,7 @@ function mostrarAba(aba){
     document.getElementById('tabNovo').classList.add('ativo');
     document.getElementById('tabHist').classList.remove('ativo');
     document.getElementById('titPagina').innerText='Novo Atendimento';
-  } else {
+  }else{
     document.getElementById('abaNovo').style.display='none';
     document.getElementById('abaHistorico').style.display='block';
     document.getElementById('tabNovo').classList.remove('ativo');
@@ -560,12 +530,13 @@ function mostrarAba(aba){
   }
 }
 
+/* ===== COLETAR ===== */
 function coletar(){
   var acoes=[];
   document.querySelectorAll('input[name="acao"]:checked').forEach(function(c){acoes.push(c.value);});
   var corEl=document.querySelector('input[name="cor"]:checked');
   var parEl=document.querySelector('input[name="tpar"]:checked');
-  return {
+  return{
     rNome:(document.getElementById('r_nome').value||'').trim(),
     rCPF:(document.getElementById('r_cpf').value||'').trim(),
     rNasc:(document.getElementById('r_nasc').value||'').trim(),
@@ -593,15 +564,16 @@ function coletar(){
   };
 }
 
+/* ===== SALVAR E GERAR ===== */
 function salvarEGerarPDF(){
   var d=coletar();
   if(!d.rNome){alert('Informe o nome do(a) requerente.');return;}
-  var lg=JSON.parse(localStorage.getItem('dpe_login')||'{}');
+  var sess=JSON.parse(localStorage.getItem('dpe_sessao')||'{}');
   var lista=JSON.parse(localStorage.getItem('dpe_atendimentos')||'[]');
   var numSeq=atendAtual&&atendAtual.numSeq?atendAtual.numSeq:lista.length+1;
   var numStr=String(numSeq);while(numStr.length<3)numStr='0'+numStr;
   var numOficio=numStr+'/'+new Date().getFullYear();
-  var atend={id:atendAtual?atendAtual.id:Date.now(),numSeq:numSeq,numOficio:numOficio,data:new Date().toLocaleDateString('pt-BR'),login:lg,ficha:d};
+  var atend={id:atendAtual?atendAtual.id:Date.now(),numSeq:numSeq,numOficio:numOficio,data:new Date().toLocaleDateString('pt-BR'),sess:sess,ficha:d};
   if(atendAtual){var idx=lista.findIndex(function(a){return a.id===atendAtual.id;});if(idx>=0)lista[idx]=atend;else lista.push(atend);}
   else{lista.push(atend);}
   try{localStorage.setItem('dpe_atendimentos',JSON.stringify(lista));}catch(e){}
@@ -613,15 +585,15 @@ function salvarEGerarPDF(){
 }
 
 var MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-
-function cidadeBase(f,lg){
+function cidadeBase(f,sess){
   if(f.rcCidade) return f.rcCidade.split('/')[0].trim();
-  if(lg.jornada){var p=lg.jornada.split('—');return p.length>1?p[1].trim():p[0].trim();}
   return 'Local';
 }
 
+/* ===== PREENCHER FICHA ===== */
 function preencherFicha(atend){
-  var f=atend.ficha;var lg=atend.login;
+  var f=atend.ficha;var sess=atend.sess||{};
+  aplicarLogo();
   document.getElementById('p_rNome').innerText=f.rNome||'';
   document.getElementById('p_rCPF').innerText=f.rCPF||'';
   document.getElementById('p_rNasc').innerText=f.rNasc||'';
@@ -637,43 +609,33 @@ function preencherFicha(atend){
 
   var coresAll=['Branca','Parda','Preta','Amarela','Indígena','Não Declarar'];
   var corDiv=document.getElementById('p_cor');corDiv.innerHTML='';
-  coresAll.forEach(function(c){
-    var sp=document.createElement('span');sp.className='ficha-opcao';
-    sp.innerHTML='<span class="ficha-check">'+(f.cor===c?'✓':'')+'</span> '+c;
-    corDiv.appendChild(sp);
-  });
+  coresAll.forEach(function(c){var sp=document.createElement('span');sp.className='ficha-opcao';sp.innerHTML='<span class="ficha-check">'+(f.cor===c?'✓':'')+'</span> '+c;corDiv.appendChild(sp);});
 
   var acoesAll=['Documentos','Alimentos','Guarda/Filiação','Criminal','Saúde','Interdição/Curatela','Previdência/INSS','Outras'];
   var aDiv=document.getElementById('p_acoes');aDiv.innerHTML='';
-  acoesAll.forEach(function(a){
-    var sp=document.createElement('span');sp.className='ficha-opcao';
-    var ok=f.acoes&&f.acoes.indexOf(a)>=0;
-    sp.innerHTML='<span class="ficha-check">'+(ok?'✓':'')+'</span> '+a;
-    aDiv.appendChild(sp);
-  });
+  acoesAll.forEach(function(a){var sp=document.createElement('span');sp.className='ficha-opcao';var ok=f.acoes&&f.acoes.indexOf(a)>=0;sp.innerHTML='<span class="ficha-check">'+(ok?'✓':'')+'</span> '+a;aDiv.appendChild(sp);});
   document.getElementById('p_outras').innerText=(f.outras&&f.acoes&&f.acoes.indexOf('Outras')>=0)?'Especif.: '+f.outras:'';
-
-  var ehProprio=!f.tNome||(f.tParentesco==='Próprio(a)');
-  var tb=document.getElementById('p_titularBloco');
-  if(ehProprio){tb.style.display='none';}
-  else{tb.style.display='block';document.getElementById('p_tNome').innerText=f.tNome||'';document.getElementById('p_tNasc').innerText=f.tNasc||'';document.getElementById('p_tPar').innerText=f.tParentesco||'';}
 
   var renda=f.rRenda&&f.rRenda!=='R$ '?f.rRenda:'R$\u00a0____________';
   document.getElementById('d_renda').innerText=renda;
 
+  /* Nome sob assinatura da hipo */
+  document.getElementById('p_nomeAssinHipo').innerText=iniciaisNome(f.rNome||'');
+
   var hoje=new Date();
-  var cb=cidadeBase(f,lg);
+  var cb=cidadeBase(f,sess);
   document.getElementById('p_dataFicha').innerText=cb+', '+hoje.getDate()+' de '+MESES[hoje.getMonth()]+' de '+hoje.getFullYear()+'.';
-  document.getElementById('p_defNomeFicha').innerText=lg.nome||'';
-  document.getElementById('p_unidFicha').innerText=lg.unidade||'';
 }
 
+/* ===== PREENCHER OFÍCIO ===== */
 function preencherOficio(atend){
-  var f=atend.ficha;var lg=atend.login;
-  document.getElementById('o_unidade').innerText=lg.unidade||'';
+  var f=atend.ficha;var sess=atend.sess||{};
+  aplicarLogo();
+  document.getElementById('o_unidade').innerText=sess.unidade||'';
   document.getElementById('o_numero').innerText='OFÍCIO N.º '+atend.numOficio;
+
   var hoje=new Date();
-  var cb=cidadeBase(f,lg);
+  var cb=cidadeBase(f,sess);
   document.getElementById('o_localdata').innerText=cb+', '+hoje.getDate()+' de '+MESES[hoje.getMonth()]+' de '+hoje.getFullYear()+'.';
 
   var destTxt='Ao(À) Senhor(a) Oficial(a) do '+(f.rcCartorio||'Cartório de Registro Civil');
@@ -709,7 +671,7 @@ function preencherOficio(atend){
     c2+=', conforme declaração de hipossuficiência e documentação anexas.';
     document.getElementById('o_corpo2').innerHTML=c2;
     p2w.style.display='block';
-  } else {p2w.style.display='none';}
+  }else{p2w.style.display='none';}
 
   var enc='Diante do exposto, <strong>REQUISITA-SE</strong> a emissão gratuita da 2.ª via da certidão de nascimento de <strong>'+nomeT+'</strong>';
   if(f.rcMatricula) enc+=', conforme matrícula <strong>'+f.rcMatricula+'</strong>';
@@ -722,11 +684,13 @@ function preencherOficio(atend){
   if(f.obs){document.getElementById('o_obs').innerText=f.obs;document.getElementById('o_obsWrap').style.display='block';}
   else{document.getElementById('o_obsWrap').style.display='none';}
 
-  document.getElementById('o_defNome').innerText=(lg.nome||'').toUpperCase();
-  document.getElementById('o_defUnidade').innerText=lg.unidade||'';
-  document.getElementById('o_rodape').innerHTML='<strong>'+(lg.unidade||'')+'</strong> &nbsp;·&nbsp; '+(lg.jornada||'')+'<br>Gerado em: '+hoje.toLocaleDateString('pt-BR')+' &nbsp;·&nbsp; Ofício n.º '+atend.numOficio;
+  /* Assinatura do defensor — iniciais maiúsculas */
+  document.getElementById('o_defNome').innerText=iniciaisNome(sess.nome||'');
+  document.getElementById('o_defUnidade').innerText=sess.unidade||'';
+  document.getElementById('o_rodape').innerHTML='<strong>'+(sess.unidade||'')+'</strong><br>Gerado em: '+hoje.toLocaleDateString('pt-BR')+' &nbsp;·&nbsp; Ofício n.º '+atend.numOficio;
 }
 
+/* ===== HISTÓRICO ===== */
 function renderizarHistorico(){
   var lista=JSON.parse(localStorage.getItem('dpe_atendimentos')||'[]');
   var div=document.getElementById('listaHist');
@@ -808,5 +772,11 @@ function novoAtendimento(){
   atualizarBadge();
 }
 </script>
+
+<!-- Botão flutuante discreto para carregar logo -->
+<div class="no-print" style="position:fixed;bottom:18px;right:18px;z-index:999;">
+  <button id="btnLogo" class="btn btn-outline btn-sm" onclick="solicitarLogo()" style="font-size:11px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.15);">🖼️ Carregar Logo DPE</button>
+</div>
+
 </body>
 </html>
