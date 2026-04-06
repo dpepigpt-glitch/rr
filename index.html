@@ -43,14 +43,14 @@
         .checkbox-group { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 5px; }
         .checkbox-item { display: flex; align-items: center; gap: 5px; font-size: 13px; cursor: pointer; }
 
-        /* HISTÓRICO */
         .historico-item { background: #f7fafc; border: 1px solid var(--border); padding: 15px; margin-bottom: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; }
         .historico-info h3 { font-size: 14px; margin-bottom: 5px; }
         .historico-info p { font-size: 12px; color: #666; margin: 2px 0; }
         .historico-actions { display: flex; gap: 8px; }
 
-        /* IMPRESSÃO */
-        .print-area { display: none; background: white; padding: 30px; max-width: 210mm; margin: 0 auto; }
+        .print-area { display: none; background: white; padding: 25px; max-width: 210mm; margin: 0 auto; font-family: Arial, sans-serif; }
+        .print-page { page-break-after: always; }
+        .print-page:last-child { page-break-after: auto; }
         
         /* OFÍCIO */
         .oficio-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 15px; }
@@ -63,20 +63,29 @@
         .oficio-linha { border-top: 1px solid #000; width: 65%; margin: 0 auto 8px; }
         .oficio-footer { margin-top: 40px; text-align: right; font-size: 11pt; }
 
-        /* FICHA */
-        .ficha-container { border: 2px solid #000; padding: 15px; font-family: Arial, sans-serif; font-size: 10px; }
-        .ficha-header { text-align: center; font-weight: bold; font-size: 13px; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase; }
-        .ficha-sub { text-align: center; font-size: 9px; margin-bottom: 15px; color: #444; }
-        .ficha-section { margin-bottom: 12px; border-bottom: 1px dashed #aaa; padding-bottom: 8px; }
-        .ficha-title { font-weight: bold; text-transform: uppercase; margin-bottom: 6px; display: block; background: #eee; padding: 3px; border: 1px solid #000; text-align: center; font-size: 10px; }
-        .ficha-row { display: flex; border-bottom: 1px solid #000; margin-bottom: 4px; padding: 3px 0; align-items: center; }
-        .ficha-label { font-weight: bold; width: 130px; flex-shrink: 0; text-transform: uppercase; font-size: 9px; }
-        .ficha-value { flex-grow: 1; padding-left: 8px; border-bottom: 1px dotted #888; min-height: 14px; font-size: 10px; }
-        .ficha-options { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
-        .ficha-opt { display: flex; align-items: center; gap: 3px; font-size: 9px; border: 1px solid #ccc; padding: 2px 5px; border-radius: 3px; }
-        .ficha-check { width: 10px; height: 10px; border: 1px solid #000; display: inline-flex; align-items: center; justify-content: center; font-size: 7px; }
-        .ficha-footer { display: flex; justify-content: space-between; margin-top: 25px; }
-        .ficha-sign { width: 48%; text-align: center; border-top: 1px solid #000; padding-top: 5px; font-size: 9px; text-transform: uppercase; }
+        /* FICHA + DECLARAÇÃO */
+        .ficha-container { border: 2px solid #000; padding: 12px; font-family: Arial, sans-serif; font-size: 9.5px; }
+        .ficha-header { text-align: center; font-weight: bold; font-size: 12px; border-bottom: 2px solid #000; padding-bottom: 4px; margin-bottom: 8px; text-transform: uppercase; }
+        .ficha-sub { text-align: center; font-size: 9px; margin-bottom: 12px; color: #444; }
+        .ficha-section { margin-bottom: 10px; border-bottom: 1px dashed #aaa; padding-bottom: 6px; }
+        .ficha-title { font-weight: bold; text-transform: uppercase; margin-bottom: 4px; display: block; background: #eee; padding: 2px; border: 1px solid #000; text-align: center; font-size: 9.5px; }
+        .ficha-row { display: flex; border-bottom: 1px solid #000; margin-bottom: 3px; padding: 2px 0; align-items: center; }
+        .ficha-label { font-weight: bold; width: 120px; flex-shrink: 0; text-transform: uppercase; font-size: 9px; }
+        .ficha-value { flex-grow: 1; padding-left: 6px; border-bottom: 1px dotted #888; min-height: 13px; font-size: 9.5px; }
+        .ficha-options { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+        .ficha-opt { display: flex; align-items: center; gap: 3px; font-size: 8.5px; border: 1px solid #ccc; padding: 2px 4px; border-radius: 3px; }
+        .ficha-check { width: 9px; height: 9px; border: 1px solid #000; display: inline-flex; align-items: center; justify-content: center; font-size: 7px; }
+        
+        /* DECLARAÇÃO */
+        .declaracao-box { margin-top: 15px; padding: 10px; border: 1px solid #000; font-size: 9px; line-height: 1.4; text-align: justify; }
+        .declaracao-titulo { font-weight: bold; text-transform: uppercase; text-align: center; margin-bottom: 8px; font-size: 10px; }
+        .declaracao-texto { margin-bottom: 12px; }
+        .declaracao-assinatura { margin-top: 25px; text-align: center; }
+        .declaracao-linha { border-top: 1px solid #000; width: 70%; margin: 0 auto 5px; }
+        .declaracao-data { text-align: right; margin-top: 15px; font-size: 9px; }
+        
+        .ficha-footer { display: flex; justify-content: space-between; margin-top: 10px; }
+        .ficha-sign { width: 48%; text-align: center; border-top: 1px solid #000; padding-top: 4px; font-size: 8.5px; text-transform: uppercase; }
 
         .nav-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
         .nav-tab { padding: 10px 20px; background: var(--card); border: 2px solid var(--border); border-radius: 5px; cursor: pointer; font-weight: 600; }
@@ -85,9 +94,11 @@
         @media print {
             body * { visibility: hidden; }
             .print-area, .print-area * { visibility: visible; }
-            .print-area { position: absolute; left: 0; top: 0; width: 100%; display: block !important; padding: 20px; margin: 0; box-shadow: none; }
+            .print-area { position: absolute; left: 0; top: 0; width: 100%; display: block !important; padding: 15px; margin: 0; box-shadow: none; }
             .no-print { display: none !important; }
-            @page { margin: 1.5cm; size: A4; }
+            @page { margin: 1.2cm; size: A4; }
+            .print-page { page-break-after: always; }
+            .print-page:last-child { page-break-after: auto; }
         }
     </style>
 </head>
@@ -196,6 +207,7 @@
                     <div class="form-row" style="justify-content:center; gap:15px;">
                         <button class="btn btn-primary" style="width:auto; min-width:160px;" onclick="salvarEGerarOficio()">💾 Salvar e Gerar Ofício</button>
                         <button class="btn btn-success" style="width:auto; min-width:160px;" onclick="salvarEGerarFicha()">💾 Salvar e Gerar Ficha</button>
+                        <button class="btn btn-info" style="width:auto; min-width:200px;" onclick="gerarPDFCompleto()">🖨️ Gerar PDF Completo (Ofício + Ficha)</button>
                     </div>
                     <button class="btn btn-outline" style="width:auto; margin-top:15px;" onclick="novoAtendimento()">🔄 Limpar Formulário</button>
                 </div>
@@ -211,8 +223,8 @@
         </div>
     </div>
 
-    <!-- PRINT: OFÍCIO -->
-    <div id="printOficio" class="print-area">
+    <!-- PRINT: OFÍCIO (Página 1) -->
+    <div id="printOficio" class="print-area print-page">
         <div class="oficio-header">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Bras%C3%A3o_da_Defensoria_P%C3%BAblica_do_Estado_do_Piau%C3%AD.svg/1200px-Bras%C3%A3o_da_Defensoria_P%C3%BAblica_do_Estado_do_Piau%C3%AD.svg.png" class="oficio-logo">
             <div class="oficio-titulo">Defensoria Pública do Estado do Piauí</div>
@@ -243,8 +255,8 @@
         </div>
     </div>
 
-    <!-- PRINT: FICHA -->
-    <div id="printFicha" class="print-area">
+    <!-- PRINT: FICHA + DECLARAÇÃO (Página 2) -->
+    <div id="printFicha" class="print-area print-page">
         <div class="ficha-container">
             <div class="ficha-header">DEFENSORIA ITINERANTE<br>Formulário de Pré-Atendimento</div>
             <div class="ficha-sub">Uso exclusivo do serviço · Tratamento sigiloso</div>
@@ -253,8 +265,8 @@
                 <span class="ficha-title">Identificação Pessoal</span>
                 <div class="ficha-row"><span class="ficha-label">Nome Completo</span> <span class="ficha-value" id="outFichaNome"></span></div>
                 <div class="ficha-row">
-                    <span class="ficha-label">CPF</span> <span class="ficha-value" id="outFichaCPF" style="max-width:140px;"></span>
-                    <span class="ficha-label" style="width:100px;">Data Nasc.</span> <span class="ficha-value" id="outFichaData"></span>
+                    <span class="ficha-label">CPF</span> <span class="ficha-value" id="outFichaCPF" style="max-width:130px;"></span>
+                    <span class="ficha-label" style="width:90px;">Data Nasc.</span> <span class="ficha-value" id="outFichaData"></span>
                 </div>
                 <div class="ficha-row"><span class="ficha-label">Nome do Pai</span> <span class="ficha-value" id="outFichaPai"></span></div>
                 <div class="ficha-row"><span class="ficha-label">Nome da Mãe</span> <span class="ficha-value" id="outFichaMae"></span></div>
@@ -264,8 +276,8 @@
                 <span class="ficha-title">Contato e Situação Social</span>
                 <div class="ficha-row"><span class="ficha-label">Telefone/Whatsapp</span> <span class="ficha-value" id="outFichaTel"></span></div>
                 <div class="ficha-row">
-                    <span class="ficha-label">Estado Civil</span> <span class="ficha-value" id="outFichaCivil" style="max-width:100px;"></span>
-                    <span class="ficha-label" style="width:80px;">Profissão</span> <span class="ficha-value" id="outFichaProfissao"></span>
+                    <span class="ficha-label">Estado Civil</span> <span class="ficha-value" id="outFichaCivil" style="max-width:90px;"></span>
+                    <span class="ficha-label" style="width:75px;">Profissão</span> <span class="ficha-value" id="outFichaProfissao"></span>
                 </div>
                 <div class="ficha-row"><span class="ficha-label">Renda Média Familiar</span> <span class="ficha-value" id="outFichaRenda"></span></div>
                 <div class="ficha-row"><span class="ficha-label">Endereço</span> <span class="ficha-value" id="outFichaEndereco"></span></div>
@@ -277,14 +289,30 @@
             </div>
 
             <div class="ficha-section" style="border:none;">
-                <span class="ficha-title">Ação Pretendida (Pode marcar mais de uma)</span>
+                <span class="ficha-title">Ação Pretendida</span>
                 <div class="ficha-options" id="outFichaAcoes"></div>
-                <div id="outFichaOutras" style="margin-top:5px; font-style:italic; font-size:9px;"></div>
+                <div id="outFichaOutras" style="margin-top:4px; font-style:italic; font-size:8.5px;"></div>
             </div>
 
-            <div class="ficha-footer">
-                <div class="ficha-sign">Assinatura do Assistido / Impressão Digital</div>
-                <div class="ficha-sign" style="width:30%;">Data de Preenchimento: ___/___/_______</div>
+            <!-- DECLARAÇÃO JURÍDICA -->
+            <div class="declaracao-box">
+                <div class="declaracao-titulo">DECLARAÇÃO</div>
+                <div class="declaracao-texto">
+                    <strong>DECLARO</strong>, para fins de obtenção de ASSISTÊNCIA JURÍDICA pela DEFENSORIA PÚBLICA DO ESTADO DO PIAUÍ que recebo mensalmente a importância líquida de R$ ____________, sendo pessoa pobre na forma da lei, não podendo, portanto, arcar com as custas processuais e honorários advocatícios sem prejuízo do próprio sustento e de sua família, nos termos do que dispõe o art. 5º, LXXIV, da Constituição Federal c.c os art. 1º a 4º da Lei 1.060/50 e art. 1º da Lei 7.115/83.
+                </div>
+                <div class="declaracao-texto">
+                    Outrossim, declaro que estou ciente de que a prestação de informações falsas perante funcionário público poderá tipificar o crime de falsidade ideológica, previsto no art. 299 do Código Penal Brasileiro, cuja pena é de reclusão de 1 (um) a 5 (cinco) anos e multa.
+                </div>
+                <div class="declaracao-texto">
+                    <strong>AUTORIZAÇÃO PARA USO DE DADOS PESSOAIS</strong><br>
+                    Conforme o disposto na Lei Geral de Proteção de Dados Pessoais (LGPD - Lei 13.709/18), AUTORIZO a DEFENSORIA PÚBLICA DO ESTADO DO PIAUÍ a incluir os meus dados pessoais (CPF, endereço e telefone) nas petições, recursos e demais peças processuais que forem necessárias protocolar junto aos sistemas judiciais de protocolo eletrônico, bem como em outros expedientes relacionados à assistência jurídica prestada.<br><br>
+                    Declaro que estou ciente de que estes dados serão utilizados exclusivamente para fins de atendimento legal e processual, e que posso revogar esta autorização a qualquer momento, mediante manifestação escrita à instituição.
+                </div>
+                <div class="declaracao-assinatura">
+                    <div class="declaracao-linha"></div>
+                    <span style="font-size:9px;">Assinatura do Assistido</span>
+                </div>
+                <div class="declaracao-data" id="outFichaDataAssinatura"></div>
             </div>
         </div>
     </div>
@@ -417,7 +445,7 @@
                 pedidos.push({
                     nome: box.querySelector('.p-nome').value,
                     cpf: box.querySelector('.p-cpf').value,
-                     box.querySelector('.p-data').value,
+                    data: box.querySelector('.p-data').value, // CORREÇÃO: adicionada chave "data:"
                     numero: box.querySelector('.p-num').value,
                     livro: box.querySelector('.p-livro').value,
                     folhas: box.querySelector('.p-folhas').value,
@@ -436,7 +464,6 @@
             
             let atendimentos = JSON.parse(localStorage.getItem('dpe_atendimentos') || '[]');
             
-            // Se já tem um atendimento atual (do histórico), mantém o número
             let numeroOficio;
             if (atendimentoAtual && atendimentoAtual.numeroOficio) {
                 numeroOficio = atendimentoAtual.numeroOficio;
@@ -451,7 +478,7 @@
                 id: atendimentoAtual ? atendimentoAtual.id : Date.now(),
                 numeroOficio: numeroOficio,
                 numFormatado: numFormatado,
-                 new Date().toISOString(),
+                data: new Date().toISOString(), // CORREÇÃO: adicionada chave "data:"
                 login: login,
                 ficha: ficha,
                 pedidos: pedidos,
@@ -540,12 +567,95 @@
                 });
             }
             
-            document.getElementById('outFichaOutras').innerText = f.outras ? `ESPECIFIQUE SE MARCOU "OUTRAS": ${f.outras.toUpperCase()}` : '';
+            document.getElementById('outFichaOutras').innerText = f.outras ? `ESPECIFIQUE: ${f.outras.toUpperCase()}` : '';
+            
+            // Data para assinatura
+            const hoje = new Date();
+            document.getElementById('outFichaDataAssinatura').innerText = 
+                `${hoje.getDate()}/${String(hoje.getMonth()+1).padStart(2,'0')}/${hoje.getFullYear()}`;
             
             window.print();
         }
 
-        // FUNÇÕES DE SALVAR E GERAR
+        // NOVA FUNÇÃO: GERAR PDF COMPLETO (OFÍCIO + FICHA)
+        function gerarPDFCompleto() {
+            // Salvar atendimento primeiro
+            const atendimento = salvarAtendimento('completo');
+            atendimentoAtual = null;
+            
+            // Preencher ambos os templates
+            preencherOficio(atendimento);
+            preencherFicha(atendimento);
+            
+            // Acionar impressão (ambas as páginas serão impressas em sequência)
+            window.print();
+        }
+
+        // Funções auxiliares para preenchimento
+        function preencherOficio(atendimento) {
+            const dados = atendimento;
+            document.getElementById('outOficioUnidade').innerText = dados.login.unidade;
+            document.getElementById('outOficioNumero').innerText = dados.numFormatado;
+            document.getElementById('outAssinaturaNome').innerText = dados.login.nome.toUpperCase();
+            
+            const hoje = new Date();
+            document.getElementById('outDataAtual').innerText = `${hoje.getDate()} de ${hoje.toLocaleString('pt-BR', {month:'long'})} de ${hoje.getFullYear()}`;
+            const cidBase = dados.login.jornada.split(' ').pop() || 'Teresina-PI';
+            document.getElementById('outCidadeData').innerText = cidBase.includes('-') ? cidBase : cidBase + '-PI';
+            
+            const lista = document.getElementById('outListaPedidos');
+            lista.innerHTML = '';
+            
+            let cidadeResidencia = '';
+            dados.pedidos.forEach((p, i) => {
+                if (i === 0) {
+                    document.getElementById('outCartorioDest').innerText = (p.cartorio || '[CARTÓRIO]').toUpperCase();
+                    document.getElementById('outCidadeDest').innerText = (p.cidade || '[CIDADE]').toUpperCase();
+                    cidadeResidencia = p.cidade || '';
+                }
+                
+                let txt = `<strong>${i+1}.</strong> <strong>${(p.nome || '[NOME]').toUpperCase()}</strong>`;
+                if (p.cpf) txt += `, CPF nº ${p.cpf}`;
+                txt += `, nascido(a) em ${p.data}, registro nº ${p.numero}, Livro ${p.livro}, Folhas ${p.folhas}, do ${p.cartorio} de ${p.cidade}.`;
+                lista.innerHTML += `<li>${txt}</li>`;
+            });
+            
+            document.getElementById('outCidadeResidencia').innerText = cidadeResidencia || (dados.ficha ? dados.ficha.endereco.split(',').pop() || '' : '');
+        }
+
+        function preencherFicha(atendimento) {
+            const f = atendimento.ficha;
+            document.getElementById('outFichaNome').innerText = (f.nome || '').toUpperCase();
+            document.getElementById('outFichaCPF').innerText = f.cpf || '';
+            document.getElementById('outFichaData').innerText = f.dataNasc || '';
+            document.getElementById('outFichaPai').innerText = (f.pai || '').toUpperCase();
+            document.getElementById('outFichaMae').innerText = (f.mae || '').toUpperCase();
+            document.getElementById('outFichaTel').innerText = f.telefone || '';
+            document.getElementById('outFichaCivil').innerText = f.estadoCivil || '';
+            document.getElementById('outFichaProfissao').innerText = (f.profissao || '').toUpperCase();
+            document.getElementById('outFichaRenda').innerText = f.renda || '';
+            document.getElementById('outFichaEndereco').innerText = (f.endereco || '').toUpperCase();
+            
+            let corTxt = f.cor ? f.cor.toUpperCase() : '';
+            if (f.corOutra) corTxt += (corTxt ? ' - ' : '') + f.corOutra.toUpperCase();
+            document.getElementById('outFichaCor').innerText = corTxt;
+            
+            const acoesDiv = document.getElementById('outFichaAcoes');
+            acoesDiv.innerHTML = '';
+            if (f.acoes) {
+                f.acoes.forEach(acao => {
+                    acoesDiv.innerHTML += `<span class="ficha-opt"><span class="ficha-check">☑</span>${acao.toUpperCase()}</span>`;
+                });
+            }
+            
+            document.getElementById('outFichaOutras').innerText = f.outras ? `ESPECIFIQUE: ${f.outras.toUpperCase()}` : '';
+            
+            const hoje = new Date();
+            document.getElementById('outFichaDataAssinatura').innerText = 
+                `${hoje.getDate()}/${String(hoje.getMonth()+1).padStart(2,'0')}/${hoje.getFullYear()}`;
+        }
+
+        // FUNÇÕES DE SALVAR E GERAR (mantidas para compatibilidade)
         function salvarEGerarOficio() {
             const atendimento = salvarAtendimento('oficio');
             atendimentoAtual = null;
@@ -611,13 +721,11 @@
             document.getElementById('corOutra').value = att.ficha.corOutra || '';
             document.getElementById('acaoOutras').value = att.ficha.outras || '';
             
-            // Radio cor
             if (att.ficha.cor) {
                 const radio = document.querySelector(`input[name="cor"][value="${att.ficha.cor}"]`);
                 if (radio) radio.checked = true;
             }
             
-            // Checkboxes ação
             document.querySelectorAll('input[name="acao"]').forEach(cb => cb.checked = false);
             if (att.ficha.acoes) {
                 att.ficha.acoes.forEach(acao => {
@@ -627,7 +735,6 @@
             }
             document.getElementById('acaoOutras').style.display = (att.ficha.acoes && att.ficha.acoes.includes('Outras')) ? 'block' : 'none';
             
-            // Pedidos
             document.getElementById('listaPedidos').innerHTML = '';
             contadorPedidos = 0;
             if (att.pedidos && att.pedidos.length > 0) {
@@ -652,13 +759,19 @@
         function reimprimirOficio(id) {
             const atendimentos = JSON.parse(localStorage.getItem('dpe_atendimentos') || '[]');
             const att = atendimentos.find(a => a.id === id);
-            if (att) gerarOficio(att);
+            if (att) {
+                preencherOficio(att);
+                window.print();
+            }
         }
 
         function reimprimirFicha(id) {
             const atendimentos = JSON.parse(localStorage.getItem('dpe_atendimentos') || '[]');
             const att = atendimentos.find(a => a.id === id);
-            if (att) gerarFicha(att);
+            if (att) {
+                preencherFicha(att);
+                window.print();
+            }
         }
 
         function excluirAtendimento(id) {
@@ -685,7 +798,6 @@
             }
         }
 
-        // Toggle "Outras"
         document.addEventListener('change', function(e) {
             if (e.target.name === 'acao' && e.target.value === 'Outras') {
                 document.getElementById('acaoOutras').style.display = e.target.checked ? 'block' : 'none';
