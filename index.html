@@ -13,46 +13,46 @@
         .card { background: var(--card); padding: 25px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px; }
         h1 { color: var(--primary); text-align: center; font-size: 24px; margin-bottom: 10px; }
         h2 { color: var(--secondary); border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 15px; font-size: 18px; }
-        h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: #4a5568; }
-
+        
         .form-row { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 12px; }
         .form-group { flex: 1; min-width: 180px; }
         .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
         .form-group input, .form-group select { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 5px; font-size: 14px; }
-        .form-group input:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(43,108,176,0.15); }
-
+        
         .btn { padding: 10px 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 14px; transition: 0.2s; width: 100%; margin-top: 8px; }
         .btn-primary { background: var(--primary); color: white; }
         .btn-primary:hover { background: #152b4a; }
         .btn-success { background: var(--success); color: white; }
-        .btn-success:hover { background: #276749; }
         .btn-outline { background: transparent; border: 2px solid var(--secondary); color: var(--secondary); }
-        .btn-outline:hover { background: var(--secondary); color: white; }
-        .btn-danger { background: var(--danger); color: white; font-size: 12px; padding: 6px 12px; width: auto; }
+        .btn-danger { background: #e53e3e; color: white; font-size: 12px; padding: 6px 12px; width: auto; }
+        .btn-info { background: #3182ce; color: white; }
 
-        /* LOGIN */
         #loginScreen { display: flex; justify-content: center; align-items: center; min-height: 90vh; }
         .login-box { max-width: 450px; width: 100%; }
         .login-note { background: #ebf8ff; border-left: 4px solid var(--secondary); padding: 10px; margin-bottom: 15px; font-size: 13px; color: #2c5282; border-radius: 0 4px 4px 0; }
 
-        /* DASHBOARD */
         #dashboard { display: none; }
         .top-bar { display: flex; justify-content: space-between; align-items: center; background: var(--card); padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); flex-wrap: wrap; gap: 15px; }
-        .user-info p { margin: 2px 0; font-size: 13px; }
-        .user-info strong { color: var(--secondary); }
         .counter-badge { background: #f0fff4; border: 1px solid #9ae6b4; padding: 6px 12px; border-radius: 6px; font-weight: bold; color: var(--success); font-size: 14px; }
+        .user-info { font-size: 12px; text-align: right; }
+        .user-info strong { color: var(--secondary); }
 
-        /* PEDIDOS DINÂMICOS */
         .pedido-box { border: 1px dashed #90cdf4; padding: 15px; margin-bottom: 10px; border-radius: 6px; background: #ebf8ff; position: relative; }
-        .btn-remove { position: absolute; top: 8px; right: 8px; background: #feb2b2; color: #742a2a; border: none; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+        .btn-remove { position: absolute; top: 8px; right: 8px; background: #feb2b2; color: #742a2a; border: none; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 12px; }
 
         .checkbox-group { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 5px; }
         .checkbox-item { display: flex; align-items: center; gap: 5px; font-size: 13px; cursor: pointer; }
 
+        /* HISTÓRICO */
+        .historico-item { background: #f7fafc; border: 1px solid var(--border); padding: 15px; margin-bottom: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; }
+        .historico-info h3 { font-size: 14px; margin-bottom: 5px; }
+        .historico-info p { font-size: 12px; color: #666; margin: 2px 0; }
+        .historico-actions { display: flex; gap: 8px; }
+
         /* IMPRESSÃO */
         .print-area { display: none; background: white; padding: 30px; max-width: 210mm; margin: 0 auto; }
         
-        /* OFÍCIO PRINT */
+        /* OFÍCIO */
         .oficio-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 15px; }
         .oficio-logo { width: 70px; margin-bottom: 8px; }
         .oficio-titulo { font-size: 16pt; font-weight: bold; text-transform: uppercase; }
@@ -63,7 +63,7 @@
         .oficio-linha { border-top: 1px solid #000; width: 65%; margin: 0 auto 8px; }
         .oficio-footer { margin-top: 40px; text-align: right; font-size: 11pt; }
 
-        /* FICHA PRINT (FIEL AO PDF) */
+        /* FICHA */
         .ficha-container { border: 2px solid #000; padding: 15px; font-family: Arial, sans-serif; font-size: 10px; }
         .ficha-header { text-align: center; font-weight: bold; font-size: 13px; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase; }
         .ficha-sub { text-align: center; font-size: 9px; margin-bottom: 15px; color: #444; }
@@ -77,6 +77,10 @@
         .ficha-check { width: 10px; height: 10px; border: 1px solid #000; display: inline-flex; align-items: center; justify-content: center; font-size: 7px; }
         .ficha-footer { display: flex; justify-content: space-between; margin-top: 25px; }
         .ficha-sign { width: 48%; text-align: center; border-top: 1px solid #000; padding-top: 5px; font-size: 9px; text-transform: uppercase; }
+
+        .nav-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .nav-tab { padding: 10px 20px; background: var(--card); border: 2px solid var(--border); border-radius: 5px; cursor: pointer; font-weight: 600; }
+        .nav-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
 
         @media print {
             body * { visibility: hidden; }
@@ -93,7 +97,7 @@
     <div id="loginScreen" class="container no-print">
         <div class="card login-box">
             <h1>Defensoria Pública do Piauí</h1>
-            <div class="login-note">💡 Login único: seus dados e a numeração são salvos automaticamente neste navegador.</div>
+            <div class="login-note">💡 Login único: seus dados são salvos automaticamente.</div>
             <div class="form-group"><label>Nome do Defensor:</label><input type="text" id="loginDefensor" placeholder="Ex: ROBERT RIOS MAGALHÃES JUNIOR"></div>
             <div class="form-group"><label>Unidade/Defensoria:</label><input type="text" id="loginUnidade" placeholder="Ex: Defensoria Pública de Itaueira"></div>
             <div class="form-group"><label>Jornada Itinerante:</label><input type="text" id="loginJornada" placeholder="Ex: Jornada Itinerante de Itaueira"></div>
@@ -107,87 +111,102 @@
         <div class="container">
             <div class="top-bar">
                 <div>
-                    <h2 style="margin:0; border:none; font-size:18px;">Novo Atendimento</h2>
-                    <p style="font-size:12px; color:#666; margin-top:4px;">Preencha os campos abaixo.</p>
+                    <h2 style="margin:0; border:none; font-size:18px;" id="tituloPagina">Novo Atendimento</h2>
                 </div>
                 <div style="text-align:right;">
                     <div class="counter-badge" id="dashContador">Próximo: nº 01</div>
                     <div class="user-info" style="margin-top:8px;">
                         <p><strong>Defensor:</strong> <span id="dashDefensor"></span></p>
-                        <p><strong>Jornada:</strong> <span id="dashJornada"></span></p>
                     </div>
                     <button class="btn btn-danger" style="margin-top:6px;" onclick="sair()">Sair</button>
                 </div>
             </div>
 
-            <!-- FICHA FORM -->
-            <div class="card">
-                <h2>📋 1. Ficha de Pré-Atendimento</h2>
-                <div class="form-row">
-                    <div class="form-group" style="flex:2;"><label>Nome Completo:</label><input type="text" id="fichaNome"></div>
-                    <div class="form-group"><label>CPF:</label><input type="text" id="fichaCPF" placeholder="000.000.000-00"></div>
-                    <div class="form-group"><label>Data Nasc.:</label><input type="text" id="fichaDataNasc" placeholder="DD/MM/AAAA"></div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group"><label>Nome do Pai:</label><input type="text" id="fichaPai"></div>
-                    <div class="form-group"><label>Nome da Mãe:</label><input type="text" id="fichaMae"></div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group"><label>Telefone/WhatsApp:</label><input type="text" id="fichaTel" placeholder="(00) 00000-0000"></div>
-                    <div class="form-group"><label>Estado Civil:</label>
-                        <select id="fichaCivil"><option value="">Selecione</option><option>Solteiro(a)</option><option>Casado(a)</option><option>Divorciado(a)</option><option>Viúvo(a)</option><option>União Estável</option></select>
+            <!-- NAVEGAÇÃO -->
+            <div class="nav-tabs no-print">
+                <div class="nav-tab active" onclick="mostrarAba('novo')" id="tabNovo">Novo Atendimento</div>
+                <div class="nav-tab" onclick="mostrarAba('historico')" id="tabHistorico">Histórico</div>
+            </div>
+
+            <!-- ABA NOVO ATENDIMENTO -->
+            <div id="abaNovo">
+                <!-- FICHA FORM -->
+                <div class="card">
+                    <h2>📋 Ficha de Pré-Atendimento</h2>
+                    <div class="form-row">
+                        <div class="form-group" style="flex:2;"><label>Nome Completo:</label><input type="text" id="fichaNome"></div>
+                        <div class="form-group"><label>CPF:</label><input type="text" id="fichaCPF" placeholder="000.000.000-00"></div>
+                        <div class="form-group"><label>Data Nasc.:</label><input type="text" id="fichaDataNasc" placeholder="DD/MM/AAAA"></div>
                     </div>
-                    <div class="form-group"><label>Profissão:</label><input type="text" id="fichaProfissao"></div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group"><label>Renda Média Familiar:</label><input type="text" id="fichaRenda" placeholder="R$ 0,00"></div>
-                    <div class="form-group" style="flex:3;"><label>Endereço Completo:</label><input type="text" id="fichaEndereco" placeholder="Rua, Nº, Bairro, Município — UF"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Cor/Raça (Autodeclaração — IBGE):</label>
-                    <div class="checkbox-group">
-                        <label class="checkbox-item"><input type="radio" name="cor" value="Branca"> Branca</label>
-                        <label class="checkbox-item"><input type="radio" name="cor" value="Parda"> Parda</label>
-                        <label class="checkbox-item"><input type="radio" name="cor" value="Preta"> Preta</label>
-                        <label class="checkbox-item"><input type="radio" name="cor" value="Amarela"> Amarela</label>
-                        <label class="checkbox-item"><input type="radio" name="cor" value="Indígena"> Indígena</label>
-                        <label class="checkbox-item"><input type="radio" name="cor" value="Não Declarar"> Não Declarar</label>
+                    <div class="form-row">
+                        <div class="form-group"><label>Nome do Pai:</label><input type="text" id="fichaPai"></div>
+                        <div class="form-group"><label>Nome da Mãe:</label><input type="text" id="fichaMae"></div>
                     </div>
-                    <input type="text" id="corOutra" placeholder="Ou descreva (opcional):" style="margin-top:8px; font-size:13px;">
+                    <div class="form-row">
+                        <div class="form-group"><label>Telefone/WhatsApp:</label><input type="text" id="fichaTel" placeholder="(00) 00000-0000"></div>
+                        <div class="form-group"><label>Estado Civil:</label>
+                            <select id="fichaCivil"><option value="">Selecione</option><option>Solteiro(a)</option><option>Casado(a)</option><option>Divorciado(a)</option><option>Viúvo(a)</option><option>União Estável</option></select>
+                        </div>
+                        <div class="form-group"><label>Profissão:</label><input type="text" id="fichaProfissao"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Renda Média Familiar:</label><input type="text" id="fichaRenda" placeholder="R$ 0,00"></div>
+                        <div class="form-group" style="flex:3;"><label>Endereço Completo:</label><input type="text" id="fichaEndereco" placeholder="Rua, Nº, Bairro, Município — UF"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Cor/Raça (Autodeclaração — IBGE):</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item"><input type="radio" name="cor" value="Branca"> Branca</label>
+                            <label class="checkbox-item"><input type="radio" name="cor" value="Parda"> Parda</label>
+                            <label class="checkbox-item"><input type="radio" name="cor" value="Preta"> Preta</label>
+                            <label class="checkbox-item"><input type="radio" name="cor" value="Amarela"> Amarela</label>
+                            <label class="checkbox-item"><input type="radio" name="cor" value="Indígena"> Indígena</label>
+                            <label class="checkbox-item"><input type="radio" name="cor" value="Não Declarar"> Não Declarar</label>
+                        </div>
+                        <input type="text" id="corOutra" placeholder="Ou descreva (opcional):" style="margin-top:8px; font-size:13px;">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ação Pretendida (pode marcar mais de uma):</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item"><input type="checkbox" name="acao" value="Alimentos"> Alimentos</label>
+                            <label class="checkbox-item"><input type="checkbox" name="acao" value="Guarda/Filiação"> Guarda/Filiação</label>
+                            <label class="checkbox-item"><input type="checkbox" name="acao" value="Criminal"> Criminal</label>
+                            <label class="checkbox-item"><input type="checkbox" name="acao" value="Violência Doméstica"> Violência Doméstica</label>
+                            <label class="checkbox-item"><input type="checkbox" name="acao" value="Cível/Contratos"> Cível/Contratos</label>
+                            <label class="checkbox-item"><input type="checkbox" name="acao" value="Interdição/Curatela"> Interdição/Curatela</label>
+                            <label class="checkbox-item"><input type="checkbox" name="acao" value="Previdência/INSS"> Previdência/INSS</label>
+                            <label class="checkbox-item"><input type="checkbox" name="acao" value="Outras"> Outras</label>
+                        </div>
+                        <input type="text" id="acaoOutras" placeholder="Especifique se marcou 'Outras'..." style="margin-top:8px; font-size:13px; display:none;">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Ação Pretendida (pode marcar mais de uma):</label>
-                    <div class="checkbox-group">
-                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Alimentos"> Alimentos</label>
-                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Guarda/Filiação"> Guarda/Filiação</label>
-                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Criminal"> Criminal</label>
-                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Violência Doméstica"> Violência Doméstica</label>
-                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Cível/Contratos"> Cível/Contratos</label>
-                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Interdição/Curatela"> Interdição/Curatela</label>
-                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Previdência/INSS"> Previdência/INSS</label>
-                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Outras"> Outras</label>
+                <!-- OFÍCIO FORM -->
+                <div class="card">
+                    <h2>📄 Dados do Ofício (2ª Via)</h2>
+                    <p style="font-size:13px; color:#666; margin-bottom:10px;">Adicione quantos registros precisar (ex: mãe e filhos no mesmo ofício).</p>
+                    <div id="listaPedidos"></div>
+                    <button class="btn btn-success" style="width:auto; margin-top:10px; font-size:13px;" onclick="addPedido()">+ Adicionar Pedido</button>
+                </div>
+
+                <div class="card" style="text-align:center; background:#f8fafc; border:2px dashed var(--border);">
+                    <h2 style="border:none;">💾 Salvar e Gerar Documentos</h2>
+                    <div class="form-row" style="justify-content:center; gap:15px;">
+                        <button class="btn btn-primary" style="width:auto; min-width:160px;" onclick="salvarEGerarOficio()">💾 Salvar e Gerar Ofício</button>
+                        <button class="btn btn-success" style="width:auto; min-width:160px;" onclick="salvarEGerarFicha()">💾 Salvar e Gerar Ficha</button>
                     </div>
-                    <input type="text" id="acaoOutras" placeholder="Especifique se marcou 'Outras'..." style="margin-top:8px; font-size:13px; display:none;">
+                    <button class="btn btn-outline" style="width:auto; margin-top:15px;" onclick="novoAtendimento()">🔄 Limpar Formulário</button>
                 </div>
             </div>
 
-            <!-- OFÍCIO FORM -->
-            <div class="card">
-                <h2>📄 2. Dados do Ofício (2ª Via)</h2>
-                <p style="font-size:13px; color:#666; margin-bottom:10px;">Adicione quantos registros precisar (ex: mãe e filhos).</p>
-                <div id="listaPedidos"></div>
-                <button class="btn btn-success" style="width:auto; margin-top:10px; font-size:13px;" onclick="addPedido()">+ Adicionar Pedido</button>
-            </div>
-
-            <div class="card" style="text-align:center; background:#f8fafc; border:2px dashed var(--border);">
-                <h2 style="border:none;">🖨️ Gerar Documentos</h2>
-                <div class="form-row" style="justify-content:center; gap:15px;">
-                    <button class="btn btn-primary" style="width:auto; min-width:160px;" onclick="gerarOficio()">Gerar Ofício (PDF)</button>
-                    <button class="btn btn-success" style="width:auto; min-width:160px;" onclick="gerarFicha()">Gerar Ficha (PDF)</button>
+            <!-- ABA HISTÓRICO -->
+            <div id="abaHistorico" style="display:none;">
+                <div class="card">
+                    <h2>📚 Histórico de Atendimentos</h2>
+                    <div id="listaHistorico"></div>
                 </div>
-                <button class="btn btn-outline" style="width:auto; margin-top:15px;" onclick="novoAtendimento()">🔄 Limpar Formulário (Novo Atendimento)</button>
             </div>
         </div>
     </div>
@@ -204,12 +223,12 @@
         <div style="margin-bottom:25px; font-size:11pt;">
             <strong>Ilmo. Sr(a). Tabelião(ã)</strong><br>
             <span id="outCartorioDest"></span> de <span id="outCidadeDest"></span>
-            <br><br><strong>Assunto:</strong> Solicitação de 2ª Via de Certidão de Nascimento (Gratuidade).
+            <br><br><strong>Assunto:</strong> Solicitação de 2ª Via de Certidão de Nascimento.
         </div>
         <div class="oficio-corpo">
             <p>Sirvo-me do presente para requisitar a Vossa Senhoria a expedição da(s) 2ª via(s) de Certidão de Nascimento em favor do(s) assistido(s) abaixo relacionado(s):</p>
             <ul style="margin:15px 0 15px 30px; line-height:1.7;" id="outListaPedidos"></ul>
-            <p>O presente pedido baseia-se na atualização do documento para fins de expedição de Cédula de Identidade, localizado na cidade de <span id="outCidadeResidencia">[CIDADE]</span>.</p>
+            <p>O presente pedido baseia-se na atualização do documento para fins de expedição de Cédula de Identidade, localizado na cidade de <span id="outCidadeResidencia"></span>.</p>
             <p>Solicito, outrossim, que a(s) referida(s) certidão(ões) seja(m) expedida(s) <strong>GRATUITAMENTE</strong>.</p>
             <p><strong>RESPALDO DA SOLICITAÇÃO:</strong> Art. 128, inc. IX da LCF 80/94 bem como na LCE nº 059/2005, art. 69, III, que conferem aos membros da Defensoria Pública a prerrogativa de requisitar dos órgãos públicos e provados, informações de interesse da Instituição para instrução de processo ou postulação por ela patrocinada.</p>
             <p>Gratuidade de selo conforme dispõe o provimento conjunto nº 001/2008 do Tribunal de Justiça do Estado do Piauí em que confere no seu art. 1º, VII, "a gratuidade da utilização de selos de fiscalização judicial aos pedidos formulados através da Defensoria Pública do Estado".</p>
@@ -271,41 +290,42 @@
     </div>
 
     <script>
-        // --- ESTADO & PERSISTÊNCIA ---
-        function carregarDados() {
+        // VARIÁVEIS GLOBAIS
+        let atendimentoAtual = null;
+        let contadorPedidos = 0;
+
+        // INICIALIZAÇÃO
+        window.onload = function() {
             const login = JSON.parse(localStorage.getItem('dpe_login') || '{}');
-            const seq = parseInt(localStorage.getItem('dpe_seq') || '0');
             if (login.nome) {
                 document.getElementById('loginDefensor').value = login.nome;
                 document.getElementById('loginUnidade').value = login.unidade;
                 document.getElementById('loginJornada').value = login.jornada;
-                iniciarSistema(login, seq);
+                iniciarSistema(login);
             }
-            addPedido(); // Inicia com 1 pedido vazio
-            atualizarContador(seq);
-        }
+            addPedido();
+        };
 
         function fazerLogin() {
             const nome = document.getElementById('loginDefensor').value.trim();
             const unidade = document.getElementById('loginUnidade').value.trim();
             const jornada = document.getElementById('loginJornada').value.trim();
             if (!nome || !unidade || !jornada) return alert('Preencha todos os campos.');
-            const login = { nome, unidade, jornada };
-            localStorage.setItem('dpe_login', JSON.stringify(login));
-            iniciarSistema(login, parseInt(localStorage.getItem('dpe_seq') || '0'));
+            localStorage.setItem('dpe_login', JSON.stringify({ nome, unidade, jornada }));
+            iniciarSistema({ nome, unidade, jornada });
         }
 
-        function iniciarSistema(login, seq) {
+        function iniciarSistema(login) {
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';
             document.getElementById('dashDefensor').innerText = login.nome;
-            document.getElementById('dashJornada').innerText = login.jornada;
-            atualizarContador(seq);
+            atualizarContador();
         }
 
-        function atualizarContador(seq) {
-            const prox = (seq || 0) + 1;
-            document.getElementById('dashContador').innerText = `Próximo: nº ${String(prox).padStart(2,'0')}`;
+        function atualizarContador() {
+            const atendimentos = JSON.parse(localStorage.getItem('dpe_atendimentos') || '[]');
+            const proxNum = atendimentos.length + 1;
+            document.getElementById('dashContador').innerText = `Próximo: nº ${String(proxNum).padStart(2,'0')}`;
         }
 
         function sair() {
@@ -313,22 +333,30 @@
         }
 
         function limparTudo() {
-            if (confirm('⚠️ Apagar TODOS os dados (login + numeração)?')) { localStorage.clear(); location.reload(); }
+            if (confirm('⚠️ Apagar TODOS os dados (login + histórico)?')) { 
+                localStorage.clear(); 
+                location.reload(); 
+            }
         }
 
-        function novoAtendimento() {
-            if (!confirm('Limpar campos do atendimento atual?')) return;
-            document.querySelectorAll('#dashboard input[type="text"], #dashboard input[type="tel"]').forEach(i => i.value = '');
-            document.querySelectorAll('#dashboard input[type="checkbox"], #dashboard input[type="radio"]').forEach(i => i.checked = false);
-            document.getElementById('fichaCivil').value = '';
-            document.getElementById('acaoOutras').style.display = 'none';
-            document.getElementById('corOutra').value = '';
-            document.getElementById('listaPedidos').innerHTML = '';
-            addPedido();
+        function mostrarAba(aba) {
+            if (aba === 'novo') {
+                document.getElementById('abaNovo').style.display = 'block';
+                document.getElementById('abaHistorico').style.display = 'none';
+                document.getElementById('tabNovo').classList.add('active');
+                document.getElementById('tabHistorico').classList.remove('active');
+                document.getElementById('tituloPagina').innerText = 'Novo Atendimento';
+            } else {
+                document.getElementById('abaNovo').style.display = 'none';
+                document.getElementById('abaHistorico').style.display = 'block';
+                document.getElementById('tabNovo').classList.remove('active');
+                document.getElementById('tabHistorico').classList.add('active');
+                document.getElementById('tituloPagina').innerText = 'Histórico de Atendimentos';
+                carregarHistorico();
+            }
         }
 
-        // --- PEDIDOS DINÂMICOS ---
-        let contadorPedidos = 0;
+        // PEDIDOS
         function addPedido() {
             contadorPedidos++;
             const div = document.createElement('div');
@@ -358,101 +386,311 @@
             else alert('Mantenha pelo menos um pedido.');
         }
 
-        // --- GERAÇÃO OFÍCIO ---
-        function gerarOficio() {
+        // COLETAR DADOS DO FORMULÁRIO
+        function coletarDadosFicha() {
+            const acoes = [];
+            document.querySelectorAll('input[name="acao"]:checked').forEach(c => acoes.push(c.value));
+            
+            const corSel = document.querySelector('input[name="cor"]:checked');
+            
+            return {
+                nome: document.getElementById('fichaNome').value,
+                cpf: document.getElementById('fichaCPF').value,
+                dataNasc: document.getElementById('fichaDataNasc').value,
+                pai: document.getElementById('fichaPai').value,
+                mae: document.getElementById('fichaMae').value,
+                telefone: document.getElementById('fichaTel').value,
+                estadoCivil: document.getElementById('fichaCivil').value,
+                profissao: document.getElementById('fichaProfissao').value,
+                renda: document.getElementById('fichaRenda').value,
+                endereco: document.getElementById('fichaEndereco').value,
+                cor: corSel ? corSel.value : '',
+                corOutra: document.getElementById('corOutra').value,
+                acoes: acoes,
+                outras: document.getElementById('acaoOutras').value
+            };
+        }
+
+        function coletarPedidos() {
+            const pedidos = [];
+            document.querySelectorAll('.pedido-box').forEach(box => {
+                pedidos.push({
+                    nome: box.querySelector('.p-nome').value,
+                    cpf: box.querySelector('.p-cpf').value,
+                     box.querySelector('.p-data').value,
+                    numero: box.querySelector('.p-num').value,
+                    livro: box.querySelector('.p-livro').value,
+                    folhas: box.querySelector('.p-folhas').value,
+                    cartorio: box.querySelector('.p-cart').value,
+                    cidade: box.querySelector('.p-cid').value
+                });
+            });
+            return pedidos;
+        }
+
+        // SALVAR ATENDIMENTO
+        function salvarAtendimento(tipo) {
             const login = JSON.parse(localStorage.getItem('dpe_login'));
-            if (!login) return alert('Sessão expirada. Faça login novamente.');
+            const ficha = coletarDadosFicha();
+            const pedidos = coletarPedidos();
             
-            let seq = parseInt(localStorage.getItem('dpe_seq') || '0') + 1;
-            localStorage.setItem('dpe_seq', seq.toString());
+            let atendimentos = JSON.parse(localStorage.getItem('dpe_atendimentos') || '[]');
+            
+            // Se já tem um atendimento atual (do histórico), mantém o número
+            let numeroOficio;
+            if (atendimentoAtual && atendimentoAtual.numeroOficio) {
+                numeroOficio = atendimentoAtual.numeroOficio;
+            } else {
+                numeroOficio = atendimentos.length + 1;
+            }
+            
             const ano = new Date().getFullYear();
-            const numFormatado = `nº ${String(seq).padStart(2,'0')} - ${login.jornada.toUpperCase()} - ${ano}`;
+            const numFormatado = `nº ${String(numeroOficio).padStart(2,'0')} - ${login.jornada.toUpperCase()} - ${ano}`;
             
-            document.getElementById('outOficioUnidade').innerText = login.unidade;
-            document.getElementById('outOficioNumero').innerText = numFormatado;
-            document.getElementById('outAssinaturaNome').innerText = login.nome.toUpperCase();
+            const atendimento = {
+                id: atendimentoAtual ? atendimentoAtual.id : Date.now(),
+                numeroOficio: numeroOficio,
+                numFormatado: numFormatado,
+                 new Date().toISOString(),
+                login: login,
+                ficha: ficha,
+                pedidos: pedidos,
+                tipo: tipo
+            };
+            
+            if (atendimentoAtual) {
+                const index = atendimentos.findIndex(a => a.id === atendimentoAtual.id);
+                if (index !== -1) atendimentos[index] = atendimento;
+            } else {
+                atendimentos.push(atendimento);
+            }
+            
+            localStorage.setItem('dpe_atendimentos', JSON.stringify(atendimentos));
+            return atendimento;
+        }
+
+        // GERAR OFÍCIO
+        function gerarOficio(atendimento) {
+            const dados = atendimento || {
+                login: JSON.parse(localStorage.getItem('dpe_login')),
+                pedidos: coletarPedidos(),
+                ficha: coletarDadosFicha()
+            };
+            
+            if (!dados.pedidos || dados.pedidos.length === 0) return alert('Adicione pelo menos um pedido.');
+            
+            document.getElementById('outOficioUnidade').innerText = dados.login.unidade;
+            document.getElementById('outOficioNumero').innerText = dados.numFormatado || `nº ${String(dados.numeroOficio).padStart(2,'0')} - ${dados.login.jornada.toUpperCase()} - ${new Date().getFullYear()}`;
+            document.getElementById('outAssinaturaNome').innerText = dados.login.nome.toUpperCase();
             
             const hoje = new Date();
             document.getElementById('outDataAtual').innerText = `${hoje.getDate()} de ${hoje.toLocaleString('pt-BR', {month:'long'})} de ${hoje.getFullYear()}`;
-            const cidBase = login.jornada.split(' ').pop() || 'Teresina-PI';
+            const cidBase = dados.login.jornada.split(' ').pop() || 'Teresina-PI';
             document.getElementById('outCidadeData').innerText = cidBase.includes('-') ? cidBase : cidBase + '-PI';
-
+            
             const lista = document.getElementById('outListaPedidos');
             lista.innerHTML = '';
-            const pedidos = document.querySelectorAll('.pedido-box');
-            if (!pedidos.length) return alert('Adicione pelo menos um pedido.');
-
-            let cidadeResidencia = "";
-
-            pedidos.forEach((p, i) => {
-                const nome = p.querySelector('.p-nome').value || '[NOME]';
-                const cpf = p.querySelector('.p-cpf').value;
-                const data = p.querySelector('.p-data').value;
-                const num = p.querySelector('.p-num').value;
-                const livro = p.querySelector('.p-livro').value;
-                const folhas = p.querySelector('.p-folhas').value;
-                const cart = p.querySelector('.p-cart').value || '[CARTÓRIO]';
-                const cid = p.querySelector('.p-cid').value || '[CIDADE]';
-
+            
+            let cidadeResidencia = '';
+            dados.pedidos.forEach((p, i) => {
                 if (i === 0) {
-                    document.getElementById('outCartorioDest').innerText = cart.toUpperCase();
-                    document.getElementById('outCidadeDest').innerText = cid.toUpperCase();
-                    cidadeResidencia = cid;
+                    document.getElementById('outCartorioDest').innerText = (p.cartorio || '[CARTÓRIO]').toUpperCase();
+                    document.getElementById('outCidadeDest').innerText = (p.cidade || '[CIDADE]').toUpperCase();
+                    cidadeResidencia = p.cidade || '';
                 }
-
-                let txt = `<strong>${i+1}.</strong> <strong>${nome.toUpperCase()}</strong>`;
-                if (cpf) txt += `, CPF nº ${cpf}`;
-                txt += `, nascido(a) em ${data}, registro nº ${num}, Livro ${livro}, Folhas ${folhas}, do ${cart} de ${cid}.`;
+                
+                let txt = `<strong>${i+1}.</strong> <strong>${(p.nome || '[NOME]').toUpperCase()}</strong>`;
+                if (p.cpf) txt += `, CPF nº ${p.cpf}`;
+                txt += `, nascido(a) em ${p.data}, registro nº ${p.numero}, Livro ${p.livro}, Folhas ${p.folhas}, do ${p.cartorio} de ${p.cidade}.`;
                 lista.innerHTML += `<li>${txt}</li>`;
             });
-
-            document.getElementById('outCidadeResidencia').innerText = cidadeResidencia || "[CIDADE]";
-
-            atualizarContador(seq);
+            
+            document.getElementById('outCidadeResidencia').innerText = cidadeResidencia || (dados.ficha ? dados.ficha.endereco.split(',').pop() || '' : '');
+            
             window.print();
         }
 
-        // --- GERAÇÃO FICHA ---
-        function gerarFicha() {
-            document.getElementById('outFichaNome').innerText = document.getElementById('fichaNome').value.toUpperCase();
-            document.getElementById('outFichaCPF').innerText = document.getElementById('fichaCPF').value;
-            document.getElementById('outFichaData').innerText = document.getElementById('fichaDataNasc').value;
-            document.getElementById('outFichaPai').innerText = document.getElementById('fichaPai').value.toUpperCase();
-            document.getElementById('outFichaMae').innerText = document.getElementById('fichaMae').value.toUpperCase();
-            document.getElementById('outFichaTel').innerText = document.getElementById('fichaTel').value;
-            document.getElementById('outFichaCivil').innerText = document.getElementById('fichaCivil').value;
-            document.getElementById('outFichaProfissao').innerText = document.getElementById('fichaProfissao').value.toUpperCase();
-            document.getElementById('outFichaRenda').innerText = document.getElementById('fichaRenda').value;
-            document.getElementById('outFichaEndereco').innerText = document.getElementById('fichaEndereco').value.toUpperCase();
-
-            const corSel = document.querySelector('input[name="cor"]:checked');
-            const corOut = document.getElementById('corOutra').value;
-            let corTxt = corSel ? corSel.value.toUpperCase() : '';
-            if (corOut) corTxt += (corTxt ? ' - ' : '') + corOut.toUpperCase();
+        // GERAR FICHA
+        function gerarFicha(atendimento) {
+            const dados = atendimento || {
+                ficha: coletarDadosFicha()
+            };
+            
+            const f = dados.ficha;
+            document.getElementById('outFichaNome').innerText = (f.nome || '').toUpperCase();
+            document.getElementById('outFichaCPF').innerText = f.cpf || '';
+            document.getElementById('outFichaData').innerText = f.dataNasc || '';
+            document.getElementById('outFichaPai').innerText = (f.pai || '').toUpperCase();
+            document.getElementById('outFichaMae').innerText = (f.mae || '').toUpperCase();
+            document.getElementById('outFichaTel').innerText = f.telefone || '';
+            document.getElementById('outFichaCivil').innerText = f.estadoCivil || '';
+            document.getElementById('outFichaProfissao').innerText = (f.profissao || '').toUpperCase();
+            document.getElementById('outFichaRenda').innerText = f.renda || '';
+            document.getElementById('outFichaEndereco').innerText = (f.endereco || '').toUpperCase();
+            
+            let corTxt = f.cor ? f.cor.toUpperCase() : '';
+            if (f.corOutra) corTxt += (corTxt ? ' - ' : '') + f.corOutra.toUpperCase();
             document.getElementById('outFichaCor').innerText = corTxt;
-
+            
             const acoesDiv = document.getElementById('outFichaAcoes');
             acoesDiv.innerHTML = '';
-            document.querySelectorAll('input[name="acao"]:checked').forEach(c => {
-                acoesDiv.innerHTML += `<span class="ficha-opt"><span class="ficha-check">☑</span>${c.value.toUpperCase()}</span>`;
-            });
-
-            const outrasVal = document.getElementById('acaoOutras').value;
-            document.getElementById('outFichaOutras').innerText = outrasVal ? `ESPECIFIQUE SE MARCOU "OUTRAS": ${outrasVal.toUpperCase()}` : '';
-
+            if (f.acoes) {
+                f.acoes.forEach(acao => {
+                    acoesDiv.innerHTML += `<span class="ficha-opt"><span class="ficha-check">☑</span>${acao.toUpperCase()}</span>`;
+                });
+            }
+            
+            document.getElementById('outFichaOutras').innerText = f.outras ? `ESPECIFIQUE SE MARCOU "OUTRAS": ${f.outras.toUpperCase()}` : '';
+            
             window.print();
         }
 
-        // Toggle campo "Outras"
-        document.querySelectorAll('input[name="acao"]').forEach(cb => {
-            cb.addEventListener('change', () => {
-                const outras = document.getElementById('acaoOutras');
-                const checkedOutras = document.querySelector('input[name="acao"][value="Outras"]');
-                outras.style.display = checkedOutras.checked ? 'block' : 'none';
-            });
-        });
+        // FUNÇÕES DE SALVAR E GERAR
+        function salvarEGerarOficio() {
+            const atendimento = salvarAtendimento('oficio');
+            atendimentoAtual = null;
+            gerarOficio(atendimento);
+        }
 
-        window.onload = carregarDados;
+        function salvarEGerarFicha() {
+            const atendimento = salvarAtendimento('ficha');
+            atendimentoAtual = null;
+            gerarFicha(atendimento);
+        }
+
+        // HISTÓRICO
+        function carregarHistorico() {
+            const atendimentos = JSON.parse(localStorage.getItem('dpe_atendimentos') || '[]').reverse();
+            const lista = document.getElementById('listaHistorico');
+            lista.innerHTML = '';
+            
+            if (atendimentos.length === 0) {
+                lista.innerHTML = '<p style="text-align:center; color:#666; padding:20px;">Nenhum atendimento salvo ainda.</p>';
+                return;
+            }
+            
+            atendimentos.forEach(att => {
+                const data = new Date(att.data).toLocaleString('pt-BR');
+                const div = document.createElement('div');
+                div.className = 'historico-item';
+                div.innerHTML = `
+                    <div class="historico-info">
+                        <h3>${att.numFormatado} - ${att.ficha.nome.toUpperCase()}</h3>
+                        <p>Data: ${data}</p>
+                        <p>${att.pedidos.length} registro(s) no ofício</p>
+                    </div>
+                    <div class="historico-actions">
+                        <button class="btn btn-primary" style="width:auto; padding:6px 12px; font-size:12px;" onclick="abrirAtendimento(${att.id})">📄 Abrir</button>
+                        <button class="btn btn-success" style="width:auto; padding:6px 12px; font-size:12px;" onclick="reimprimirOficio(${att.id})">🖨️ Ofício</button>
+                        <button class="btn btn-info" style="width:auto; padding:6px 12px; font-size:12px;" onclick="reimprimirFicha(${att.id})">📋 Ficha</button>
+                        <button class="btn btn-danger" style="width:auto; padding:6px 12px; font-size:12px;" onclick="excluirAtendimento(${att.id})">🗑️</button>
+                    </div>
+                `;
+                lista.appendChild(div);
+            });
+        }
+
+        function abrirAtendimento(id) {
+            const atendimentos = JSON.parse(localStorage.getItem('dpe_atendimentos') || '[]');
+            const att = atendimentos.find(a => a.id === id);
+            if (!att) return;
+            
+            atendimentoAtual = att;
+            
+            // Preencher ficha
+            document.getElementById('fichaNome').value = att.ficha.nome || '';
+            document.getElementById('fichaCPF').value = att.ficha.cpf || '';
+            document.getElementById('fichaDataNasc').value = att.ficha.dataNasc || '';
+            document.getElementById('fichaPai').value = att.ficha.pai || '';
+            document.getElementById('fichaMae').value = att.ficha.mae || '';
+            document.getElementById('fichaTel').value = att.ficha.telefone || '';
+            document.getElementById('fichaCivil').value = att.ficha.estadoCivil || '';
+            document.getElementById('fichaProfissao').value = att.ficha.profissao || '';
+            document.getElementById('fichaRenda').value = att.ficha.renda || '';
+            document.getElementById('fichaEndereco').value = att.ficha.endereco || '';
+            document.getElementById('corOutra').value = att.ficha.corOutra || '';
+            document.getElementById('acaoOutras').value = att.ficha.outras || '';
+            
+            // Radio cor
+            if (att.ficha.cor) {
+                const radio = document.querySelector(`input[name="cor"][value="${att.ficha.cor}"]`);
+                if (radio) radio.checked = true;
+            }
+            
+            // Checkboxes ação
+            document.querySelectorAll('input[name="acao"]').forEach(cb => cb.checked = false);
+            if (att.ficha.acoes) {
+                att.ficha.acoes.forEach(acao => {
+                    const cb = document.querySelector(`input[name="acao"][value="${acao}"]`);
+                    if (cb) cb.checked = true;
+                });
+            }
+            document.getElementById('acaoOutras').style.display = (att.ficha.acoes && att.ficha.acoes.includes('Outras')) ? 'block' : 'none';
+            
+            // Pedidos
+            document.getElementById('listaPedidos').innerHTML = '';
+            contadorPedidos = 0;
+            if (att.pedidos && att.pedidos.length > 0) {
+                att.pedidos.forEach(p => {
+                    addPedido();
+                    const box = document.getElementById(`ped${contadorPedidos}`);
+                    box.querySelector('.p-nome').value = p.nome || '';
+                    box.querySelector('.p-cpf').value = p.cpf || '';
+                    box.querySelector('.p-data').value = p.data || '';
+                    box.querySelector('.p-num').value = p.numero || '';
+                    box.querySelector('.p-livro').value = p.livro || '';
+                    box.querySelector('.p-folhas').value = p.folhas || '';
+                    box.querySelector('.p-cart').value = p.cartorio || '';
+                    box.querySelector('.p-cid').value = p.cidade || '';
+                });
+            }
+            
+            mostrarAba('novo');
+            document.getElementById('tituloPagina').innerText = `Editando: ${att.numFormatado}`;
+        }
+
+        function reimprimirOficio(id) {
+            const atendimentos = JSON.parse(localStorage.getItem('dpe_atendimentos') || '[]');
+            const att = atendimentos.find(a => a.id === id);
+            if (att) gerarOficio(att);
+        }
+
+        function reimprimirFicha(id) {
+            const atendimentos = JSON.parse(localStorage.getItem('dpe_atendimentos') || '[]');
+            const att = atendimentos.find(a => a.id === id);
+            if (att) gerarFicha(att);
+        }
+
+        function excluirAtendimento(id) {
+            if (!confirm('Deseja excluir este atendimento?')) return;
+            let atendimentos = JSON.parse(localStorage.getItem('dpe_atendimentos') || '[]');
+            atendimentos = atendimentos.filter(a => a.id !== id);
+            localStorage.setItem('dpe_atendimentos', JSON.stringify(atendimentos));
+            carregarHistorico();
+            atualizarContador();
+        }
+
+        function novoAtendimento() {
+            if (confirm('Limpar formulário para novo atendimento?')) {
+                document.querySelectorAll('#abaNovo input[type="text"], #abaNovo input[type="tel"]').forEach(i => i.value = '');
+                document.querySelectorAll('#abaNovo input[type="checkbox"], #abaNovo input[type="radio"]').forEach(i => i.checked = false);
+                document.getElementById('fichaCivil').value = '';
+                document.getElementById('acaoOutras').style.display = 'none';
+                document.getElementById('listaPedidos').innerHTML = '';
+                contadorPedidos = 0;
+                addPedido();
+                atendimentoAtual = null;
+                document.getElementById('tituloPagina').innerText = 'Novo Atendimento';
+                atualizarContador();
+            }
+        }
+
+        // Toggle "Outras"
+        document.addEventListener('change', function(e) {
+            if (e.target.name === 'acao' && e.target.value === 'Outras') {
+                document.getElementById('acaoOutras').style.display = e.target.checked ? 'block' : 'none';
+            }
+        });
     </script>
 </body>
 </html>
