@@ -1,0 +1,90 @@
+Perfeito! Vou aprimorar o gerador com essas funcionalidades. Segue a versão atualizada:
+
+```html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Ofícios - Defensoria Pública</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 40px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        
+        /* Estilos do Formulário */
+        .form-section { border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; background: #f9f9f9; border-radius: 5px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; }
+        input, select { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
+        button { background-color: #0056b3; color: white; padding: 12px 24px; border: none; cursor: pointer; font-size: 16px; margin: 5px; border-radius: 4px; }
+        button:hover { background-color: #004494; }
+        button:disabled { background-color: #cccccc; cursor: not-allowed; }
+        button.print-btn { background-color: #28a745; }
+        button.print-btn:hover { background-color: #218838; }
+        
+        .modelo-card { border: 2px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+        .modelo-card:hover { border-color: #0056b3; background-color: #f0f7ff; }
+        .modelo-card.ativo { border-color: #28a745; background-color: #f0fff0; }
+        .modelo-card.inativo { border-color: #ffc107; background-color: #fffbf0; opacity: 0.7; }
+        .modelo-card h4 { margin: 0 0 10px 0; }
+        .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-left: 10px; }
+        .badge-ativo { background-color: #28a745; color: white; }
+        .badge-inativo { background-color: #ffc107; color: #333; }
+
+        /* Estilos do Documento Oficial */
+        #documento-final { display: none; text-align: center; font-family: 'Times New Roman', Times, serif; line-height: 1.6; }
+        .header-defensor { font-size: 14pt; font-weight: bold; margin-bottom: 5px; }
+        .cargo-defensor { font-size: 12pt; font-style: italic; margin-bottom: 10px; }
+        .jornada-info { font-size: 11pt; margin-bottom: 30px; color: #555; }
+        .numero-oficio { text-align: right; font-weight: bold; margin-bottom: 40px; }
+        .destinatario { text-align: left; margin-bottom: 20px; }
+        .assunto { text-align: left; margin-bottom: 30px; font-weight: bold; }
+        .corpo-texto { text-align: justify; font-size: 12pt; margin-bottom: 20px; }
+        .destaque { font-weight: bold; text-transform: uppercase; }
+        .rodape { margin-top: 60px; text-align: left; }
+        .assinatura { margin-top: 50px; border-top: 1px solid black; width: 60%; margin-left: auto; margin-right: auto; padding-top: 5px; }
+
+        .hidden { display: none; }
+        
+        @media print {
+            body { background: white; padding: 0; }
+            .no-print { display: none !important; }
+            #documento-final { display: block !important; }
+            .container { box-shadow: none; padding: 0; max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TELA DE LOGIN E CONFIGURAÇÃO -->
+    <div class="container no-print" id="tela-login">
+        <h2 style="text-align:center; color: #0056b3;">Sistema de Gerenciamento de Ofícios<br><small style="font-size: 18px; color: #666;">Defensoria Pública do Estado do Piauí</small></h2>
+        
+        <!-- Dados do Defensor -->
+        <div class="form-section">
+            <h3 style="margin-top: 0; border-bottom: 2px solid #0056b3; padding-bottom: 10px;">1. Dados do Defensor</h3>
+            <div class="form-group">
+                <label>Nome Completo do Defensor:</label>
+                <input type="text" id="inputDefensor" placeholder="Ex: ROBERT RIOS MAGALHÃES JUNIOR">
+            </div>
+            <div class="form-group">
+                <label>Defensoria/Unidade:</label>
+                <input type="text" id="inputDefensoria" placeholder="Ex: Defensoria Pública de Itaueira">
+            </div>
+            <div class="form-group">
+                <label>Jornada Itinerante:</label>
+                <input type="text" id="inputJornada" placeholder="Ex: Jornada Itinerante de Itaueira">
+            </div>
+            <div class="form-group">
+                <label>Número do Ofício:</label>
+                <input type="text" id="inputNumeroOficio" placeholder="Ex: 01" value="01">
+            </div>
+        </div>
+
+        <!-- Seleção do Modelo -->
+        <div class="form-section">
+            <h3 style="margin-top: 0; border-bottom: 2px solid #0056b3; padding-bottom: 10px;">2. Selecione o Modelo de Ofício</h3>
+            
+            <div class="modelo-card ativo" onclick="selecionarModelo(1)">
+                <h4>📄 Segunda Via de Certidão de Nascimento <span class="badge badge-ativo">ATIVO</span></h4>
+                <p style="margin: 5px 0; font-size: 14px; color
