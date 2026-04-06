@@ -37,9 +37,6 @@
         .user-info { font-size: 12px; text-align: right; }
         .user-info strong { color: var(--secondary); }
 
-        .pedido-box { border: 1px dashed #90cdf4; padding: 15px; margin-bottom: 10px; border-radius: 6px; background: #ebf8ff; position: relative; }
-        .btn-remove { position: absolute; top: 8px; right: 8px; background: #feb2b2; color: #742a2a; border: none; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 12px; }
-
         .checkbox-group { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 5px; }
         .checkbox-item { display: flex; align-items: center; gap: 5px; font-size: 13px; cursor: pointer; }
 
@@ -115,7 +112,7 @@
     <div id="loginScreen" class="container no-print">
         <div class="card login-box">
             <h1>Defensoria Pública do Piauí</h1>
-            <div class="login-note">💡 Login único: seus dados são salvos automaticamente.</div>
+            <div class="login-note">💡 Login único: seus dados são salvos automaticamente no navegador.</div>
             <div class="form-group"><label>Nome do Defensor:</label><input type="text" id="loginDefensor" placeholder="Ex: ROBERT RIOS MAGALHÃES JUNIOR"></div>
             <div class="form-group"><label>Unidade/Defensoria:</label><input type="text" id="loginUnidade" placeholder="Ex: Defensoria Regional de Simplício Mendes"></div>
             <div class="form-group"><label>Jornada Itinerante:</label><input type="text" id="loginJornada" placeholder="Ex: Jornada Itinerante de Simplício Mendes"></div>
@@ -398,12 +395,16 @@
 
         // INICIALIZAÇÃO
         window.onload = function() {
-            const login = JSON.parse(localStorage.getItem('dpe_login') || '{}');
-            if (login.nome) {
-                document.getElementById('loginDefensor').value = login.nome;
-                document.getElementById('loginUnidade').value = login.unidade;
-                document.getElementById('loginJornada').value = login.jornada;
-                iniciarSistema(login);
+            try {
+                const login = JSON.parse(localStorage.getItem('dpe_login') || '{}');
+                if (login.nome) {
+                    document.getElementById('loginDefensor').value = login.nome;
+                    document.getElementById('loginUnidade').value = login.unidade;
+                    document.getElementById('loginJornada').value = login.jornada;
+                    iniciarSistema(login);
+                }
+            } catch (e) {
+                console.error('Erro ao carregar dados do login:', e);
             }
         };
 
@@ -411,9 +412,17 @@
             const nome = document.getElementById('loginDefensor').value.trim();
             const unidade = document.getElementById('loginUnidade').value.trim();
             const jornada = document.getElementById('loginJornada').value.trim();
-            if (!nome || !unidade || !jornada) return alert('Preencha todos os campos.');
-            localStorage.setItem('dpe_login', JSON.stringify({ nome, unidade, jornada }));
-            iniciarSistema({ nome, unidade, jornada });
+            
+            if (!nome || !unidade || !jornada) {
+                return alert('Por favor, preencha todos os campos de login.');
+            }
+            
+            try {
+                localStorage.setItem('dpe_login', JSON.stringify({ nome, unidade, jornada }));
+                iniciarSistema({ nome, unidade, jornada });
+            } catch (e) {
+                alert('Erro ao salvar dados de acesso. Verifique as permissões do navegador.');
+            }
         }
 
         function iniciarSistema(login) {
@@ -430,11 +439,14 @@
         }
 
         function sair() {
-            if (confirm('Deseja sair?')) { localStorage.removeItem('dpe_login'); location.reload(); }
+            if (confirm('Deseja sair? O sistema limpará apenas a sessão atual.')) { 
+                localStorage.removeItem('dpe_login'); 
+                location.reload(); 
+            }
         }
 
         function limparTudo() {
-            if (confirm('⚠️ Apagar TODOS os dados (login + histórico)?')) { 
+            if (confirm('⚠️ ATENÇÃO: Isso apagará TODOS os dados salvos (login e histórico). Deseja continuar?')) { 
                 localStorage.clear(); 
                 location.reload(); 
             }
@@ -464,42 +476,42 @@
             const corSel = document.querySelector('input[name="cor"]:checked');
             
             return {
-                nome: document.getElementById('fichaNome').value,
-                cpf: document.getElementById('fichaCPF').value,
-                dataNasc: document.getElementById('fichaDataNasc').value,
-                pai: document.getElementById('fichaPai').value,
-                mae: document.getElementById('fichaMae').value,
-                telefone: document.getElementById('fichaTel').value,
-                estadoCivil: document.getElementById('fichaCivil').value,
-                profissao: document.getElementById('fichaProfissao').value,
-                renda: document.getElementById('fichaRenda').value,
-                endereco: document.getElementById('fichaEndereco').value,
+                nome: document.getElementById('fichaNome').value.trim(),
+                cpf: document.getElementById('fichaCPF').value.trim(),
+                dataNasc: document.getElementById('fichaDataNasc').value.trim(),
+                pai: document.getElementById('fichaPai').value.trim(),
+                mae: document.getElementById('fichaMae').value.trim(),
+                telefone: document.getElementById('fichaTel').value.trim(),
+                estadoCivil: document.getElementById('fichaCivil').value.trim(),
+                profissao: document.getElementById('fichaProfissao').value.trim(),
+                renda: document.getElementById('fichaRenda').value.trim(),
+                endereco: document.getElementById('fichaEndereco').value.trim(),
                 cor: corSel ? corSel.value : '',
-                corOutra: document.getElementById('corOutra').value,
+                corOutra: document.getElementById('corOutra').value.trim(),
                 acoes: acoes,
-                outras: document.getElementById('acaoOutras').value,
+                outras: document.getElementById('acaoOutras').value.trim(),
                 // Dados do responsável
-                respNome: document.getElementById('respNome').value,
-                respParentesco: document.getElementById('respParentesco').value,
-                respOcupacao: document.getElementById('respOcupacao').value,
-                respSituacao: document.getElementById('respSituacao').value,
-                respBeneficio: document.getElementById('respBeneficio').value,
-                respCPF: document.getElementById('respCPF').value,
+                respNome: document.getElementById('respNome').value.trim(),
+                respParentesco: document.getElementById('respParentesco').value.trim(),
+                respOcupacao: document.getElementById('respOcupacao').value.trim(),
+                respSituacao: document.getElementById('respSituacao').value.trim(),
+                respBeneficio: document.getElementById('respBeneficio').value.trim(),
+                respCPF: document.getElementById('respCPF').value.trim(),
                 // Dados do registro
-                regCartorio: document.getElementById('regCartorio').value,
-                regComarca: document.getElementById('regComarca').value,
-                regNumero: document.getElementById('regNumero').value,
-                regLivro: document.getElementById('regLivro').value,
-                regFolha: document.getElementById('regFolha').value,
-                regMatricula: document.getElementById('regMatricula').value,
+                regCartorio: document.getElementById('regCartorio').value.trim(),
+                regComarca: document.getElementById('regComarca').value.trim(),
+                regNumero: document.getElementById('regNumero').value.trim(),
+                regLivro: document.getElementById('regLivro').value.trim(),
+                regFolha: document.getElementById('regFolha').value.trim(),
+                regMatricula: document.getElementById('regMatricula').value.trim(),
                 // Observações
-                obsCRCJUD: document.getElementById('obsCRCJUD').value
+                obsCRCJUD: document.getElementById('obsCRCJUD').value.trim()
             };
         }
 
         // SALVAR ATENDIMENTO
         function salvarAtendimento() {
-            const login = JSON.parse(localStorage.getItem('dpe_login'));
+            const login = JSON.parse(localStorage.getItem('dpe_login') || '{}');
             const ficha = coletarDadosFicha();
             
             let atendimentos = JSON.parse(localStorage.getItem('dpe_atendimentos') || '[]');
@@ -512,58 +524,10 @@
             }
             
             const ano = new Date().getFullYear();
-            const numFormatado = `${String(numeroOficio).padStart(2,'0')}/${ano} - ${login.jornada.toUpperCase().split(' ').pop()}`;
-            
-            const atendimento = {
-                id: atendimentoAtual ? atendimentoAtual.id : Date.now(),
-                numeroOficio: numeroOficio,
-                numFormatado: numFormatado,
-                 new Date().toISOString(),
-                login: login,
-                ficha: ficha
-            };
-            
-            if (atendimentoAtual) {
-                const index = atendimentos.findIndex(a => a.id === atendimentoAtual.id);
-                if (index !== -1) atendimentos[index] = atendimento;
-            } else {
-                atendimentos.push(atendimento);
-            }
-            
-            localStorage.setItem('dpe_atendimentos', JSON.stringify(atendimentos));
-            return atendimento;
-        }
-
-        // PREENCHER FICHA PARA IMPRESSÃO
-        function preencherFicha(atendimento) {
-            const f = atendimento.ficha;
-            document.getElementById('outFichaNome').innerText = (f.nome || '').toUpperCase();
-            document.getElementById('outFichaCPF').innerText = f.cpf || '';
-            document.getElementById('outFichaData').innerText = f.dataNasc || '';
-            document.getElementById('outFichaPai').innerText = (f.pai || '').toUpperCase();
-            document.getElementById('outFichaMae').innerText = (f.mae || '').toUpperCase();
-            document.getElementById('outFichaTel').innerText = f.telefone || '';
-            document.getElementById('outFichaCivil').innerText = f.estadoCivil || '';
-            document.getElementById('outFichaProfissao').innerText = (f.profissao || '').toUpperCase();
-            document.getElementById('outFichaRenda').innerText = f.renda || '';
-            document.getElementById('outFichaEndereco').innerText = (f.endereco || '').toUpperCase();
-            
-            let corTxt = f.cor ? f.cor.toUpperCase() : '';
-            if (f.corOutra) corTxt += (corTxt ? ' - ' : '') + f.corOutra.toUpperCase();
-            document.getElementById('outFichaCor').innerText = corTxt;
-            
-            const acoesDiv = document.getElementById('outFichaAcoes');
-            acoesDiv.innerHTML = '';
-            if (f.acoes) {
-                f.acoes.forEach(acao => {
-                    acoesDiv.innerHTML += `<span class="ficha-opt"><span class="ficha-check">☑</span>${acao.toUpperCase()}</span>`;
+            const numFormatado = `<LaTex>id_14</LaTex>{ano} - <LaTex>id_13</LaTex>{acao.toUpperCase()}</span>`;
                 });
             }
-            document.getElementById('outFichaOutras').innerText = f.outras ? `ESPECIFIQUE: ${f.outras.toUpperCase()}` : '';
-            
-            const hoje = new Date();
-            document.getElementById('outFichaDataAssinatura').innerText = 
-                `${hoje.getDate()}/${String(hoje.getMonth()+1).padStart(2,'0')}/${hoje.getFullYear()}`;
+            document.getElementById('outFichaOutras').innerText = f.outras ? `ESPECIFIQUE: <LaTex>id_12</LaTex>{hoje.getDate()}/<LaTex>id_11</LaTex>{hoje.getFullYear()}`;
         }
 
         // PREENCHER OFÍCIO PARA IMPRESSÃO
@@ -572,11 +536,11 @@
             const login = atendimento.login;
             
             // Número e local/data
-            document.getElementById('outOficioNumero').innerText = `OFÍCIO Nº ${atendimento.numFormatado}`;
-            const hoje = new Date();
-            const cidades = login.jornada.match(/(?:de|em)\s+([A-Za-zÀ-ÿ\s]+?)(?:\/[A-Z]{2})?$/i);
+            document.getElementById('outOficioNumero').innerText = `OFÍCIO Nº <LaTex>id_10</LaTex>/i);
             const cidade = cidades ? cidades[1].trim() : login.jornada.split(' ').pop();
-            const dataFormatada = `${cidade}, ${hoje.getDate()} de ${hoje.toLocaleString('pt-BR', {month:'long'})} de ${hoje.getFullYear()}.`;
+            const meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+            const mesExt = meses[hoje.getMonth()] || hoje.toLocaleString('pt-BR', {month:'long'});
+            const dataFormatada = `<LaTex>id_9</LaTex>{hoje.getDate()} de <LaTex>id_8</LaTex>{hoje.getFullYear()}.`;
             document.getElementById('outOficioLocalData').innerText = dataFormatada;
             
             // Instituição
@@ -600,17 +564,7 @@
             document.getElementById('outResponsavelNome2').innerText = (f.respNome || '[NOME]').toUpperCase();
             document.getElementById('outResponsavelSituacao1').innerText = f.respSituacao ? f.respSituacao.toLowerCase() : 'carente';
             document.getElementById('outResponsavelOcupacao').innerText = f.respOcupacao ? f.respOcupacao.toLowerCase() : '';
-            document.getElementById('outResponsavelSituacao2').innerText = f.respBeneficio ? `do benefício do ${f.respBeneficio.toLowerCase()}` : '';
-            
-            document.getElementById('outAssistidoNome2').innerText = (f.nome || '[NOME]').toUpperCase();
-            document.getElementById('outRegistroMatricula').innerText = f.regMatricula || '[MATRÍCULA]';
-            document.getElementById('outResponsavelNome3').innerText = (f.respNome || '[NOME]').toUpperCase();
-            
-            // Observação CRC JUD
-            const obsDiv = document.getElementById('outObsCRCJUD');
-            if (f.obsCRCJUD) {
-                obsDiv.style.display = 'block';
-                obsDiv.innerText = `*${f.obsCRCJUD}`;
+            document.getElementById('outResponsavelSituacao2').innerText = f.respBeneficio ? `do benefício do <LaTex>id_7</LaTex>{f.obsCRCJUD}`;
             } else {
                 obsDiv.style.display = 'none';
             }
@@ -621,61 +575,11 @@
             
             // Rodapé
             const footer = document.getElementById('outOficioFooter');
-            footer.innerHTML = `${cidade} | ${login.unidade}<br>
-                ${login.unidade.includes('Simplício') ? 'Rua Dom Pedro II, 804 Centro | 64.260-000 – Piripiri – PI' : ''}<br>
-                diretoriaregional@defensoria.pi.gov.br | www.defensoria.pi.gov.br | (86) 3276-2766`;
-        }
-
-        // FUNÇÃO PRINCIPAL: SALVAR E GERAR PDF COMPLETO
-        function salvarEGerarPDF() {
-            // Validar campos obrigatórios
-            const fichaNome = document.getElementById('fichaNome').value.trim();
-            const regCartorio = document.getElementById('regCartorio').value.trim();
-            const respNome = document.getElementById('respNome').value.trim();
-            
-            if (!fichaNome || !regCartorio || !respNome) {
-                return alert('Preencha os campos obrigatórios:\n- Nome do Assistido\n- Cartório/Ofício\n- Nome do Responsável/Genitor');
-            }
-            
-            // Salvar atendimento
-            const atendimento = salvarAtendimento();
-            atendimentoAtual = null;
-            
-            // Preencher ambos os templates
-            preencherFicha(atendimento);
-            preencherOficio(atendimento);
-            
-            // Pequeno delay para garantir renderização antes da impressão
-            setTimeout(() => {
-                window.print();
-            }, 300);
-        }
-
-        // HISTÓRICO
-        function carregarHistorico() {
-            const atendimentos = JSON.parse(localStorage.getItem('dpe_atendimentos') || '[]').reverse();
-            const lista = document.getElementById('listaHistorico');
-            lista.innerHTML = '';
-            
-            if (atendimentos.length === 0) {
-                lista.innerHTML = '<p style="text-align:center; color:#666; padding:20px;">Nenhum atendimento salvo ainda.</p>';
-                return;
-            }
-            
-            atendimentos.forEach(att => {
-                const data = new Date(att.data).toLocaleString('pt-BR');
-                const div = document.createElement('div');
-                div.className = 'historico-item';
-                div.innerHTML = `
-                    <div class="historico-info">
-                        <h3>${att.numFormatado} - ${att.ficha.nome.toUpperCase()}</h3>
-                        <p>Data: ${data}</p>
-                        <p>Responsável: ${att.ficha.respNome || '-'}</p>
-                    </div>
-                    <div class="historico-actions">
-                        <button class="btn btn-primary" style="width:auto; padding:6px 12px; font-size:12px;" onclick="abrirAtendimento(${att.id})">📄 Editar</button>
-                        <button class="btn btn-success" style="width:auto; padding:6px 12px; font-size:12px;" onclick="reimprimirPDF(${att.id})">🖨️ Reimprimir PDF</button>
-                        <button class="btn btn-danger" style="width:auto; padding:6px 12px; font-size:12px;" onclick="excluirAtendimento(${att.id})">🗑️</button>
+            const enderecoBase = cidade.includes('Simplício') ? 'Rua Dom Pedro II, 804 Centro | 64.260-000 – Piripiri – PI' : 'Endereço da Unidade Regional';
+            footer.innerHTML = `<LaTex>id_6</LaTex>{login.unidade}<br>
+                <LaTex>id_5</LaTex>{att.numFormatado} - <LaTex>id_4</LaTex>{data}</p>
+                        <p>Responsável: <LaTex>id_3</LaTex>{att.id})">📄 Editar</button>
+                        <button class="btn btn-success" style="width:auto; padding:6px 12px; font-size:12px;" onclick="reimprimirPDF(<LaTex>id_2</LaTex>{att.id})">🗑️</button>
                     </div>
                 `;
                 lista.appendChild(div);
@@ -705,14 +609,7 @@
             document.getElementById('acaoOutras').value = f.outras || '';
             
             if (f.cor) {
-                const radio = document.querySelector(`input[name="cor"][value="${f.cor}"]`);
-                if (radio) radio.checked = true;
-            }
-            
-            document.querySelectorAll('input[name="acao"]').forEach(cb => cb.checked = false);
-            if (f.acoes) {
-                f.acoes.forEach(acao => {
-                    const cb = document.querySelector(`input[name="acao"][value="${acao}"]`);
+                const radio = document.querySelector(`input[name="cor"][value="<LaTex>id_1</LaTex>{acao}"]`);
                     if (cb) cb.checked = true;
                 });
             }
@@ -752,7 +649,7 @@
         }
 
         function excluirAtendimento(id) {
-            if (!confirm('Deseja excluir este atendimento?')) return;
+            if (!confirm('Deseja excluir este atendimento permanentemente?')) return;
             let atendimentos = JSON.parse(localStorage.getItem('dpe_atendimentos') || '[]');
             atendimentos = atendimentos.filter(a => a.id !== id);
             localStorage.setItem('dpe_atendimentos', JSON.stringify(atendimentos));
@@ -762,7 +659,7 @@
 
         function novoAtendimento() {
             if (confirm('Limpar formulário para novo atendimento?')) {
-                document.querySelectorAll('#abaNovo input[type="text"], #abaNovo input[type="tel"], #abaNovo textarea').forEach(i => i.value = '');
+                document.querySelectorAll('#abaNovo input[type="text"], #abaNovo textarea').forEach(i => i.value = '');
                 document.querySelectorAll('#abaNovo input[type="checkbox"], #abaNovo input[type="radio"]').forEach(i => i.checked = false);
                 document.querySelectorAll('#abaNovo select').forEach(s => s.value = '');
                 document.getElementById('acaoOutras').style.display = 'none';
