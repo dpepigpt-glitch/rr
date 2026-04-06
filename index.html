@@ -1,395 +1,422 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Integrado - Defensoria Pública do Piauí</title>
+    <title>Sistema DPE-PI | Ofícios & Fichas</title>
     <style>
-        /* Estilos Gerais */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f6f9; color: #333; }
+        :root { --primary: #1a365d; --secondary: #2b6cb0; --success: #2f855a; --bg: #f7fafc; --card: #ffffff; --text: #2d3748; --border: #e2e8f0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background: var(--bg); color: var(--text); padding-bottom: 40px; line-height: 1.5; }
         
-        /* Layout do Sistema (Não imprime) */
-        .app-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        
-        h1, h2, h3 { color: #2c5282; margin-bottom: 15px; }
-        h1 { text-align: center; border-bottom: 2px solid #2c5282; padding-bottom: 10px; }
-        
-        .form-row { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
-        .form-group { flex: 1; min-width: 200px; }
-        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 14px;
-        }
-        
-        .btn { padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; margin: 5px; }
-        .btn-primary { background: #2c5282; color: white; }
-        .btn-success { background: #38a169; color: white; }
-        .btn-danger { background: #e53e3e; color: white; }
-        .btn-secondary { background: #718096; color: white; }
-        .btn:hover { opacity: 0.9; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .card { background: var(--card); padding: 25px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px; }
+        h1 { color: var(--primary); text-align: center; font-size: 24px; margin-bottom: 10px; }
+        h2 { color: var(--secondary); border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 15px; font-size: 18px; }
+        h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: #4a5568; }
 
-        /* Área de Requisições (Múltiplos Pedidos) */
-        .requisicoes-area { border: 1px dashed #2c5282; padding: 15px; margin-top: 15px; background: #ebf8ff; border-radius: 4px; }
-        .requisicao-item { background: white; padding: 15px; border: 1px solid #bee3f8; margin-bottom: 10px; border-radius: 4px; position: relative; }
-        .btn-remove { position: absolute; top: 10px; right: 10px; background: #e53e3e; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
+        .form-row { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 12px; }
+        .form-group { flex: 1; min-width: 180px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+        .form-group input, .form-group select { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 5px; font-size: 14px; }
+        .form-group input:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(43,108,176,0.15); }
 
-        /* Checkboxes da Ficha */
-        .checkbox-group { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 5px; }
-        .checkbox-item { display: flex; align-items: center; gap: 5px; }
+        .btn { padding: 10px 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 14px; transition: 0.2s; width: 100%; margin-top: 8px; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: #152b4a; }
+        .btn-success { background: var(--success); color: white; }
+        .btn-success:hover { background: #276749; }
+        .btn-outline { background: transparent; border: 2px solid var(--secondary); color: var(--secondary); }
+        .btn-outline:hover { background: var(--secondary); color: white; }
+        .btn-danger { background: var(--danger); color: white; font-size: 12px; padding: 6px 12px; width: auto; }
 
-        /* Estilos de Impressão (Ofício e Ficha) */
-        .print-area { display: none; background: white; padding: 40px; max-width: 210mm; margin: 0 auto; }
+        /* LOGIN */
+        #loginScreen { display: flex; justify-content: center; align-items: center; min-height: 90vh; }
+        .login-box { max-width: 450px; width: 100%; }
+        .login-note { background: #ebf8ff; border-left: 4px solid var(--secondary); padding: 10px; margin-bottom: 15px; font-size: 13px; color: #2c5282; border-radius: 0 4px 4px 0; }
+
+        /* DASHBOARD */
+        #dashboard { display: none; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; background: var(--card); padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); flex-wrap: wrap; gap: 15px; }
+        .user-info p { margin: 2px 0; font-size: 13px; }
+        .user-info strong { color: var(--secondary); }
+        .counter-badge { background: #f0fff4; border: 1px solid #9ae6b4; padding: 6px 12px; border-radius: 6px; font-weight: bold; color: var(--success); font-size: 14px; }
+
+        /* PEDIDOS DINÂMICOS */
+        .pedido-box { border: 1px dashed #90cdf4; padding: 15px; margin-bottom: 10px; border-radius: 6px; background: #ebf8ff; position: relative; }
+        .btn-remove { position: absolute; top: 8px; right: 8px; background: #feb2b2; color: #742a2a; border: none; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+
+        .checkbox-group { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 5px; }
+        .checkbox-item { display: flex; align-items: center; gap: 5px; font-size: 13px; cursor: pointer; }
+
+        /* IMPRESSÃO */
+        .print-area { display: none; background: white; padding: 30px; max-width: 210mm; margin: 0 auto; }
         
-        /* Estilos Específicos do Ofício */
-        .oficio-header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #000; padding-bottom: 20px; }
-        .oficio-logo { width: 80px; margin-bottom: 10px; }
-        .oficio-titulo { font-size: 18px; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; }
-        .oficio-subtitulo { font-size: 14px; font-style: italic; }
-        .oficio-corpo { text-align: justify; line-height: 1.5; font-size: 12pt; margin-bottom: 30px; }
-        .oficio-destaque { font-weight: bold; text-transform: uppercase; }
-        .oficio-assinatura { margin-top: 80px; text-align: center; }
-        .oficio-linha { border-top: 1px solid #000; width: 60%; margin: 0 auto 10px; }
-        
-        /* Estilos Específicos da Ficha */
-        .ficha-container { font-family: Arial, sans-serif; font-size: 12px; border: 2px solid #000; padding: 20px; }
-        .ficha-header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; font-weight: bold; text-transform: uppercase; }
-        .ficha-row { display: flex; border-bottom: 1px solid #ccc; padding: 5px 0; }
-        .ficha-label { font-weight: bold; width: 150px; flex-shrink: 0; }
-        .ficha-value { flex-grow: 1; }
-        .ficha-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-        .ficha-box { border: 1px solid #000; padding: 10px; min-height: 100px; }
-        .ficha-title { font-weight: bold; margin-bottom: 10px; background: #eee; padding: 5px; text-align: center; border: 1px solid #000; }
+        /* OFÍCIO PRINT */
+        .oficio-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 15px; }
+        .oficio-logo { width: 70px; margin-bottom: 8px; }
+        .oficio-titulo { font-size: 16pt; font-weight: bold; text-transform: uppercase; }
+        .oficio-unidade { font-size: 11pt; font-style: italic; margin-top: 4px; }
+        .oficio-numero { text-align: right; margin-bottom: 20px; font-size: 11pt; font-weight: bold; background: #f7fafc; padding: 6px 10px; border: 1px solid #cbd5e0; display: inline-block; float: right; }
+        .oficio-corpo { text-align: justify; line-height: 1.6; font-size: 11pt; margin-top: 30px; clear: both; }
+        .oficio-assinatura { text-align: center; margin-top: 70px; }
+        .oficio-linha { border-top: 1px solid #000; width: 65%; margin: 0 auto 8px; }
+        .oficio-footer { margin-top: 40px; text-align: right; font-size: 11pt; }
 
-        /* Controle de Impressão */
+        /* FICHA PRINT (FIEL AO PDF) */
+        .ficha-container { border: 2px solid #000; padding: 15px; font-family: Arial, sans-serif; font-size: 10px; }
+        .ficha-header { text-align: center; font-weight: bold; font-size: 13px; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase; }
+        .ficha-sub { text-align: center; font-size: 9px; margin-bottom: 15px; color: #444; }
+        .ficha-section { margin-bottom: 12px; border-bottom: 1px dashed #aaa; padding-bottom: 8px; }
+        .ficha-title { font-weight: bold; text-transform: uppercase; margin-bottom: 6px; display: block; background: #eee; padding: 3px; border: 1px solid #000; text-align: center; font-size: 10px; }
+        .ficha-row { display: flex; border-bottom: 1px solid #000; margin-bottom: 4px; padding: 3px 0; align-items: center; }
+        .ficha-label { font-weight: bold; width: 130px; flex-shrink: 0; text-transform: uppercase; font-size: 9px; }
+        .ficha-value { flex-grow: 1; padding-left: 8px; border-bottom: 1px dotted #888; min-height: 14px; font-size: 10px; }
+        .ficha-options { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+        .ficha-opt { display: flex; align-items: center; gap: 3px; font-size: 9px; border: 1px solid #ccc; padding: 2px 5px; border-radius: 3px; }
+        .ficha-check { width: 10px; height: 10px; border: 1px solid #000; display: inline-flex; align-items: center; justify-content: center; font-size: 7px; }
+        .ficha-footer { display: flex; justify-content: space-between; margin-top: 25px; }
+        .ficha-sign { width: 48%; text-align: center; border-top: 1px solid #000; padding-top: 5px; font-size: 9px; text-transform: uppercase; }
+
         @media print {
             body * { visibility: hidden; }
             .print-area, .print-area * { visibility: visible; }
-            .print-area { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 20px; display: block !important; }
+            .print-area { position: absolute; left: 0; top: 0; width: 100%; display: block !important; padding: 20px; margin: 0; box-shadow: none; }
             .no-print { display: none !important; }
+            @page { margin: 1.5cm; size: A4; }
         }
-
-        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <!-- ÁREA DE FORMULÁRIO (NÃO IMPRIME) -->
-    <div class="app-container no-print" id="appForm">
-        <h1>Sistema de Geração de Documentos - Defensoria Pública</h1>
-
-        <!-- Login Defensor -->
-        <div class="card">
-            <h3>1. Dados do Defensor</h3>
-            <div class="form-row">
-                <div class="form-group"><label>Nome:</label><input type="text" id="defensorNome" placeholder="Ex: ROBERT RIOS MAGALHÃES JUNIOR"></div>
-                <div class="form-group"><label>Defensoria:</label><input type="text" id="defensorUnidade" placeholder="Ex: Defensoria Pública de Itaueira"></div>
-            </div>
-            <div class="form-row">
-                <div class="form-group"><label>Jornada Itinerante:</label><input type="text" id="defensorJornada" placeholder="Ex: Jornada Itinerante de Itaueira"></div>
-                <div class="form-group"><label>Nº Ofício:</label><input type="text" id="oficioNumero" placeholder="Ex: 01" value="01"></div>
-            </div>
-        </div>
-
-        <!-- Dados da Ficha (Pessoais e Sociais) -->
-        <div class="card">
-            <h3>2. Ficha de Pré-Atendimento (Dados Pessoais e Sociais)</h3>
-            <div class="form-row">
-                <div class="form-group"><label>Nome Completo:</label><input type="text" id="fichaNome"></div>
-                <div class="form-group" style="max-width: 150px;"><label>CPF:</label><input type="text" id="fichaCPF" placeholder="000.000.000-00"></div>
-                <div class="form-group" style="max-width: 150px;"><label>Nascimento:</label><input type="text" id="fichaDataNasc" placeholder="DD/MM/AAAA"></div>
-            </div>
-            <div class="form-row">
-                <div class="form-group"><label>Nome do Pai:</label><input type="text" id="fichaPai"></div>
-                <div class="form-group"><label>Nome da Mãe:</label><input type="text" id="fichaMae"></div>
-            </div>
-            <div class="form-row">
-                <div class="form-group"><label>Telefone/WhatsApp:</label><input type="text" id="fichaTel"></div>
-                <div class="form-group"><label>Estado Civil:</label><select id="fichaCivil"><option value="">Selecione</option><option>Solteiro(a)</option><option>Casado(a)</option><option>Divorciado(a)</option><option>Viúvo(a)</option></select></div>
-                <div class="form-group"><label>Profissão:</label><input type="text" id="fichaProfissao"></div>
-            </div>
-            <div class="form-row">
-                <div class="form-group"><label>Renda Familiar:</label><input type="text" id="fichaRenda" placeholder="R$"></div>
-                <div class="form-group" style="flex: 2;"><label>Endereço:</label><input type="text" id="fichaEndereco"></div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Cor/Raça:</label>
-                    <div class="checkbox-group">
-                        <label><input type="radio" name="cor" value="Branca"> Branca</label>
-                        <label><input type="radio" name="cor" value="Parda"> Parda</label>
-                        <label><input type="radio" name="cor" value="Preta"> Preta</label>
-                        <label><input type="radio" name="cor" value="Amarela"> Amarela</label>
-                        <label><input type="radio" name="cor" value="Indígena"> Indígena</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Ação Pretendida:</label>
-                    <div class="checkbox-group">
-                        <label><input type="checkbox" name="acao" value="Alimentos"> Alimentos</label>
-                        <label><input type="checkbox" name="acao" value="Guarda/Filiação"> Guarda/Filiação</label>
-                        <label><input type="checkbox" name="acao" value="Criminal"> Criminal</label>
-                        <label><input type="checkbox" name="acao" value="Violência Doméstica"> Violência Doméstica</label>
-                        <label><input type="checkbox" name="acao" value="Cível/Contratos"> Cível/Contratos</label>
-                        <label><input type="checkbox" name="acao" value="Previdência/INSS"> Previdência/INSS</label>
-                        <label><input type="checkbox" name="acao" value="Interdição/Curatela"> Interdição/Curatela</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Dados do Ofício (Requisições) -->
-        <div class="card">
-            <h3>3. Dados do Ofício (Segunda Via)</h3>
-            <p style="margin-bottom: 10px; font-size: 14px; color: #666;">Adicione quantos pedidos forem necessários (ex: Mãe e Filhos).</p>
-            
-            <div id="listaRequisicoes">
-                <!-- Os pedidos serão inseridos aqui via JS -->
-            </div>
-
-            <button class="btn btn-secondary" onclick="adicionarRequisicao()">+ Adicionar Outro Pedido</button>
-        </div>
-
-        <div style="text-align: center; margin-top: 30px;">
-            <button class="btn btn-primary" onclick="gerarOficio()">🖨️ Gerar Ofício (PDF)</button>
-            <button class="btn btn-success" onclick="gerarFicha()">📋 Gerar Ficha de Pré-Atendimento (PDF)</button>
+    <!-- LOGIN -->
+    <div id="loginScreen" class="container no-print">
+        <div class="card login-box">
+            <h1>Defensoria Pública do Piauí</h1>
+            <div class="login-note">💡 Login único: seus dados e a numeração são salvos automaticamente neste navegador.</div>
+            <div class="form-group"><label>Nome do Defensor:</label><input type="text" id="loginDefensor" placeholder="Ex: ROBERT RIOS MAGALHÃES JUNIOR"></div>
+            <div class="form-group"><label>Unidade/Defensoria:</label><input type="text" id="loginUnidade" placeholder="Ex: Defensoria Pública de Itaueira"></div>
+            <div class="form-group"><label>Jornada Itinerante:</label><input type="text" id="loginJornada" placeholder="Ex: Jornada Itinerante de Itaueira"></div>
+            <button class="btn btn-primary" onclick="fazerLogin()">🔐 ENTRAR NO SISTEMA</button>
+            <button class="btn btn-outline" style="margin-top:10px; font-size:12px;" onclick="limparTudo()">🗑️ Limpar Dados e Sair</button>
         </div>
     </div>
 
-    <!-- MODELO DE IMPRESSÃO: OFÍCIO -->
-    <div class="print-area" id="modeloOficio">
-        <div class="oficio-header">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Bras%C3%A3o_da_Defensoria_P%C3%BAblica_do_Estado_do_Piau%C3%AD.svg/1200px-Bras%C3%A3o_da_Defensoria_P%C3%BAblica_do_Estado_do_Piau%C3%AD.svg.png" alt="Logo" class="oficio-logo">
-            <div class="oficio-titulo">Defensoria Pública do Estado do Piauí</div>
-            <div class="oficio-subtitulo" id="outOficioUnidade">Defensoria Pública</div>
-            <div style="text-align: right; margin-top: 10px;">
-                <strong>Ofício nº <span id="outOficioNumero">01</span></strong><br>
-                <span id="outOficioJornada">Jornada Itinerante</span>
+    <!-- DASHBOARD -->
+    <div id="dashboard" class="no-print">
+        <div class="container">
+            <div class="top-bar">
+                <div>
+                    <h2 style="margin:0; border:none; font-size:18px;">Novo Atendimento</h2>
+                    <p style="font-size:12px; color:#666; margin-top:4px;">Preencha os campos abaixo.</p>
+                </div>
+                <div style="text-align:right;">
+                    <div class="counter-badge" id="dashContador">Próximo: nº 01</div>
+                    <div class="user-info" style="margin-top:8px;">
+                        <p><strong>Defensor:</strong> <span id="dashDefensor"></span></p>
+                        <p><strong>Jornada:</strong> <span id="dashJornada"></span></p>
+                    </div>
+                    <button class="btn btn-danger" style="margin-top:6px;" onclick="sair()">Sair</button>
+                </div>
+            </div>
+
+            <!-- FICHA FORM -->
+            <div class="card">
+                <h2>📋 1. Ficha de Pré-Atendimento</h2>
+                <div class="form-row">
+                    <div class="form-group" style="flex:2;"><label>Nome Completo:</label><input type="text" id="fichaNome"></div>
+                    <div class="form-group"><label>CPF:</label><input type="text" id="fichaCPF" placeholder="000.000.000-00"></div>
+                    <div class="form-group"><label>Data Nasc.:</label><input type="text" id="fichaDataNasc" placeholder="DD/MM/AAAA"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Nome do Pai:</label><input type="text" id="fichaPai"></div>
+                    <div class="form-group"><label>Nome da Mãe:</label><input type="text" id="fichaMae"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Telefone/WhatsApp:</label><input type="text" id="fichaTel" placeholder="(00) 00000-0000"></div>
+                    <div class="form-group"><label>Estado Civil:</label>
+                        <select id="fichaCivil"><option value="">Selecione</option><option>Solteiro(a)</option><option>Casado(a)</option><option>Divorciado(a)</option><option>Viúvo(a)</option><option>União Estável</option></select>
+                    </div>
+                    <div class="form-group"><label>Profissão:</label><input type="text" id="fichaProfissao"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Renda Média Familiar:</label><input type="text" id="fichaRenda" placeholder="R$ 0,00"></div>
+                    <div class="form-group" style="flex:3;"><label>Endereço Completo:</label><input type="text" id="fichaEndereco" placeholder="Rua, Nº, Bairro, Município — UF"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Cor/Raça (Autodeclaração — IBGE):</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item"><input type="radio" name="cor" value="Branca"> Branca</label>
+                        <label class="checkbox-item"><input type="radio" name="cor" value="Parda"> Parda</label>
+                        <label class="checkbox-item"><input type="radio" name="cor" value="Preta"> Preta</label>
+                        <label class="checkbox-item"><input type="radio" name="cor" value="Amarela"> Amarela</label>
+                        <label class="checkbox-item"><input type="radio" name="cor" value="Indígena"> Indígena</label>
+                        <label class="checkbox-item"><input type="radio" name="cor" value="Não Declarar"> Não Declarar</label>
+                    </div>
+                    <input type="text" id="corOutra" placeholder="Ou descreva (opcional):" style="margin-top:8px; font-size:13px;">
+                </div>
+
+                <div class="form-group">
+                    <label>Ação Pretendida (pode marcar mais de uma):</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Alimentos"> Alimentos</label>
+                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Guarda/Filiação"> Guarda/Filiação</label>
+                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Criminal"> Criminal</label>
+                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Violência Doméstica"> Violência Doméstica</label>
+                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Cível/Contratos"> Cível/Contratos</label>
+                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Interdição/Curatela"> Interdição/Curatela</label>
+                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Previdência/INSS"> Previdência/INSS</label>
+                        <label class="checkbox-item"><input type="checkbox" name="acao" value="Outras"> Outras</label>
+                    </div>
+                    <input type="text" id="acaoOutras" placeholder="Especifique se marcou 'Outras'..." style="margin-top:8px; font-size:13px; display:none;">
+                </div>
+            </div>
+
+            <!-- OFÍCIO FORM -->
+            <div class="card">
+                <h2>📄 2. Dados do Ofício (2ª Via)</h2>
+                <p style="font-size:13px; color:#666; margin-bottom:10px;">Adicione quantos registros precisar (ex: mãe e filhos).</p>
+                <div id="listaPedidos"></div>
+                <button class="btn btn-success" style="width:auto; margin-top:10px; font-size:13px;" onclick="addPedido()">+ Adicionar Pedido</button>
+            </div>
+
+            <div class="card" style="text-align:center; background:#f8fafc; border:2px dashed var(--border);">
+                <h2 style="border:none;">🖨️ Gerar Documentos</h2>
+                <div class="form-row" style="justify-content:center; gap:15px;">
+                    <button class="btn btn-primary" style="width:auto; min-width:160px;" onclick="gerarOficio()">Gerar Ofício (PDF)</button>
+                    <button class="btn btn-success" style="width:auto; min-width:160px;" onclick="gerarFicha()">Gerar Ficha (PDF)</button>
+                </div>
+                <button class="btn btn-outline" style="width:auto; margin-top:15px;" onclick="novoAtendimento()">🔄 Limpar Formulário (Novo Atendimento)</button>
             </div>
         </div>
+    </div>
 
-        <div style="margin-bottom: 30px;">
-            Ilmo. Sr. (a) Tabelião do <strong id="outOficioCartorio">[NOME DO CARTÓRIO]</strong> de <strong id="outOficioCidadeCartorio">[CIDADE]</strong>.<br>
-            <strong>Assunto:</strong> Solicitação de 2ª Via de Certidão de Nascimento.
+    <!-- PRINT: OFÍCIO -->
+    <div id="printOficio" class="print-area">
+        <div class="oficio-header">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Bras%C3%A3o_da_Defensoria_P%C3%BAblica_do_Estado_do_Piau%C3%AD.svg/1200px-Bras%C3%A3o_da_Defensoria_P%C3%BAblica_do_Estado_do_Piau%C3%AD.svg.png" class="oficio-logo">
+            <div class="oficio-titulo">Defensoria Pública do Estado do Piauí</div>
+            <div class="oficio-unidade" id="outOficioUnidade"></div>
         </div>
-
-        <p>Sr(a). Tabelião(ã),</p>
-        <br>
-        <p>Sirvo-me do presente para requisitar a Vossa Senhoria a expedição de 2ª via de Certidão de Nascimento referente(s) ao(s) seguinte(s) indivíduo(s):</p>
-        
-        <ul id="listaItensOficio" style="margin: 20px 0 20px 40px; line-height: 1.6;">
-            <!-- Itens listados aqui -->
-        </ul>
-
-        <p>O presente pedido baseia-se na atualização do documento para fins de expedição de Cédula de Identidade.</p>
-        <br>
-        <p>Solicito, outrossim, que a(s) referida(s) certidão(ões) seja(m) expedida(s) <span class="oficio-destaque">GRATUITAMENTE</span>.</p>
-        <br>
-        <p><strong>RESPALDO DA SOLICITAÇÃO:</strong> Art. 128, inc IX da LCF 80/94 bem como na LCE nº 059/2005, art. 69, III, que conferem aos membros da Defensoria Pública a prerrogativa de requisitar dos órgãos públicos e provados, informações de interesse da Instituição para instrução de processo ou postulação por ela patrocinada.</p>
-        <p>Gratuidade de selo conforme dispõe o provimento conjunto nº 001/2008 do Tribunal de Justiça do Estado do Piauí em que confere no seu art. 1º, VII, "a gratuidade da utilização de selos de fiscalização judicial aos pedidos formulados através da Defensoria Pública do Estado".</p>
-
-        <br><br>
+        <div class="oficio-numero" id="outOficioNumero"></div>
+        <div style="clear:both; margin-bottom:20px;"></div>
+        <div style="margin-bottom:25px; font-size:11pt;">
+            <strong>Ilmo. Sr(a). Tabelião(ã)</strong><br>
+            <span id="outCartorioDest"></span> de <span id="outCidadeDest"></span>
+            <br><br><strong>Assunto:</strong> Solicitação de 2ª Via de Certidão de Nascimento (Gratuidade).
+        </div>
+        <div class="oficio-corpo">
+            <p>Sirvo-me do presente para requisitar a Vossa Senhoria a expedição da(s) 2ª via(s) de Certidão de Nascimento em favor do(s) assistido(s) abaixo relacionado(s):</p>
+            <ul style="margin:15px 0 15px 30px; line-height:1.7;" id="outListaPedidos"></ul>
+            <p>O presente pedido baseia-se na atualização do documento para fins de expedição de Cédula de Identidade, localizado na cidade de <span id="outCidadeResidencia">[CIDADE]</span>.</p>
+            <p>Solicito, outrossim, que a(s) referida(s) certidão(ões) seja(m) expedida(s) <strong>GRATUITAMENTE</strong>.</p>
+            <p><strong>RESPALDO DA SOLICITAÇÃO:</strong> Art. 128, inc. IX da LCF 80/94 bem como na LCE nº 059/2005, art. 69, III, que conferem aos membros da Defensoria Pública a prerrogativa de requisitar dos órgãos públicos e provados, informações de interesse da Instituição para instrução de processo ou postulação por ela patrocinada.</p>
+            <p>Gratuidade de selo conforme dispõe o provimento conjunto nº 001/2008 do Tribunal de Justiça do Estado do Piauí em que confere no seu art. 1º, VII, "a gratuidade da utilização de selos de fiscalização judicial aos pedidos formulados através da Defensoria Pública do Estado".</p>
+        </div>
         <div class="oficio-assinatura">
             <div class="oficio-linha"></div>
-            <div id="outOficioAssinaturaNome">DEFENSOR</div>
-            <div>Defensor Público</div>
+            <strong id="outAssinaturaNome"></strong><br>
+            Defensor Público
         </div>
-        
-        <div style="margin-top: 40px; text-align: right;">
-            <span id="outOficioCidadeData">Teresina-PI</span>, <span id="outOficioDataAtual"></span>.
+        <div class="oficio-footer">
+            <span id="outCidadeData"></span>, <span id="outDataAtual"></span>.
         </div>
     </div>
 
-    <!-- MODELO DE IMPRESSÃO: FICHA -->
-    <div class="print-area" id="modeloFicha">
+    <!-- PRINT: FICHA -->
+    <div id="printFicha" class="print-area">
         <div class="ficha-container">
-            <div class="ficha-header">
-                DEFENSORIA ITINERANTE - Formulário de Pré-Atendimento
-                <div style="font-size: 10px; font-weight: normal; margin-top: 5px;">Uso exclusivo do serviço · Tratamento sigiloso</div>
-            </div>
-
-            <div class="ficha-row">
-                <div class="ficha-label">NOME COMPLETO:</div>
-                <div class="ficha-value" id="outFichaNome"></div>
-            </div>
-            <div class="ficha-row">
-                <div class="ficha-label">CPF:</div>
-                <div class="ficha-value" id="outFichaCPF"></div>
-                <div class="ficha-label" style="width: 120px;">DATA NASC.:</div>
-                <div class="ficha-value" id="outFichaDataNasc"></div>
-            </div>
-            <div class="ficha-row">
-                <div class="ficha-label">NOME DO PAI:</div>
-                <div class="ficha-value" id="outFichaPai"></div>
-            </div>
-            <div class="ficha-row">
-                <div class="ficha-label">NOME DA MÃE:</div>
-                <div class="ficha-value" id="outFichaMae"></div>
-            </div>
-            <div class="ficha-row">
-                <div class="ficha-label">TELEFONE:</div>
-                <div class="ficha-value" id="outFichaTel"></div>
-                <div class="ficha-label" style="width: 100px;">ESTADO CIVIL:</div>
-                <div class="ficha-value" id="outFichaCivil"></div>
-                <div class="ficha-label" style="width: 80px;">PROFISSÃO:</div>
-                <div class="ficha-value" id="outFichaProfissao"></div>
-            </div>
-            <div class="ficha-row">
-                <div class="ficha-label">RENDA FAMILIAR:</div>
-                <div class="ficha-value" id="outFichaRenda"></div>
-            </div>
-            <div class="ficha-row">
-                <div class="ficha-label">ENDEREÇO:</div>
-                <div class="ficha-value" id="outFichaEndereco"></div>
-            </div>
+            <div class="ficha-header">DEFENSORIA ITINERANTE<br>Formulário de Pré-Atendimento</div>
+            <div class="ficha-sub">Uso exclusivo do serviço · Tratamento sigiloso</div>
             
-            <div class="ficha-row" style="border: none;">
-                <div class="ficha-label">COR/RAÇA:</div>
-                <div class="ficha-value" id="outFichaCor"></div>
+            <div class="ficha-section">
+                <span class="ficha-title">Identificação Pessoal</span>
+                <div class="ficha-row"><span class="ficha-label">Nome Completo</span> <span class="ficha-value" id="outFichaNome"></span></div>
+                <div class="ficha-row">
+                    <span class="ficha-label">CPF</span> <span class="ficha-value" id="outFichaCPF" style="max-width:140px;"></span>
+                    <span class="ficha-label" style="width:100px;">Data Nasc.</span> <span class="ficha-value" id="outFichaData"></span>
+                </div>
+                <div class="ficha-row"><span class="ficha-label">Nome do Pai</span> <span class="ficha-value" id="outFichaPai"></span></div>
+                <div class="ficha-row"><span class="ficha-label">Nome da Mãe</span> <span class="ficha-value" id="outFichaMae"></span></div>
             </div>
 
-            <div class="ficha-row" style="border: none; margin-top: 10px;">
-                <div class="ficha-label">AÇÃO PRETENDIDA:</div>
-                <div class="ficha-value" id="outFichaAcao"></div>
+            <div class="ficha-section">
+                <span class="ficha-title">Contato e Situação Social</span>
+                <div class="ficha-row"><span class="ficha-label">Telefone/Whatsapp</span> <span class="ficha-value" id="outFichaTel"></span></div>
+                <div class="ficha-row">
+                    <span class="ficha-label">Estado Civil</span> <span class="ficha-value" id="outFichaCivil" style="max-width:100px;"></span>
+                    <span class="ficha-label" style="width:80px;">Profissão</span> <span class="ficha-value" id="outFichaProfissao"></span>
+                </div>
+                <div class="ficha-row"><span class="ficha-label">Renda Média Familiar</span> <span class="ficha-value" id="outFichaRenda"></span></div>
+                <div class="ficha-row"><span class="ficha-label">Endereço</span> <span class="ficha-value" id="outFichaEndereco"></span></div>
             </div>
 
-            <div style="margin-top: 50px; display: flex; justify-content: space-between;">
-                <div style="text-align: center; width: 45%;">
-                    <div style="border-bottom: 1px solid #000; margin-bottom: 5px;"></div>
-                    ASSINATURA DO ASSISTIDO
-                </div>
-                <div style="text-align: center; width: 45%;">
-                    <div style="border-bottom: 1px solid #000; margin-bottom: 5px;"></div>
-                    DATA: ___/___/_______
-                </div>
+            <div class="ficha-section">
+                <span class="ficha-title">Cor/Raça (Autodeclaração — IBGE)</span>
+                <div id="outFichaCor" class="ficha-value" style="border:none; margin:0;"></div>
+            </div>
+
+            <div class="ficha-section" style="border:none;">
+                <span class="ficha-title">Ação Pretendida (Pode marcar mais de uma)</span>
+                <div class="ficha-options" id="outFichaAcoes"></div>
+                <div id="outFichaOutras" style="margin-top:5px; font-style:italic; font-size:9px;"></div>
+            </div>
+
+            <div class="ficha-footer">
+                <div class="ficha-sign">Assinatura do Assistido / Impressão Digital</div>
+                <div class="ficha-sign" style="width:30%;">Data de Preenchimento: ___/___/_______</div>
             </div>
         </div>
     </div>
 
     <script>
-        // Inicializar com uma requisição
-        let contadorRequisicoes = 0;
-        window.onload = function() {
-            adicionarRequisicao();
-            
-            // Carregar dados salvos se houver
-            if(localStorage.getItem('defensorNome')) document.getElementById('defensorNome').value = localStorage.getItem('defensorNome');
-            if(localStorage.getItem('defensorUnidade')) document.getElementById('defensorUnidade').value = localStorage.getItem('defensorUnidade');
-        };
-
-        function salvarDadosDefensor() {
-            localStorage.setItem('defensorNome', document.getElementById('defensorNome').value);
-            localStorage.setItem('defensorUnidade', document.getElementById('defensorUnidade').value);
-        }
-
-        function adicionarRequisicao() {
-            contadorRequisicoes++;
-            const div = document.createElement('div');
-            div.className = 'requisicao-item';
-            div.id = `req_${contadorRequisicoes}`;
-            div.innerHTML = `
-                <button class="btn-remove" onclick="removerRequisicao(${contadorRequisicoes})">X</button>
-                <h4>Pedido Nº ${contadorRequisicoes}</h4>
-                <div class="form-row">
-                    <div class="form-group"><label>Nome do Interessado:</label><input type="text" class="req-nome" required></div>
-                    <div class="form-group" style="max-width: 150px;"><label>CPF (Opcional):</label><input type="text" class="req-cpf" placeholder="000.000.000-00"></div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group" style="max-width: 150px;"><label>Nascimento:</label><input type="text" class="req-data" placeholder="DD/MM/AAAA"></div>
-                    <div class="form-group" style="max-width: 100px;"><label>Registro Nº:</label><input type="text" class="req-numero"></div>
-                    <div class="form-group" style="max-width: 100px;"><label>Livro:</label><input type="text" class="req-livro"></div>
-                    <div class="form-group" style="max-width: 100px;"><label>Folhas:</label><input type="text" class="req-folhas"></div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group"><label>Cartório:</label><input type="text" class="req-cartorio"></div>
-                    <div class="form-group"><label>Cidade do Cartório:</label><input type="text" class="req-cidade"></div>
-                </div>
-            `;
-            document.getElementById('listaRequisicoes').appendChild(div);
-        }
-
-        function removerRequisicao(id) {
-            document.getElementById(`req_${id}`).remove();
-        }
-
-        function gerarOficio() {
-            salvarDadosDefensor();
-            
-            // Preencher Cabeçalho
-            document.getElementById('outOficioUnidade').innerText = document.getElementById('defensorUnidade').value;
-            document.getElementById('outOficioNumero').innerText = document.getElementById('oficioNumero').value;
-            document.getElementById('outOficioJornada').innerText = document.getElementById('defensorJornada').value;
-            document.getElementById('outOficioAssinaturaNome').innerText = document.getElementById('defensorNome').value.toUpperCase();
-
-            // Preencher Lista de Pedidos
-            const lista = document.getElementById('listaItensOficio');
-            lista.innerHTML = ''; // Limpar
-            
-            const requisicoes = document.querySelectorAll('.requisicao-item');
-            if (requisicoes.length === 0) {
-                alert("Adicione pelo menos um pedido.");
-                return;
+        // --- ESTADO & PERSISTÊNCIA ---
+        function carregarDados() {
+            const login = JSON.parse(localStorage.getItem('dpe_login') || '{}');
+            const seq = parseInt(localStorage.getItem('dpe_seq') || '0');
+            if (login.nome) {
+                document.getElementById('loginDefensor').value = login.nome;
+                document.getElementById('loginUnidade').value = login.unidade;
+                document.getElementById('loginJornada').value = login.jornada;
+                iniciarSistema(login, seq);
             }
+            addPedido(); // Inicia com 1 pedido vazio
+            atualizarContador(seq);
+        }
 
-            let cartorioPrincipal = "";
-            let cidadePrincipal = "";
+        function fazerLogin() {
+            const nome = document.getElementById('loginDefensor').value.trim();
+            const unidade = document.getElementById('loginUnidade').value.trim();
+            const jornada = document.getElementById('loginJornada').value.trim();
+            if (!nome || !unidade || !jornada) return alert('Preencha todos os campos.');
+            const login = { nome, unidade, jornada };
+            localStorage.setItem('dpe_login', JSON.stringify(login));
+            iniciarSistema(login, parseInt(localStorage.getItem('dpe_seq') || '0'));
+        }
 
-            requisicoes.forEach((req, index) => {
-                const nome = req.querySelector('.req-nome').value.toUpperCase();
-                const cpf = req.querySelector('.req-cpf').value;
-                const data = req.querySelector('.req-data').value;
-                const numero = req.querySelector('.req-numero').value;
-                const livro = req.querySelector('.req-livro').value;
-                const folhas = req.querySelector('.req-folhas').value;
-                const cartorio = req.querySelector('.req-cartorio').value;
-                const cidade = req.querySelector('.req-cidade').value;
+        function iniciarSistema(login, seq) {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('dashDefensor').innerText = login.nome;
+            document.getElementById('dashJornada').innerText = login.jornada;
+            atualizarContador(seq);
+        }
 
-                if (index === 0) { // Pegar dados do primeiro para o cabeçalho se não for uniforme
-                     cartorioPrincipal = cartorio;
-                     cidadePrincipal = cidade;
+        function atualizarContador(seq) {
+            const prox = (seq || 0) + 1;
+            document.getElementById('dashContador').innerText = `Próximo: nº ${String(prox).padStart(2,'0')}`;
+        }
+
+        function sair() {
+            if (confirm('Deseja sair?')) { localStorage.removeItem('dpe_login'); location.reload(); }
+        }
+
+        function limparTudo() {
+            if (confirm('⚠️ Apagar TODOS os dados (login + numeração)?')) { localStorage.clear(); location.reload(); }
+        }
+
+        function novoAtendimento() {
+            if (!confirm('Limpar campos do atendimento atual?')) return;
+            document.querySelectorAll('#dashboard input[type="text"], #dashboard input[type="tel"]').forEach(i => i.value = '');
+            document.querySelectorAll('#dashboard input[type="checkbox"], #dashboard input[type="radio"]').forEach(i => i.checked = false);
+            document.getElementById('fichaCivil').value = '';
+            document.getElementById('acaoOutras').style.display = 'none';
+            document.getElementById('corOutra').value = '';
+            document.getElementById('listaPedidos').innerHTML = '';
+            addPedido();
+        }
+
+        // --- PEDIDOS DINÂMICOS ---
+        let contadorPedidos = 0;
+        function addPedido() {
+            contadorPedidos++;
+            const div = document.createElement('div');
+            div.className = 'pedido-box';
+            div.id = `ped${contadorPedidos}`;
+            div.innerHTML = `
+                <button class="btn-remove" onclick="removerPedido('ped${contadorPedidos}')">×</button>
+                <div class="form-row">
+                    <div class="form-group"><label>Nome do Assistido:</label><input type="text" class="p-nome" placeholder="Nome completo"></div>
+                    <div class="form-group"><label>CPF:</label><input type="text" class="p-cpf" placeholder="000.000.000-00"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Data Nasc.:</label><input type="text" class="p-data" placeholder="DD/MM/AAAA"></div>
+                    <div class="form-group"><label>Nº Registro:</label><input type="text" class="p-num"></div>
+                    <div class="form-group"><label>Livro:</label><input type="text" class="p-livro"></div>
+                    <div class="form-group"><label>Folhas:</label><input type="text" class="p-folhas"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Cartório:</label><input type="text" class="p-cart"></div>
+                    <div class="form-group"><label>Cidade:</label><input type="text" class="p-cid"></div>
+                </div>`;
+            document.getElementById('listaPedidos').appendChild(div);
+        }
+
+        function removerPedido(id) {
+            if (document.querySelectorAll('.pedido-box').length > 1) document.getElementById(id).remove();
+            else alert('Mantenha pelo menos um pedido.');
+        }
+
+        // --- GERAÇÃO OFÍCIO ---
+        function gerarOficio() {
+            const login = JSON.parse(localStorage.getItem('dpe_login'));
+            if (!login) return alert('Sessão expirada. Faça login novamente.');
+            
+            let seq = parseInt(localStorage.getItem('dpe_seq') || '0') + 1;
+            localStorage.setItem('dpe_seq', seq.toString());
+            const ano = new Date().getFullYear();
+            const numFormatado = `nº ${String(seq).padStart(2,'0')} - ${login.jornada.toUpperCase()} - ${ano}`;
+            
+            document.getElementById('outOficioUnidade').innerText = login.unidade;
+            document.getElementById('outOficioNumero').innerText = numFormatado;
+            document.getElementById('outAssinaturaNome').innerText = login.nome.toUpperCase();
+            
+            const hoje = new Date();
+            document.getElementById('outDataAtual').innerText = `${hoje.getDate()} de ${hoje.toLocaleString('pt-BR', {month:'long'})} de ${hoje.getFullYear()}`;
+            const cidBase = login.jornada.split(' ').pop() || 'Teresina-PI';
+            document.getElementById('outCidadeData').innerText = cidBase.includes('-') ? cidBase : cidBase + '-PI';
+
+            const lista = document.getElementById('outListaPedidos');
+            lista.innerHTML = '';
+            const pedidos = document.querySelectorAll('.pedido-box');
+            if (!pedidos.length) return alert('Adicione pelo menos um pedido.');
+
+            let cidadeResidencia = "";
+
+            pedidos.forEach((p, i) => {
+                const nome = p.querySelector('.p-nome').value || '[NOME]';
+                const cpf = p.querySelector('.p-cpf').value;
+                const data = p.querySelector('.p-data').value;
+                const num = p.querySelector('.p-num').value;
+                const livro = p.querySelector('.p-livro').value;
+                const folhas = p.querySelector('.p-folhas').value;
+                const cart = p.querySelector('.p-cart').value || '[CARTÓRIO]';
+                const cid = p.querySelector('.p-cid').value || '[CIDADE]';
+
+                if (i === 0) {
+                    document.getElementById('outCartorioDest').innerText = cart.toUpperCase();
+                    document.getElementById('outCidadeDest').innerText = cid.toUpperCase();
+                    cidadeResidencia = cid;
                 }
 
-                // Montar texto do item
-                let texto = `Solicitamos a 2ª via da Certidão de Nascimento de <strong>${nome}</strong>`;
-                if(cpf) texto += `, inscrito(a) no CPF sob nº ${cpf}`;
-                texto += `, lavrada em <strong>${data}</strong>, sob nº <strong>${numero}</strong>, Livro <strong>${livro}</strong>, Folhas <strong>${folhas}</strong>`;
-                if(cartorio) texto += `, no <strong>${cartorio}</strong> de <strong>${cidade}</strong>`;
-                texto += `.`;
-
-                const li = document.createElement('li');
-                li.innerHTML = texto;
-                lista.appendChild(li);
+                let txt = `<strong>${i+1}.</strong> <strong>${nome.toUpperCase()}</strong>`;
+                if (cpf) txt += `, CPF nº ${cpf}`;
+                txt += `, nascido(a) em ${data}, registro nº ${num}, Livro ${livro}, Folhas ${folhas}, do ${cart} de ${cid}.`;
+                lista.innerHTML += `<li>${txt}</li>`;
             });
 
-            // Atualizar cabeçalho do ofício com dados do primeiro cartório encontrado (assumindo uniformidade para o endereçamento)
-            // Se quiser ser dinâmico, precisaria de lógica complexa, mas geralmente é um ofício por cartório.
-            document.getElementById('outOficioCartorio').innerText = cartorioPrincipal;
-            document.getElementById('outOficioCidadeCartorio').innerText = cidadePrincipal;
+            document.getElementById('outCidadeResidencia').innerText = cidadeResidencia || "[CIDADE]";
 
-            // Data Atual
-            const hoje = new Date();
-            const meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
-            document.getElementById('outOficioDataAtual').innerText = `${hoje.getDate()} de ${meses[hoje.getMonth()]} de ${hoje.getFullYear()}`;
-            
-            const cidadeBase = cidadePrincipal.split('-')[0] || 'Teresina';
-            document.getElementById('outOficioCidadeData').innerText = cidadeBase;
-
-            // Imprimir
-            document.getElementById('modeloOficio').style.display = 'block';
+            atualizarContador(seq);
             window.print();
-            document.getElementById('modeloOficio').style.display = 'none';
         }
 
+        // --- GERAÇÃO FICHA ---
         function gerarFicha() {
-            // Preencher Ficha
             document.getElementById('outFichaNome').innerText = document.getElementById('fichaNome').value.toUpperCase();
             document.getElementById('outFichaCPF').innerText = document.getElementById('fichaCPF').value;
-            document.getElementById('outFichaDataNasc').innerText = document.getElementById('fichaDataNasc').value;
+            document.getElementById('outFichaData').innerText = document.getElementById('fichaDataNasc').value;
             document.getElementById('outFichaPai').innerText = document.getElementById('fichaPai').value.toUpperCase();
             document.getElementById('outFichaMae').innerText = document.getElementById('fichaMae').value.toUpperCase();
             document.getElementById('outFichaTel').innerText = document.getElementById('fichaTel').value;
@@ -398,22 +425,34 @@
             document.getElementById('outFichaRenda').innerText = document.getElementById('fichaRenda').value;
             document.getElementById('outFichaEndereco').innerText = document.getElementById('fichaEndereco').value.toUpperCase();
 
-            // Radio Buttons
-            const corSelecionada = document.querySelector('input[name="cor"]:checked');
-            document.getElementById('outFichaCor').innerText = corSelecionada ? corSelecionada.value.toUpperCase() : '';
+            const corSel = document.querySelector('input[name="cor"]:checked');
+            const corOut = document.getElementById('corOutra').value;
+            let corTxt = corSel ? corSel.value.toUpperCase() : '';
+            if (corOut) corTxt += (corTxt ? ' - ' : '') + corOut.toUpperCase();
+            document.getElementById('outFichaCor').innerText = corTxt;
 
-            // Checkboxes
-            const acoes = [];
-            document.querySelectorAll('input[name="acao"]:checked').forEach((checkbox) => {
-                acoes.push(checkbox.value);
+            const acoesDiv = document.getElementById('outFichaAcoes');
+            acoesDiv.innerHTML = '';
+            document.querySelectorAll('input[name="acao"]:checked').forEach(c => {
+                acoesDiv.innerHTML += `<span class="ficha-opt"><span class="ficha-check">☑</span>${c.value.toUpperCase()}</span>`;
             });
-            document.getElementById('outFichaAcao').innerText = acoes.join(', ').toUpperCase();
 
-            // Imprimir
-            document.getElementById('modeloFicha').style.display = 'block';
+            const outrasVal = document.getElementById('acaoOutras').value;
+            document.getElementById('outFichaOutras').innerText = outrasVal ? `ESPECIFIQUE SE MARCOU "OUTRAS": ${outrasVal.toUpperCase()}` : '';
+
             window.print();
-            document.getElementById('modeloFicha').style.display = 'none';
         }
+
+        // Toggle campo "Outras"
+        document.querySelectorAll('input[name="acao"]').forEach(cb => {
+            cb.addEventListener('change', () => {
+                const outras = document.getElementById('acaoOutras');
+                const checkedOutras = document.querySelector('input[name="acao"][value="Outras"]');
+                outras.style.display = checkedOutras.checked ? 'block' : 'none';
+            });
+        });
+
+        window.onload = carregarDados;
     </script>
 </body>
 </html>
