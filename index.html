@@ -22,25 +22,20 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 .btn-outline{background:transparent;border:2px solid var(--verde);color:var(--verde);}
 .btn-danger{background:#c62828;color:#fff;font-size:11px;padding:5px 10px;}
 .btn-sm{padding:5px 10px;font-size:12px;}
-
-.sel-grupo{margin-top:6px;}
-.sel-grupo-titulo{font-size:12px;font-weight:700;color:var(--verde3);margin-bottom:8px;display:block;}
-.sel-cards{display:flex;flex-wrap:wrap;gap:8px;}
+.sel-cards{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
 .sel-card{position:relative;}
 .sel-card input[type=radio],.sel-card input[type=checkbox]{position:absolute;opacity:0;width:0;height:0;}
-.sel-card label{display:flex;align-items:center;gap:6px;padding:7px 13px;border:2px solid var(--borda);border-radius:20px;cursor:pointer;font-size:12.5px;font-weight:600;color:#555;background:#fff;transition:.15s;user-select:none;white-space:nowrap;}
+.sel-card label{display:flex;align-items:center;gap:5px;padding:7px 13px;border:2px solid var(--borda);border-radius:20px;cursor:pointer;font-size:12.5px;font-weight:600;color:#555;background:#fff;transition:.15s;user-select:none;white-space:nowrap;}
 .sel-card label:hover{border-color:var(--verde2);color:var(--verde2);background:var(--verdeClaro);}
-.sel-card input[type=radio]:checked+label,.sel-card input[type=checkbox]:checked+label{border-color:var(--verde);background:var(--verde);color:#fff;}
-
+.sel-card input:checked+label{border-color:var(--verde);background:var(--verde);color:#fff;}
 .sel-divisor{height:1px;background:var(--borda);margin:18px 0 16px;}
-
+.sel-titulo{font-size:12px;font-weight:700;color:var(--verde3);margin-bottom:4px;display:block;}
 #loginScreen{display:flex;justify-content:center;align-items:center;min-height:90vh;}
-.login-box{max-width:420px;width:100%;}
+.login-box{max-width:400px;width:100%;}
 .login-header{background:var(--verde);color:#fff;padding:18px;border-radius:8px 8px 0 0;text-align:center;}
 .login-body{background:#fff;padding:22px;border-radius:0 0 8px 8px;box-shadow:0 4px 12px rgba(0,0,0,0.12);}
 .login-dica{background:var(--verdeClaro);border-left:4px solid var(--verde);padding:10px;margin-bottom:14px;font-size:12px;color:var(--verde3);border-radius:0 4px 4px 0;}
-.erro-senha{color:#c62828;font-size:12px;text-align:center;margin-top:8px;display:none;}
-
+.erro-msg{color:#c62828;font-size:12px;text-align:center;margin-top:8px;display:none;}
 #dashboard{display:none;}
 .top-bar{display:flex;justify-content:space-between;align-items:center;background:#fff;padding:14px 18px;border-radius:8px;margin-bottom:18px;box-shadow:0 2px 6px rgba(0,0,0,0.05);flex-wrap:wrap;gap:12px;border-left:5px solid var(--verde);}
 .badge-num{background:var(--verdeClaro);border:1px solid var(--verdeMedio);padding:5px 12px;border-radius:6px;font-weight:700;color:var(--verde3);font-size:13px;}
@@ -51,7 +46,7 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 .hist-info h3{font-size:13px;margin-bottom:3px;color:var(--verde3);}
 .hist-info p{font-size:11px;color:#555;}
 .hist-acoes{display:flex;gap:7px;flex-wrap:wrap;}
-.secao-limpar{border-top:1px dashed var(--borda);padding-top:20px;margin-top:8px;text-align:center;}
+.secao-limpar{border-top:1px dashed var(--borda);padding-top:20px;margin-top:16px;text-align:center;}
 
 /* IMPRESSÃO */
 .area-print{display:none;}
@@ -60,15 +55,15 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
   .area-print,.area-print *{visibility:visible;}
   .area-print{position:absolute;left:0;top:0;width:100%;display:block!important;padding:0;margin:0;}
   .no-print{display:none!important;}
-  @page{margin:1.2cm 1.8cm;size:A4;}
+  @page{margin:1.2cm 1.8cm;size:A4 portrait;}
   .quebra{page-break-after:always;}
   .quebra:last-child{page-break-after:auto;}
 }
 
-/* ===== FICHA ===== */
+/* FICHA */
 .ficha-wrap{font-family:Arial,sans-serif;font-size:8.5pt;padding:0;}
 .ficha-topo{display:flex;align-items:center;gap:12px;border-bottom:3px solid #2E7D32;padding-bottom:8px;margin-bottom:8px;}
-.ficha-topo img{width:70px;height:auto;}
+.ficha-topo img{width:68px;height:auto;}
 .ficha-topo-txt{flex:1;text-align:center;}
 .ficha-topo-txt h2{color:#1B5E20;font-size:12pt;margin:0 0 1px;text-transform:uppercase;letter-spacing:.5px;border:none;padding:0;}
 .ficha-topo-txt p{color:#388E3C;font-size:7.5pt;margin:0;}
@@ -76,7 +71,7 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 .ficha-linha{display:flex;border-bottom:1px solid #bbb;padding:2px 0;align-items:flex-end;gap:6px;margin-bottom:2px;}
 .ficha-rot{font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;white-space:nowrap;flex-shrink:0;}
 .ficha-val{flex:1;border-bottom:1px dotted #999;min-height:12px;font-size:8pt;padding-left:3px;}
-.ficha-opcoes{display:flex;flex-wrap:wrap;gap:7px;margin:4px 0 5px;}
+.ficha-opcoes{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 4px;}
 .ficha-opcao{display:flex;align-items:center;gap:2px;font-size:7.5pt;}
 .ficha-check{width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-flex;align-items:center;justify-content:center;font-size:6.5pt;flex-shrink:0;}
 
@@ -84,29 +79,29 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 .decl-box{margin-top:8px;padding:8px;border:1.5px solid #2E7D32;font-size:7.5pt;line-height:1.35;text-align:justify;}
 .decl-titulo{font-weight:700;text-transform:uppercase;text-align:center;margin-bottom:6px;font-size:8.5pt;color:#1B5E20;}
 .decl-p{margin-bottom:6px;}
-.decl-assin-area{margin-top:22px;text-align:center;}
-.decl-assin-linha{border-top:1px solid #000;width:60%;margin:0 auto 3px;}
-.decl-data{text-align:right;margin-top:6px;font-size:7.5pt;}
+.decl-assin-area{margin-top:28px;text-align:center;}
+.decl-assin-linha{border-top:1px solid #000;width:58%;margin:0 auto 3px;}
+.decl-data{text-align:right;margin-top:5px;font-size:7.5pt;}
 
-/* ===== OFÍCIO ===== */
-.oficio-wrap{font-family:Arial,sans-serif;font-size:10pt;line-height:1.6;text-align:justify;}
-.oficio-cab{display:flex;align-items:center;gap:14px;border-bottom:2px solid #2E7D32;padding-bottom:8px;margin-bottom:16px;}
-.oficio-cab img{width:72px;height:auto;}
+/* OFÍCIO — A4 retrato */
+.oficio-wrap{font-family:Arial,sans-serif;font-size:10pt;line-height:1.65;text-align:justify;}
+.oficio-cab{display:flex;align-items:center;gap:14px;border-bottom:2px solid #2E7D32;padding-bottom:8px;margin-bottom:14px;}
+.oficio-cab img{width:70px;height:auto;}
 .oficio-cab-txt h3{color:#1B5E20;font-size:11pt;margin:0;text-transform:uppercase;letter-spacing:.3px;}
 .oficio-cab-txt p{color:#388E3C;font-size:8pt;margin:0;}
-.oficio-numloc{display:flex;justify-content:space-between;margin-bottom:16px;font-size:9.5pt;font-weight:700;}
-.oficio-dest{margin-bottom:12px;font-size:9.5pt;}
-.oficio-assunto{margin-bottom:12px;font-weight:700;font-size:9.5pt;}
-.oficio-p{margin-bottom:10px;text-indent:30px;font-size:9.5pt;}
-.oficio-fund{margin:12px 0;font-size:9.5pt;}
-.oficio-fund ol{padding-left:20px;margin-top:5px;}
-.oficio-fund li{margin-bottom:6px;}
-.oficio-obs{font-style:italic;padding:5px 0 5px 8px;border-left:3px solid #C8E6C9;margin:8px 0;font-size:9.5pt;}
-.oficio-assin-area{margin-top:38px;text-align:center;}
-.oficio-data-local{text-align:center;font-size:9.5pt;margin-bottom:28px;}
+.oficio-numero{font-size:9.5pt;font-weight:700;margin-bottom:14px;}
+.oficio-dest{margin-bottom:10px;font-size:9.5pt;}
+.oficio-assunto{margin-bottom:10px;font-weight:700;font-size:9.5pt;}
+.oficio-p{margin-bottom:9px;text-indent:28px;font-size:9.5pt;}
+.oficio-fund{margin:10px 0;font-size:9.5pt;}
+.oficio-fund ol{padding-left:18px;margin-top:4px;}
+.oficio-fund li{margin-bottom:5px;}
+.oficio-obs{font-style:italic;padding:4px 0 4px 8px;border-left:3px solid #C8E6C9;margin:7px 0;font-size:9.5pt;}
+.oficio-assin-area{margin-top:36px;text-align:center;}
+.oficio-data-assin{font-size:9.5pt;margin-bottom:26px;}
 .oficio-assin-linha{border-top:1px solid #000;width:55%;margin:0 auto 4px;}
-.oficio-assin-nome{font-weight:700;font-size:10pt;text-transform:uppercase;}
-.oficio-rodape{border-top:1px solid #ccc;margin-top:20px;padding-top:6px;font-size:8pt;color:#555;}
+.oficio-assin-nome{font-weight:700;font-size:10pt;}
+.oficio-rodape{border-top:1px solid #ccc;margin-top:18px;padding-top:5px;font-size:7.5pt;color:#555;}
 </style>
 </head>
 <body>
@@ -116,13 +111,13 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
   <div class="login-box">
     <div class="login-header">
       <div style="font-size:13px;font-weight:700;letter-spacing:.5px;">DEFENSORIA PÚBLICA DO ESTADO DO PIAUÍ</div>
-      <div style="font-size:11px;margin-top:2px;opacity:.9;">Diretoria de Atendimento Itinerante</div>
+      <div style="font-size:11px;margin-top:2px;opacity:.9;">Diretoria Itinerante</div>
     </div>
     <div class="login-body">
-      <div class="login-dica">🔒 Acesso restrito. Insira a senha de acesso ao sistema.</div>
+      <div class="login-dica">🔒 Acesso restrito. Informe seus dados e a senha do sistema.</div>
       <div class="form-group" style="margin-bottom:10px;">
         <label>Nome do(a) Defensor(a) Público(a):</label>
-        <input type="text" id="lgDefensor" placeholder="Ex: ROBERT RIOS MAGALHÃES JUNIOR" oninput="this.value=this.value.toUpperCase()">
+        <input type="text" id="lgDefensor" placeholder="Ex: Robert Rios Magalhães Junior" oninput="this.value=capitalizarTitulo(this.value)">
       </div>
       <div class="form-group" style="margin-bottom:10px;">
         <label>Unidade / Defensoria:</label>
@@ -132,8 +127,8 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
         <label>Senha de Acesso:</label>
         <input type="password" id="lgSenha" placeholder="••••••••" onkeydown="if(event.key==='Enter')fazerLogin()">
       </div>
-      <button class="btn btn-verde" style="width:100%;margin-top:4px;" onclick="fazerLogin()">🔐 ENTRAR NO SISTEMA</button>
-      <div class="erro-senha" id="erroSenha">❌ Senha incorreta. Tente novamente.</div>
+      <button class="btn btn-verde" style="width:100%;" onclick="fazerLogin()">🔐 ENTRAR NO SISTEMA</button>
+      <div class="erro-msg" id="erroSenha">❌ Senha incorreta. Tente novamente.</div>
     </div>
   </div>
 </div>
@@ -163,10 +158,10 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
       <div class="card">
         <h2>🧑 Dados do(a) Requerente</h2>
         <div style="background:var(--verdeClaro);border-left:4px solid var(--verde);padding:9px 12px;margin-bottom:16px;font-size:12px;color:var(--verde3);border-radius:0 4px 4px 0;">
-          ℹ️ O(A) requerente é quem comparece ao atendimento e assina os documentos. Os dados abaixo vão para a Ficha e para a Declaração de Hipossuficiência.
+          ℹ️ Dados do(a) requerente vão para a Ficha de Atendimento e para a Declaração de Hipossuficiência.
         </div>
         <div class="form-row">
-          <div class="form-group" style="flex:3;"><label>Nome Completo:</label><input type="text" id="r_nome" placeholder="Nome completo do(a) requerente" oninput="this.value=this.value.toUpperCase()"></div>
+          <div class="form-group" style="flex:3;"><label>Nome Completo:</label><input type="text" id="r_nome" placeholder="Nome completo" oninput="this.value=this.value.toUpperCase()"></div>
           <div class="form-group"><label>CPF:</label><input type="text" id="r_cpf" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)"></div>
         </div>
         <div class="form-row">
@@ -184,20 +179,18 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
           <div class="form-group"><label>Nome da Mãe:</label><input type="text" id="r_mae" placeholder="Nome da mãe" oninput="this.value=this.value.toUpperCase()"></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label>Profissão:</label><input type="text" id="r_prof" placeholder="Ex: Agricultora" oninput="capitalizarPalavras(this)"></div>
-          <div class="form-group"><label>Situação Econômica:</label><input type="text" id="r_sit" placeholder="Ex: Desempregada, sem renda fixa" oninput="capitalizarPalavras(this)"></div>
+          <div class="form-group"><label>Profissão:</label><input type="text" id="r_prof" placeholder="Ex: Agricultora" oninput="this.value=capitalizarTitulo(this.value)"></div>
           <div class="form-group"><label>Renda Média Familiar:</label><input type="text" id="r_renda" placeholder="R$ 0,00" oninput="mascaraRenda(this)" onfocus="iniciarRenda(this)"></div>
         </div>
         <div class="form-group" style="margin-bottom:4px;">
           <label>Endereço Completo:</label>
-          <input type="text" id="r_end" placeholder="Rua, Nº, Bairro, Município — UF" oninput="capitalizarPalavras(this)">
+          <input type="text" id="r_end" placeholder="Rua, Nº, Bairro, Município — UF" oninput="this.value=capitalizarTitulo(this.value)">
         </div>
 
         <div class="sel-divisor"></div>
 
-        <!-- COR/RAÇA -->
-        <div class="sel-grupo">
-          <span class="sel-grupo-titulo">🎨 Cor / Raça — Autodeclaração (IBGE)</span>
+        <div>
+          <span class="sel-titulo">🎨 Cor / Raça — Autodeclaração (IBGE)</span>
           <div class="sel-cards">
             <div class="sel-card"><input type="radio" name="cor" id="cor1" value="Branca"><label for="cor1">Branca</label></div>
             <div class="sel-card"><input type="radio" name="cor" id="cor2" value="Parda"><label for="cor2">Parda</label></div>
@@ -210,9 +203,8 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 
         <div class="sel-divisor"></div>
 
-        <!-- AÇÃO PRETENDIDA -->
-        <div class="sel-grupo">
-          <span class="sel-grupo-titulo">⚖️ Ação Pretendida — pode marcar mais de uma</span>
+        <div>
+          <span class="sel-titulo">⚖️ Ação Pretendida — pode marcar mais de uma</span>
           <div class="sel-cards">
             <div class="sel-card"><input type="checkbox" name="acao" id="ac1" value="Documentos"><label for="ac1">📄 Documentos</label></div>
             <div class="sel-card"><input type="checkbox" name="acao" id="ac2" value="Alimentos"><label for="ac2">🍽️ Alimentos</label></div>
@@ -227,25 +219,25 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
         </div>
       </div>
 
-      <!-- TITULAR DO DOCUMENTO (só para o ofício) -->
+      <!-- TITULAR DO DOCUMENTO -->
       <div class="card">
-        <h2>📄 Titular do Documento <span style="font-size:12px;font-weight:400;color:#888;">(dados usados apenas no Ofício)</span></h2>
+        <h2>📄 Titular do Documento <span style="font-size:12px;font-weight:400;color:#888;">(dados apenas para o Ofício)</span></h2>
         <div style="background:#fff8e1;border-left:4px solid #f9a825;padding:9px 12px;margin-bottom:14px;font-size:12px;color:#5d4037;border-radius:0 4px 4px 0;">
-          ⚠️ Preencha apenas se o titular for diferente do requerente (ex: filho menor). Selecione "Próprio(a)" se for a mesma pessoa.
+          ⚠️ Preencha somente se o titular for diferente do(a) requerente. Selecione "Próprio(a)" se for a mesma pessoa.
         </div>
         <div class="form-row">
           <div class="form-group" style="flex:3;"><label>Nome Completo do Titular:</label><input type="text" id="t_nome" placeholder="Deixe em branco se for o próprio requerente" oninput="this.value=this.value.toUpperCase()"></div>
           <div class="form-group"><label>Data de Nascimento do Titular:</label><input type="text" id="t_nasc" placeholder="DD/MM/AAAA" maxlength="10" oninput="mascaraData(this)"></div>
         </div>
-        <div class="form-group" style="margin-bottom:6px;">
+        <div class="form-group">
           <label>Parentesco do(a) Requerente com o Titular:</label>
-          <div class="sel-cards" style="margin-top:8px;">
+          <div class="sel-cards">
             <div class="sel-card"><input type="radio" name="tpar" id="tp0" value="Próprio(a)"><label for="tp0">Próprio(a)</label></div>
-            <div class="sel-card"><input type="radio" name="tpar" id="tp1" value="Pai/Mãe"><label for="tp1">Pai / Mãe</label></div>
-            <div class="sel-card"><input type="radio" name="tpar" id="tp2" value="Avô/Avó"><label for="tp2">Avô / Avó</label></div>
+            <div class="sel-card"><input type="radio" name="tpar" id="tp1" value="Genitor(a)"><label for="tp1">Genitor(a)</label></div>
+            <div class="sel-card"><input type="radio" name="tpar" id="tp2" value="Avô/Avó"><label for="tp2">Avô/Avó</label></div>
             <div class="sel-card"><input type="radio" name="tpar" id="tp3" value="Esposo(a)"><label for="tp3">Esposo(a)</label></div>
             <div class="sel-card"><input type="radio" name="tpar" id="tp4" value="Tio(a)"><label for="tp4">Tio(a)</label></div>
-            <div class="sel-card"><input type="radio" name="tpar" id="tp5" value="Tutor(a)/Curador(a)"><label for="tp5">Tutor(a) / Curador(a)</label></div>
+            <div class="sel-card"><input type="radio" name="tpar" id="tp5" value="Tutor(a)/Curador(a)"><label for="tp5">Tutor(a)/Curador(a)</label></div>
             <div class="sel-card"><input type="radio" name="tpar" id="tp6" value="Filho(a)"><label for="tp6">Filho(a)</label></div>
             <div class="sel-card"><input type="radio" name="tpar" id="tp7" value="Convivente"><label for="tp7">Convivente</label></div>
             <div class="sel-card"><input type="radio" name="tpar" id="tp8" value="Outro(a)"><label for="tp8">Outro(a)</label></div>
@@ -257,12 +249,12 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
       <div class="card">
         <h2>📜 Dados do Registro Civil</h2>
         <div class="form-row">
-          <div class="form-group" style="flex:2;"><label>Nome do Cartório / Ofício:</label><input type="text" id="rc_cartorio" placeholder="Ex: 1º Ofício de Registro Civil" oninput="capitalizarPalavras(this)"></div>
-          <div class="form-group"><label>Cidade / Comarca:</label><input type="text" id="rc_cidade" placeholder="Ex: Simplício Mendes/PI" oninput="capitalizarPalavras(this)"></div>
+          <div class="form-group" style="flex:2;"><label>Nome do Cartório / Ofício:</label><input type="text" id="rc_cartorio" placeholder="Ex: 1º Ofício de Registro Civil" oninput="this.value=capitalizarTitulo(this.value)"></div>
+          <div class="form-group"><label>Cidade / Comarca:</label><input type="text" id="rc_cidade" placeholder="Ex: Simplício Mendes/PI" oninput="this.value=capitalizarTitulo(this.value)"></div>
         </div>
         <div class="form-row">
           <div class="form-group"><label>Número do Registro / Termo:</label><input type="text" id="rc_num" placeholder="Ex: 14.766"></div>
-          <div class="form-group"><label>Livro:</label><input type="text" id="rc_livro" placeholder="Ex: A-22"></div>
+          <div class="form-group"><label>Livro:</label><input type="text" id="rc_livro" placeholder="Ex: A-22" oninput="this.value=this.value.toUpperCase()"></div>
           <div class="form-group"><label>Folha:</label><input type="text" id="rc_folha" placeholder="Ex: 210v"></div>
           <div class="form-group" style="flex:2;"><label>Matrícula Completa (opcional):</label><input type="text" id="rc_matricula" placeholder="Opcional"></div>
         </div>
@@ -301,13 +293,11 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
   <!-- PÁG 1: FICHA + DECLARAÇÃO -->
   <div id="printFicha" class="quebra">
     <div class="ficha-wrap">
-
-      <!-- Cabeçalho com logo PNG real -->
       <div class="ficha-topo">
-        <img id="logoFicha" src="" alt="DPE-PI">
+        <img id="logoFicha" src="https://raw.githubusercontent.com/dpepigpt-glitch/calculadora-alimentar-dpe/main/public/logo-dpe.png" alt="DPE-PI" onerror="this.style.display='none'">
         <div class="ficha-topo-txt">
           <h2>Ficha de Atendimento</h2>
-          <p>Defensoria Pública do Estado do Piauí &nbsp;·&nbsp; Diretoria de Atendimento Itinerante</p>
+          <p>Defensoria Pública do Estado do Piauí &nbsp;·&nbsp; Diretoria Itinerante</p>
           <p style="color:#777;font-size:7pt;margin-top:1px;">Uso exclusivo do serviço · Tratamento sigiloso</p>
         </div>
       </div>
@@ -329,64 +319,53 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
         <div style="flex:2;"><div class="ficha-linha"><span class="ficha-rot">Renda Familiar:</span><span class="ficha-val" id="p_rRenda"></span></div></div>
       </div>
       <div class="ficha-linha"><span class="ficha-rot">Endereço:</span><span class="ficha-val" id="p_rEnd"></span></div>
-      <div id="p_sitBloco"><div class="ficha-linha"><span class="ficha-rot">Situação Econômica:</span><span class="ficha-val" id="p_rSit"></span></div></div>
 
-      <!-- Cor/Raça e Ação lado a lado -->
       <div style="display:flex;gap:0;margin-top:8px;border:1px solid #C8E6C9;border-radius:3px;overflow:hidden;">
         <div style="flex:1;padding:5px 8px;border-right:2px solid #C8E6C9;">
           <div style="background:#1B5E20;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:4px;">Cor / Raça (IBGE)</div>
-          <div id="p_cor" class="ficha-opcoes" style="gap:5px;"></div>
+          <div id="p_cor" class="ficha-opcoes"></div>
         </div>
         <div style="flex:2;padding:5px 8px;">
           <div style="background:#2E7D32;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:4px;">Ação Pretendida</div>
-          <div id="p_acoes" class="ficha-opcoes" style="gap:5px;"></div>
+          <div id="p_acoes" class="ficha-opcoes"></div>
           <div id="p_outras" style="font-size:7pt;font-style:italic;margin-top:2px;"></div>
         </div>
       </div>
 
-      <!-- DECLARAÇÃO DE HIPOSSUFICIÊNCIA -->
+      <!-- DECLARAÇÃO -->
       <div class="decl-box">
         <div class="decl-titulo">Declaração de Hipossuficiência</div>
-        <div class="decl-p">
-          <strong>DECLARO</strong>, para fins de obtenção de <strong>ASSISTÊNCIA JURÍDICA</strong> pela <strong>DEFENSORIA PÚBLICA DO ESTADO DO PIAUÍ</strong>, que recebo mensalmente a importância líquida de <strong id="d_renda">R$&nbsp;____________</strong>, sendo pessoa pobre na forma da lei, não podendo, portanto, arcar com as custas processuais e honorários advocatícios sem prejuízo do próprio sustento e de minha família, nos termos do art. 5.º, LXXIV, da Constituição Federal c.c. os arts. 1.º a 4.º da Lei n.º 1.060/1950 e art. 1.º da Lei n.º 7.115/1983.
-        </div>
+        <div class="decl-p" id="d_texto"></div>
         <div class="decl-p">
           Outrossim, declaro estar ciente de que a prestação de informações falsas perante funcionário público poderá tipificar o crime de falsidade ideológica, previsto no art. 299 do Código Penal Brasileiro, cuja pena é de reclusão de 1 (um) a 5 (cinco) anos e multa.
         </div>
         <div class="decl-p">
           <strong>AUTORIZAÇÃO LGPD</strong> — Conforme a Lei Geral de Proteção de Dados Pessoais (Lei n.º 13.709/2018), <strong>AUTORIZO</strong> a Defensoria Pública do Estado do Piauí a incluir meus dados pessoais nas peças processuais e expedientes relacionados à assistência jurídica prestada, para fins exclusivamente legais e processuais.
         </div>
-
-        <!-- Assinatura da requerente — espaço generoso -->
         <div class="decl-assin-area">
-          <div style="height:32px;"></div>
+          <div style="height:30px;"></div>
           <div class="decl-assin-linha"></div>
-          <div style="font-size:8pt;margin-top:2px;" id="p_nomeAssinHipo"></div>
-          <div style="font-size:7.5pt;color:#555;">Assinatura do(a) Requerente</div>
+          <div style="font-size:8pt;margin-top:3px;" id="p_nomeAssinHipo"></div>
+          <div style="font-size:7.5pt;color:#555;">Requerente</div>
         </div>
         <div class="decl-data" id="p_dataFicha"></div>
       </div>
-
-    </div><!-- /ficha-wrap -->
-  </div><!-- /printFicha -->
+    </div>
+  </div>
 
   <!-- PÁG 2: OFÍCIO -->
   <div id="printOficio">
     <div class="oficio-wrap">
-
-      <!-- Cabeçalho com logo PNG real -->
       <div class="oficio-cab">
-        <img id="logoOficio" src="" alt="DPE-PI">
+        <img id="logoOficio" src="https://raw.githubusercontent.com/dpepigpt-glitch/calculadora-alimentar-dpe/main/public/logo-dpe.png" alt="DPE-PI" onerror="this.style.display='none'">
         <div class="oficio-cab-txt">
           <h3>Defensoria Pública do Estado do Piauí</h3>
           <p id="o_unidade"></p>
+          <p style="color:#555;font-size:7.5pt;" id="o_jornada"></p>
         </div>
       </div>
 
-      <div class="oficio-numloc">
-        <span id="o_numero"></span>
-      </div>
-
+      <div class="oficio-numero" id="o_numero"></div>
       <div class="oficio-dest" id="o_dest"></div>
       <div class="oficio-assunto"><u>Assunto:</u> Requisição de emissão gratuita da 2.ª via de certidão de nascimento</div>
       <div class="oficio-p" id="o_corpo"></div>
@@ -404,9 +383,8 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
       <div class="oficio-p" id="o_encer"></div>
       <div id="o_obsWrap" style="display:none;"><div class="oficio-obs" id="o_obs"></div></div>
 
-      <!-- Assinatura do defensor — com data centralizada acima -->
       <div class="oficio-assin-area">
-        <div class="oficio-data-local" id="o_localdata"></div>
+        <div class="oficio-data-assin" id="o_localdata"></div>
         <div class="oficio-assin-linha"></div>
         <div class="oficio-assin-nome" id="o_defNome"></div>
         <div style="font-size:9.5pt;">Defensor(a) Público(a)</div>
@@ -421,63 +399,75 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 
 <script>
 var atendAtual = null;
-var LOGO_B64 = '';
-var SENHA_CORRETA = 'DITI2027';
+var SENHA = 'DITI2027';
 
 /* ===== MÁSCARAS ===== */
 function mascaraCPF(el){var v=el.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);v=v.replace(/(\d{3})(\d)/,'$1.$2');v=v.replace(/(\d{3})(\d)/,'$1.$2');v=v.replace(/(\d{3})(\d{1,2})$/,'$1-$2');el.value=v;}
 function mascaraData(el){var v=el.value.replace(/\D/g,'');if(v.length>8)v=v.slice(0,8);v=v.replace(/(\d{2})(\d)/,'$1/$2');v=v.replace(/(\d{2})(\d)/,'$1/$2');el.value=v;}
 function mascaraTel(el){var v=el.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);if(v.length<=10){v=v.replace(/(\d{2})(\d)/,'($1) $2');v=v.replace(/(\d{4})(\d)/,'$1-$2');}else{v=v.replace(/(\d{2})(\d)/,'($1) $2');v=v.replace(/(\d{5})(\d)/,'$1-$2');}el.value=v;}
-function iniciarRenda(el){if(!el.value)el.value='R$ ';}
-function mascaraRenda(el){var raw=el.value.replace(/[^\d]/g,'');if(!raw){el.value='R$ ';return;}var num=parseInt(raw,10);var reais=Math.floor(num/100);var cents=num%100;var r=reais.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');el.value='R$ '+r+','+(cents<10?'0':'')+cents;}
-function capitalizarPalavras(el){el.value=el.value.replace(/\b\w/g,function(c){return c.toUpperCase();});}
-
-/* Iniciais em maiúsculo (para nome defensor) */
-function iniciaisNome(nome){
-  return nome.split(' ').map(function(p){
-    if(!p) return '';
-    return p.charAt(0).toUpperCase()+p.slice(1).toLowerCase();
-  }).join(' ');
+function iniciarRenda(el){if(!el.value||el.value==='R$ ')el.value='R$ ';}
+function mascaraRenda(el){
+  var raw=el.value.replace(/[^\d]/g,'');
+  if(!raw){el.value='R$ ';return;}
+  var num=parseInt(raw,10);
+  var reais=Math.floor(num/100);
+  var cents=num%100;
+  var r=reais.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  el.value='R$ '+r+','+(cents<10?'0':'')+cents;
 }
 
-/* ===== LOGO PNG ===== */
-/* Tenta carregar logo salvo; se não houver, mostra campo de upload invisível */
-function carregarLogo(){
-  var saved=localStorage.getItem('dpe_logo');
-  if(saved){LOGO_B64=saved;aplicarLogo();}
-}
-function aplicarLogo(){
-  if(!LOGO_B64) return;
-  document.getElementById('logoFicha').src=LOGO_B64;
-  document.getElementById('logoOficio').src=LOGO_B64;
+/* Capitaliza apenas o primeiro caractere de cada palavra,
+   sem deixar maiúsculo após letras acentuadas */
+function capitalizarTitulo(str){
+  return str.replace(/(?:^|\s)\S/g,function(c){return c.toUpperCase();});
 }
 
-/* INPUT FILE para capturar o PNG enviado pelo usuário no chat (via clipboard/drag ou campo) */
-/* Como estamos no artifact, vamos usar um campo oculto de upload */
-function solicitarLogo(){
-  var inp=document.createElement('input');
-  inp.type='file';inp.accept='image/*';
-  inp.onchange=function(e){
-    var file=e.target.files[0];if(!file) return;
-    var reader=new FileReader();
-    reader.onload=function(ev){
-      LOGO_B64=ev.target.result;
-      try{localStorage.setItem('dpe_logo',LOGO_B64);}catch(x){}
-      aplicarLogo();
-      document.getElementById('btnLogo').innerText='✅ Logo carregada';
-    };
-    reader.readAsDataURL(file);
-  };
-  inp.click();
+/* Converte valor em reais por extenso (simplificado até 9.999) */
+function valorPorExtenso(valor){
+  var unidades=['zero','um','dois','três','quatro','cinco','seis','sete','oito','nove',
+    'dez','onze','doze','treze','quatorze','quinze','dezesseis','dezessete','dezoito','dezenove'];
+  var dezenas=['','','vinte','trinta','quarenta','cinquenta','sessenta','setenta','oitenta','noventa'];
+  var centenas=['','cem','duzentos','trezentos','quatrocentos','quinhentos','seiscentos','setecentos','oitocentos','novecentos'];
+  if(isNaN(valor)||valor<0) return '';
+  var reais=Math.floor(valor);
+  var cents=Math.round((valor-reais)*100);
+  function grupo(n){
+    if(n===0) return '';
+    if(n<=19) return unidades[n];
+    if(n<100){
+      var d=Math.floor(n/10);var u=n%10;
+      return dezenas[d]+(u?' e '+unidades[u]:'');
+    }
+    var c=Math.floor(n/100);var r=n%100;
+    if(r===0) return centenas[c];
+    if(c===1) return 'cento e '+grupo(r);
+    return centenas[c]+' e '+grupo(r);
+  }
+  function milhar(n){
+    if(n===0) return 'zero';
+    if(n<1000) return grupo(n);
+    var m=Math.floor(n/1000);var r=n%1000;
+    var milStr=m===1?'mil':grupo(m)+' mil';
+    return r===0?milStr:milStr+(r<100?' e ':' ')+grupo(r);
+  }
+  var partes=[];
+  if(reais>0) partes.push(milhar(reais)+(reais===1?' real':' reais'));
+  if(cents>0) partes.push(grupo(cents)+(cents===1?' centavo':' centavos'));
+  if(partes.length===0) return 'zero reais';
+  return partes.join(' e ');
+}
+
+function rendaFormatadaParaNumero(str){
+  if(!str||str==='R$ ') return 0;
+  var limpo=str.replace('R$ ','').replace(/\./g,'').replace(',','.');
+  return parseFloat(limpo)||0;
 }
 
 /* ===== INICIALIZAÇÃO ===== */
 window.onload=function(){
-  carregarLogo();
-  /* Verifica sessão salva */
   try{
     var sess=JSON.parse(localStorage.getItem('dpe_sessao')||'null');
-    if(sess&&sess.nome){iniciarSistema(sess);}
+    if(sess&&sess.nome) iniciarSistema(sess);
   }catch(e){}
   document.getElementById('ac8').addEventListener('change',function(){
     document.getElementById('f_outras').style.display=this.checked?'block':'none';
@@ -491,7 +481,7 @@ function fazerLogin(){
   var senha=(document.getElementById('lgSenha').value||'').trim();
   var err=document.getElementById('erroSenha');
   if(!nome||!unidade){alert('Preencha nome e unidade.');return;}
-  if(senha!==SENHA_CORRETA){err.style.display='block';document.getElementById('lgSenha').value='';return;}
+  if(senha!==SENHA){err.style.display='block';document.getElementById('lgSenha').value='';return;}
   err.style.display='none';
   var sess={nome:nome,unidade:unidade};
   try{localStorage.setItem('dpe_sessao',JSON.stringify(sess));}catch(e){}
@@ -504,15 +494,11 @@ function iniciarSistema(sess){
   atualizarBadge();
 }
 function sair(){if(confirm('Sair?')){localStorage.removeItem('dpe_sessao');location.reload();}}
-
-/* ===== BADGE ===== */
 function atualizarBadge(){
   var lista=JSON.parse(localStorage.getItem('dpe_atendimentos')||'[]');
   var s=String(lista.length+1);while(s.length<3)s='0'+s;
   document.getElementById('badgeProximo').innerText='Próximo: Ofício nº '+s;
 }
-
-/* ===== ABAS ===== */
 function mostrarAba(aba){
   if(aba==='novo'){
     document.getElementById('abaNovo').style.display='block';
@@ -529,8 +515,6 @@ function mostrarAba(aba){
     renderizarHistorico();
   }
 }
-
-/* ===== COLETAR ===== */
 function coletar(){
   var acoes=[];
   document.querySelectorAll('input[name="acao"]:checked').forEach(function(c){acoes.push(c.value);});
@@ -545,7 +529,6 @@ function coletar(){
     rPai:(document.getElementById('r_pai').value||'').trim(),
     rMae:(document.getElementById('r_mae').value||'').trim(),
     rProf:(document.getElementById('r_prof').value||'').trim(),
-    rSit:(document.getElementById('r_sit').value||'').trim(),
     rRenda:(document.getElementById('r_renda').value||'').trim(),
     rEnd:(document.getElementById('r_end').value||'').trim(),
     cor:corEl?corEl.value:'',
@@ -564,6 +547,13 @@ function coletar(){
   };
 }
 
+/* ===== NOME DO ARQUIVO PDF ===== */
+function gerarNomeArquivo(atend){
+  var num=String(atend.numSeq);while(num.length<3)num='0'+num;
+  var jornada=(atend.sess&&atend.sess.unidade?atend.sess.unidade:'').replace(/[^a-zA-Z0-9\s]/g,'').replace(/\s+/g,'').toLowerCase();
+  return 'OF'+num+jornada+'.pdf';
+}
+
 /* ===== SALVAR E GERAR ===== */
 function salvarEGerarPDF(){
   var d=coletar();
@@ -575,25 +565,28 @@ function salvarEGerarPDF(){
   var numOficio=numStr+'/'+new Date().getFullYear();
   var atend={id:atendAtual?atendAtual.id:Date.now(),numSeq:numSeq,numOficio:numOficio,data:new Date().toLocaleDateString('pt-BR'),sess:sess,ficha:d};
   if(atendAtual){var idx=lista.findIndex(function(a){return a.id===atendAtual.id;});if(idx>=0)lista[idx]=atend;else lista.push(atend);}
-  else{lista.push(atend);}
+  else lista.push(atend);
   try{localStorage.setItem('dpe_atendimentos',JSON.stringify(lista));}catch(e){}
   atendAtual=atend;
   preencherFicha(atend);
   preencherOficio(atend);
   atualizarBadge();
-  setTimeout(function(){window.print();},400);
+  /* Tenta definir título da janela para sugerir nome do arquivo ao "Salvar como PDF" */
+  var nomeArq=gerarNomeArquivo(atend);
+  var tituloOriginal=document.title;
+  document.title=nomeArq;
+  setTimeout(function(){
+    window.print();
+    setTimeout(function(){document.title=tituloOriginal;},2000);
+  },400);
 }
 
 var MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-function cidadeBase(f,sess){
-  if(f.rcCidade) return f.rcCidade.split('/')[0].trim();
-  return 'Local';
-}
+function cidadeBase(f){if(f.rcCidade) return f.rcCidade.split('/')[0].trim();return '';}
 
 /* ===== PREENCHER FICHA ===== */
 function preencherFicha(atend){
   var f=atend.ficha;var sess=atend.sess||{};
-  aplicarLogo();
   document.getElementById('p_rNome').innerText=f.rNome||'';
   document.getElementById('p_rCPF').innerText=f.rCPF||'';
   document.getElementById('p_rNasc').innerText=f.rNasc||'';
@@ -604,8 +597,6 @@ function preencherFicha(atend){
   document.getElementById('p_rProf').innerText=f.rProf||'';
   document.getElementById('p_rRenda').innerText=f.rRenda||'';
   document.getElementById('p_rEnd').innerText=f.rEnd||'';
-  var sb=document.getElementById('p_sitBloco');
-  if(f.rSit){sb.style.display='block';document.getElementById('p_rSit').innerText=f.rSit;}else{sb.style.display='none';}
 
   var coresAll=['Branca','Parda','Preta','Amarela','Indígena','Não Declarar'];
   var corDiv=document.getElementById('p_cor');corDiv.innerHTML='';
@@ -616,27 +607,34 @@ function preencherFicha(atend){
   acoesAll.forEach(function(a){var sp=document.createElement('span');sp.className='ficha-opcao';var ok=f.acoes&&f.acoes.indexOf(a)>=0;sp.innerHTML='<span class="ficha-check">'+(ok?'✓':'')+'</span> '+a;aDiv.appendChild(sp);});
   document.getElementById('p_outras').innerText=(f.outras&&f.acoes&&f.acoes.indexOf('Outras')>=0)?'Especif.: '+f.outras:'';
 
-  var renda=f.rRenda&&f.rRenda!=='R$ '?f.rRenda:'R$\u00a0____________';
-  document.getElementById('d_renda').innerText=renda;
+  /* Declaração de hipossuficiência — texto com profissão e renda */
+  var numRenda=rendaFormatadaParaNumero(f.rRenda);
+  var rendaStr=f.rRenda&&f.rRenda!=='R$ '?f.rRenda:'R$ ____________';
+  var extenso=numRenda>0?valorPorExtenso(numRenda):'____________';
+  var textoDecl='<strong>DECLARO</strong>, para fins de obtenção de <strong>ASSISTÊNCIA JURÍDICA</strong> pela <strong>DEFENSORIA PÚBLICA DO ESTADO DO PIAUÍ</strong>, que sou pessoa pobre na forma da lei, não podendo arcar com as custas processuais e honorários advocatícios sem prejuízo do próprio sustento e de minha família, nos termos do art. 5.º, LXXIV, da Constituição Federal c.c. os arts. 1.º a 4.º da Lei n.º 1.060/1950 e art. 1.º da Lei n.º 7.115/1983.';
+  if(f.rProf||numRenda>0){
+    textoDecl+=' O(A) Requerente';
+    if(f.rProf) textoDecl+=' atua como <strong>'+f.rProf+'</strong>,';
+    textoDecl+=' auferindo renda média de <strong>'+rendaStr+' ('+extenso+')</strong>.';
+  }
+  document.getElementById('d_texto').innerHTML=textoDecl;
 
-  /* Nome sob assinatura da hipo */
-  document.getElementById('p_nomeAssinHipo').innerText=iniciaisNome(f.rNome||'');
+  document.getElementById('p_nomeAssinHipo').innerText=capitalizarTitulo(f.rNome.toLowerCase());
 
   var hoje=new Date();
-  var cb=cidadeBase(f,sess);
-  document.getElementById('p_dataFicha').innerText=cb+', '+hoje.getDate()+' de '+MESES[hoje.getMonth()]+' de '+hoje.getFullYear()+'.';
+  var cb=cidadeBase(f);
+  document.getElementById('p_dataFicha').innerText=(cb?cb+', ':'')+hoje.getDate()+' de '+MESES[hoje.getMonth()]+' de '+hoje.getFullYear()+'.';
 }
 
 /* ===== PREENCHER OFÍCIO ===== */
 function preencherOficio(atend){
   var f=atend.ficha;var sess=atend.sess||{};
-  aplicarLogo();
   document.getElementById('o_unidade').innerText=sess.unidade||'';
   document.getElementById('o_numero').innerText='OFÍCIO N.º '+atend.numOficio;
 
   var hoje=new Date();
-  var cb=cidadeBase(f,sess);
-  document.getElementById('o_localdata').innerText=cb+', '+hoje.getDate()+' de '+MESES[hoje.getMonth()]+' de '+hoje.getFullYear()+'.';
+  var cb=cidadeBase(f);
+  document.getElementById('o_localdata').innerText=(cb?cb+', ':'')+hoje.getDate()+' de '+MESES[hoje.getMonth()]+' de '+hoje.getFullYear()+'.';
 
   var destTxt='Ao(À) Senhor(a) Oficial(a) do '+(f.rcCartorio||'Cartório de Registro Civil');
   if(f.rcCidade) destTxt+=' da Comarca de '+f.rcCidade;
@@ -662,13 +660,17 @@ function preencherOficio(atend){
   else{c1+='do(a) requerente, <strong>'+nomeR+'</strong>';if(f.tParentesco) c1+=', '+f.tParentesco.toLowerCase()+' do(a) titular';c1+=', conforme declaração de hipossuficiência anexa.';}
   document.getElementById('o_corpo').innerHTML=c1;
 
+  /* Parágrafo de situação econômica */
   var p2w=document.getElementById('o_p2wrap');
-  if(f.rSit||f.rProf||f.rRenda){
+  var numRenda=rendaFormatadaParaNumero(f.rRenda);
+  if(f.rProf||numRenda>0){
     var c2='O(A) requerente, <strong>'+nomeR+'</strong>';
-    if(f.rSit) c2+=', '+f.rSit.toLowerCase();
-    if(f.rProf) c2+=', atuando como '+f.rProf.toLowerCase();
-    if(f.rRenda&&f.rRenda!=='R$ ') c2+=', com renda familiar de '+f.rRenda;
-    c2+=', conforme declaração de hipossuficiência e documentação anexas.';
+    if(f.rProf) c2+=', atua como <strong>'+f.rProf+'</strong>';
+    if(numRenda>0){
+      var extenso=valorPorExtenso(numRenda);
+      c2+=', auferindo renda média de <strong>'+f.rRenda+' ('+extenso+')</strong>';
+    }
+    c2+='.';
     document.getElementById('o_corpo2').innerHTML=c2;
     p2w.style.display='block';
   }else{p2w.style.display='none';}
@@ -682,12 +684,11 @@ function preencherOficio(atend){
   document.getElementById('o_encer').innerHTML=enc;
 
   if(f.obs){document.getElementById('o_obs').innerText=f.obs;document.getElementById('o_obsWrap').style.display='block';}
-  else{document.getElementById('o_obsWrap').style.display='none';}
+  else document.getElementById('o_obsWrap').style.display='none';
 
-  /* Assinatura do defensor — iniciais maiúsculas */
-  document.getElementById('o_defNome').innerText=iniciaisNome(sess.nome||'');
+  document.getElementById('o_defNome').innerText=capitalizarTitulo((sess.nome||'').toLowerCase());
   document.getElementById('o_defUnidade').innerText=sess.unidade||'';
-  document.getElementById('o_rodape').innerHTML='<strong>'+(sess.unidade||'')+'</strong><br>Gerado em: '+hoje.toLocaleDateString('pt-BR')+' &nbsp;·&nbsp; Ofício n.º '+atend.numOficio;
+  document.getElementById('o_rodape').innerHTML='<strong>'+(sess.unidade||'')+'</strong> &nbsp;·&nbsp; Diretoria Itinerante<br>Gerado em: '+hoje.toLocaleDateString('pt-BR')+' &nbsp;·&nbsp; Ofício n.º '+atend.numOficio;
 }
 
 /* ===== HISTÓRICO ===== */
@@ -710,7 +711,6 @@ function renderizarHistorico(){
     })(lista[i]);
   }
 }
-
 function abrirAtend(id){
   var lista=JSON.parse(localStorage.getItem('dpe_atendimentos')||'[]');
   var att=lista.find(function(a){return a.id===id;});
@@ -724,7 +724,6 @@ function abrirAtend(id){
   document.getElementById('r_pai').value=f.rPai||'';
   document.getElementById('r_mae').value=f.rMae||'';
   document.getElementById('r_prof').value=f.rProf||'';
-  document.getElementById('r_sit').value=f.rSit||'';
   document.getElementById('r_renda').value=f.rRenda||'';
   document.getElementById('r_end').value=f.rEnd||'';
   document.querySelectorAll('input[name="cor"]').forEach(function(r){r.checked=(r.value===f.cor);});
@@ -744,7 +743,6 @@ function abrirAtend(id){
   mostrarAba('novo');
   document.getElementById('titPagina').innerText='Editando: Ofício n.º '+att.numOficio;
 }
-
 function reimprimirAtend(id){
   var lista=JSON.parse(localStorage.getItem('dpe_atendimentos')||'[]');
   var att=lista.find(function(a){return a.id===id;});
@@ -752,7 +750,6 @@ function reimprimirAtend(id){
   preencherFicha(att);preencherOficio(att);
   setTimeout(function(){window.print();},300);
 }
-
 function excluirAtend(id){
   if(!confirm('Excluir permanentemente?')) return;
   var lista=JSON.parse(localStorage.getItem('dpe_atendimentos')||'[]');
@@ -760,9 +757,8 @@ function excluirAtend(id){
   localStorage.setItem('dpe_atendimentos',JSON.stringify(lista));
   renderizarHistorico();atualizarBadge();
 }
-
 function novoAtendimento(){
-  if(!confirm('Limpar formulário? Os dados já salvos no histórico não serão perdidos.')) return;
+  if(!confirm('Limpar formulário?')) return;
   document.querySelectorAll('#abaNovo input[type="text"],#abaNovo textarea').forEach(function(i){i.value='';});
   document.querySelectorAll('#abaNovo input[type="checkbox"],#abaNovo input[type="radio"]').forEach(function(i){i.checked=false;});
   document.querySelectorAll('#abaNovo select').forEach(function(s){s.value='';});
@@ -772,11 +768,5 @@ function novoAtendimento(){
   atualizarBadge();
 }
 </script>
-
-<!-- Botão flutuante discreto para carregar logo -->
-<div class="no-print" style="position:fixed;bottom:18px;right:18px;z-index:999;">
-  <button id="btnLogo" class="btn btn-outline btn-sm" onclick="solicitarLogo()" style="font-size:11px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.15);">🖼️ Carregar Logo DPE</button>
-</div>
-
 </body>
 </html>
