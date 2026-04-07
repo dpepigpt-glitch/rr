@@ -335,6 +335,12 @@ h2{color:var(--v);border-bottom:2px solid var(--vm);padding-bottom:7px;margin-bo
         </div>
         <div id="buscaInfo" style="font-size:12px;color:#666;margin-bottom:10px;"></div>
         <div id="buscaResultados"></div>
+
+        <!-- RELATÓRIOS SALVOS -->
+        <div style="margin-top:24px;">
+          <div style="font-weight:700;font-size:14px;color:var(--v3);border-bottom:2px solid var(--vm);padding-bottom:6px;margin-bottom:12px;">📁 Relatórios de Jornadas Encerradas</div>
+          <div id="listaRelatorios"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -706,12 +712,127 @@ function encerrarJornada(){
   var s=prompt('🔒 Senha para encerrar jornada:');
   if(!s)return;
   if(s!==SENHA){alert('❌ Senha incorreta.');return;}
-  if(confirm('⚠️ Encerrar jornada "'+sessao.jornadaNome+'"?\nO contador e o histórico desta jornada serão zerados.')){
+  if(!confirm('⚠️ Encerrar jornada "'+sessao.jornadaNome+'"?\nUm relatório será gerado e salvo antes de limpar os dados.'))return;
+
+  var lista=JSON.parse(localStorage.getItem(chaveAtend(sessao.jornadaId))||'[]');
+  var totalAtend=lista.length;
+  var totalOfic=lista.length;
+  var totalDocs=0;
+  lista.forEach(function(a){totalDocs+=(a.certs?a.certs.length:0);});
+
+  /* Salva relatório no histórico global de relatórios */
+  var relatorios=JSON.parse(localStorage.getItem('dpe_relatorios')||'[]');
+  relatorios.push({
+    id:Date.now(),
+    jornadaId:sessao.jornadaId,
+    jornadaNome:sessao.jornadaNome,
+    dataEncerramento:new Date().toLocaleDateString('pt-BR'),
+    horaEncerramento:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),
+    defensor:sessao.nome,
+    unidade:sessao.unidade,
+    totalAtend:totalAtend,
+    totalOfic:totalOfic,
+    totalDocs:totalDocs,
+    atendimentos:lista
+  });
+  try{localStorage.setItem('dpe_relatorios',JSON.stringify(relatorios));}catch(e){}
+
+  /* Gera e imprime o relatório antes de limpar */
+  imprimirRelatorio(relatorios[relatorios.length-1]);
+
+  setTimeout(function(){
     localStorage.removeItem(chaveAtend(sessao.jornadaId));
     localStorage.removeItem(chaveSeq(sessao.jornadaId));
     localStorage.removeItem('dpe_sessao');
     location.reload();
-  }
+  },600);
+}
+
+function imprimirRelatorio(rel){
+  var janela=window.open('','_blank','width=900,height=700');
+  if(!janela)return;
+  var hoje=new Date();
+  var linhas='';
+  rel.atendimentos.forEach(function(a,i){
+    var docs=(a.certs||[]).map(function(c){return tipoLabel(c.tipo)+(c.nome&&c.nome!==a.req.nome?' (titular: '+capTit(c.nome.toLowerCase())+')':'');}).join('; ');
+    linhas+='<tr style="background:'+(i%2===0?'#f1f8e9':'#fff')+'">'
+      +'<td style="padding:5px 8px;border:1px solid #ccc;text-align:center;">'+a.numOficio+'</td>'
+      +'<td style="padding:5px 8px;border:1px solid #ccc;">'+capTit((a.req.nome||'').toLowerCase())+'</td>'
+      +'<td style="padding:5px 8px;border:1px solid #ccc;text-align:center;">'+(a.req.cpf||'—')+'</td>'
+      +'<td style="padding:5px 8px;border:1px solid #ccc;text-align:center;">'+(a.data||'—')+'</td>'
+      +'<td style="padding:5px 8px;border:1px solid #ccc;">'+(docs||'—')+'</td>'
+      +'</tr>';
+  });
+
+  var html='<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Relatório — '+rel.jornadaNome+'</title>'
+    +'<style>*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}'
+    +'body{padding:24px;font-size:10pt;color:#222;}'
+    +'@page{margin:1.5cm 2cm;size:A4 portrait;}'
+    +'@media print{.noprint{display:none;}}'
+    +'</style></head><body>'
+    +'<div style="display:flex;align-items:center;gap:14px;border-bottom:3px solid #2E7D32;padding-bottom:10px;margin-bottom:16px;">'
+    +'<img src="'+LOGO+'" style="width:70px;height:auto;" onerror="this.style.display=\'none\'">'
+    +'<div style="flex:1;text-align:center;">'
+    +'<div style="color:#1B5E20;font-size:13pt;font-weight:700;text-transform:uppercase;letter-spacing:.5px;">Relatório de Encerramento de Jornada</div>'
+    +'<div style="color:#2E7D32;font-size:9pt;font-weight:700;margin-top:3px;">Defensoria Pública do Estado do Piauí — Diretoria Itinerante</div>'
+    +'</div></div>'
+
+    +'<div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;">'
+    +'<div style="flex:1;background:#E8F5E9;border:1px solid #C8E6C9;border-radius:6px;padding:10px 14px;">'
+    +'<div style="font-size:8pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:4px;">Jornada</div>'
+    +'<div style="font-size:10pt;font-weight:700;">'+rel.jornadaNome+'</div>'
+    +'<div style="font-size:8.5pt;color:#555;margin-top:3px;">Encerrada em '+rel.dataEncerramento+' às '+rel.horaEncerramento+'</div>'
+    +'</div>'
+    +'<div style="flex:1;background:#E8F5E9;border:1px solid #C8E6C9;border-radius:6px;padding:10px 14px;">'
+    +'<div style="font-size:8pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:4px;">Responsável</div>'
+    +'<div style="font-size:10pt;font-weight:700;">'+rel.defensor+'</div>'
+    +'<div style="font-size:8.5pt;color:#555;margin-top:3px;">'+rel.unidade+'</div>'
+    +'</div></div>'
+
+    +'<div style="display:flex;gap:12px;margin-bottom:20px;">'
+    +'<div style="flex:1;text-align:center;background:#1B5E20;color:#fff;border-radius:8px;padding:12px;">'
+    +'<div style="font-size:22pt;font-weight:700;">'+rel.totalAtend+'</div>'
+    +'<div style="font-size:8.5pt;margin-top:2px;">Atendimentos Realizados</div>'
+    +'</div>'
+    +'<div style="flex:1;text-align:center;background:#2E7D32;color:#fff;border-radius:8px;padding:12px;">'
+    +'<div style="font-size:22pt;font-weight:700;">'+rel.totalOfic+'</div>'
+    +'<div style="font-size:8.5pt;margin-top:2px;">Ofícios Expedidos</div>'
+    +'</div>'
+    +'<div style="flex:1;text-align:center;background:#388E3C;color:#fff;border-radius:8px;padding:12px;">'
+    +'<div style="font-size:22pt;font-weight:700;">'+rel.totalDocs+'</div>'
+    +'<div style="font-size:8.5pt;margin-top:2px;">Documentos Solicitados</div>'
+    +'</div>'
+    +'</div>'
+
+    +'<div style="font-weight:700;font-size:10pt;color:#1B5E20;margin-bottom:8px;">Relação de Atendimentos</div>'
+    +'<table style="width:100%;border-collapse:collapse;font-size:8.5pt;">'
+    +'<thead><tr style="background:#1B5E20;color:#fff;">'
+    +'<th style="padding:6px 8px;border:1px solid #aaa;text-align:center;">Ofício</th>'
+    +'<th style="padding:6px 8px;border:1px solid #aaa;text-align:left;">Requerente</th>'
+    +'<th style="padding:6px 8px;border:1px solid #aaa;text-align:center;">CPF</th>'
+    +'<th style="padding:6px 8px;border:1px solid #aaa;text-align:center;">Data</th>'
+    +'<th style="padding:6px 8px;border:1px solid #aaa;text-align:left;">Documentos Solicitados</th>'
+    +'</tr></thead>'
+    +'<tbody>'+linhas+'</tbody></table>'
+
+    +'<div style="margin-top:50px;text-align:center;">'
+    +'<div style="border-top:1px solid #000;width:55%;margin:0 auto 4px;"></div>'
+    +'<div style="font-weight:700;font-size:10pt;">'+capTit(rel.defensor.toLowerCase())+'</div>'
+    +'<div style="font-size:9pt;">Defensor(a) Público(a)</div>'
+    +'<div style="font-size:9pt;">'+rel.unidade+'</div>'
+    +'</div>'
+
+    +'<div style="border-top:1px solid #ccc;margin-top:20px;padding-top:6px;font-size:7.5pt;color:#555;text-align:center;">'
+    +'Relatório gerado automaticamente pelo Sistema de Ofícios da Diretoria Itinerante — DPE-PI &nbsp;·&nbsp; '+hoje.toLocaleDateString('pt-BR')+' '+hoje.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})
+    +'</div>'
+    +'<div class="noprint" style="text-align:center;margin-top:20px;">'
+    +'<button onclick="window.print()" style="background:#2E7D32;color:#fff;border:none;padding:10px 28px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;">🖨️ Imprimir Relatório</button>'
+    +'</div>'
+    +'</body></html>';
+
+  janela.document.write(html);
+  janela.document.close();
+  janela.onload=function(){janela.print();};
 }
 
 function atualizarBadge(){
