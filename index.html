@@ -143,7 +143,8 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
       </div>
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
         <div class="badge-num" id="badgeProximo">Próximo: Ofício nº 001</div>
-        <button class="btn btn-danger btn-sm" onclick="sair()">Sair</button>
+        <button class="btn btn-danger btn-sm" onclick="encerrarJornada()" title="Zera o contador de ofícios ao fim da jornada">🏁 Encerrar Jornada</button>
+        <button class="btn btn-outline btn-sm" onclick="sair()">Sair</button>
       </div>
     </div>
 
@@ -294,7 +295,7 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
   <div id="printFicha" class="quebra">
     <div class="ficha-wrap">
       <div class="ficha-topo">
-        <img id="logoFicha" src="https://raw.githubusercontent.com/dpepigpt-glitch/calculadora-alimentar-dpe/main/public/logo-dpe.png" alt="DPE-PI" onerror="this.style.display='none'">
+        <img id="logoFicha" src="https://raw.githubusercontent.com/dpepigpt-glitch/dpe-oficios/main/public/logo-dpe.png" alt="DPE-PI" onerror="this.style.display='none'">
         <div class="ficha-topo-txt">
           <h2>Ficha de Atendimento</h2>
           <p>Defensoria Pública do Estado do Piauí &nbsp;·&nbsp; Diretoria Itinerante</p>
@@ -357,7 +358,7 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
   <div id="printOficio">
     <div class="oficio-wrap">
       <div class="oficio-cab">
-        <img id="logoOficio" src="https://raw.githubusercontent.com/dpepigpt-glitch/calculadora-alimentar-dpe/main/public/logo-dpe.png" alt="DPE-PI" onerror="this.style.display='none'">
+        <img id="logoOficio" src="https://raw.githubusercontent.com/dpepigpt-glitch/dpe-oficios/main/public/logo-dpe.png" alt="DPE-PI" onerror="this.style.display='none'">
         <div class="oficio-cab-txt">
           <h3>Defensoria Pública do Estado do Piauí</h3>
           <p id="o_unidade"></p>
@@ -493,10 +494,35 @@ function iniciarSistema(sess){
   document.getElementById('infoDefensor').innerText=sess.nome+' | '+sess.unidade;
   atualizarBadge();
 }
-function sair(){if(confirm('Sair?')){localStorage.removeItem('dpe_sessao');location.reload();}}
+function sair(){if(confirm('Sair? O contador de ofícios permanece onde está.')){localStorage.removeItem('dpe_sessao');location.reload();}}
+function encerrarJornada(){
+  var senha=prompt('🔒 Para encerrar a jornada, informe a senha:');
+  if(senha===null) return;
+  if(senha!==SENHA){
+    alert('❌ Senha incorreta. Jornada não encerrada.');
+    return;
+  }
+  if(confirm('⚠️ ENCERRAR JORNADA?\n\nO contador de ofícios será zerado e o histórico desta jornada será limpo.\nUse somente ao fim da jornada completa.')){
+    localStorage.removeItem('dpe_seq');
+    localStorage.removeItem('dpe_atendimentos');
+    localStorage.removeItem('dpe_sessao');
+    location.reload();
+  }
+}
+/* Contador global de ofícios — independente de sessão/login.
+   Persiste até ser encerrado manualmente via botão "Encerrar Jornada". */
+function proximoNumSeq(){
+  var n=parseInt(localStorage.getItem('dpe_seq')||'0',10);
+  return n+1;
+}
+function incrementarSeq(){
+  var n=parseInt(localStorage.getItem('dpe_seq')||'0',10)+1;
+  localStorage.setItem('dpe_seq',String(n));
+  return n;
+}
 function atualizarBadge(){
-  var lista=JSON.parse(localStorage.getItem('dpe_atendimentos')||'[]');
-  var s=String(lista.length+1);while(s.length<3)s='0'+s;
+  var prox=proximoNumSeq();
+  var s=String(prox);while(s.length<3)s='0'+s;
   document.getElementById('badgeProximo').innerText='Próximo: Ofício nº '+s;
 }
 function mostrarAba(aba){
@@ -560,7 +586,7 @@ function salvarEGerarPDF(){
   if(!d.rNome){alert('Informe o nome do(a) requerente.');return;}
   var sess=JSON.parse(localStorage.getItem('dpe_sessao')||'{}');
   var lista=JSON.parse(localStorage.getItem('dpe_atendimentos')||'[]');
-  var numSeq=atendAtual&&atendAtual.numSeq?atendAtual.numSeq:lista.length+1;
+  var numSeq=atendAtual&&atendAtual.numSeq?atendAtual.numSeq:incrementarSeq();
   var numStr=String(numSeq);while(numStr.length<3)numStr='0'+numStr;
   var numOficio=numStr+'/'+new Date().getFullYear();
   var atend={id:atendAtual?atendAtual.id:Date.now(),numSeq:numSeq,numOficio:numOficio,data:new Date().toLocaleDateString('pt-BR'),sess:sess,ficha:d};
