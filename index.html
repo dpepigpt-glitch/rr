@@ -472,9 +472,7 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 
       <!-- CABEÇALHO -->
       <div class="oficio-cab">
-        <img id="logoOficio" src="https://raw.githubusercontent.com/dpepigpt-glitch/rr/main/logo-dpe.png" alt="DPE-PI"
-          style="width:72px;height:auto;display:block;"
-          onerror="this.style.display='none'">
+        <img id="logoOficio" alt="DPE-PI" style="width:72px;height:auto;display:block;" onerror="this.style.visibility='hidden'">
         <div class="oficio-cab-txt" style="flex:1;">
           <h3 style="color:#1B5E20;font-size:11pt;margin:0 0 1px;text-transform:uppercase;letter-spacing:.3px;">Defensoria Pública do Estado do Piauí</h3>
           <p id="o_unidade" style="color:#388E3C;font-size:8pt;margin:0;"></p>
@@ -522,23 +520,25 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 <script>
 var atendAtual = null;
 var SENHA = 'DITI2027';
+var LOGO_URL = 'https://raw.githubusercontent.com/dpepigpt-glitch/rr/main/logo-dpe.png';
 
 /* ===== FICHA MANUAL ===== */
 function imprimirFichaManual(){
-  /* Oculta os outros documentos, mostra só a ficha manual */
   var fm=document.getElementById('printFichaManual');
   var pf=document.getElementById('printFicha');
   var po=document.getElementById('printOficio');
   fm.style.display='block';
   pf.style.display='none';
   po.style.display='none';
+  var tOrig=document.title;
+  document.title='Fichamodelo.pdf';
   window.print();
-  /* Restaura */
   setTimeout(function(){
     fm.style.display='none';
     pf.style.display='block';
     po.style.display='block';
-  },1000);
+    document.title=tOrig;
+  },1200);
 }
 
 /* ===== MÁSCARAS ===== */
