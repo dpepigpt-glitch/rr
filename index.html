@@ -71,11 +71,13 @@ h2{color:var(--v);border-bottom:2px solid var(--vm);padding-bottom:7px;margin-bo
 }
 /* FICHA PDF */
 .fw{font-family:Arial,sans-serif;font-size:8.5pt;}
-.ftopo{display:flex;align-items:center;gap:12px;border-bottom:3px solid #2E7D32;padding-bottom:8px;margin-bottom:8px;}
-.ftopo img{width:68px;height:auto;display:block;}
+.ftopo{display:flex;align-items:center;gap:12px;border-bottom:3px solid #2E7D32;padding-bottom:9px;margin-bottom:9px;}
+.ftopo img{width:72px;height:auto;display:block;flex-shrink:0;}
 .ftxt{flex:1;text-align:center;}
-.ftxt h2{color:#1B5E20;font-size:12pt;margin:0 0 1px;text-transform:uppercase;letter-spacing:.5px;border:none;padding:0;}
-.ftxt p{color:#388E3C;font-size:7.5pt;margin:0;}
+.ftxt h2{color:#1B5E20;font-size:12pt;margin:0 0 2px;text-transform:uppercase;letter-spacing:.5px;border:none;padding:0;font-weight:700;}
+.ftxt .ftxt-inst{color:#2E7D32;font-size:8.5pt;font-weight:700;margin:0 0 1px;}
+.ftxt .ftxt-sub{color:#388E3C;font-size:7.5pt;margin:0;}
+.ftxt .ftxt-sigi{color:#777;font-size:7pt;margin-top:1px;}
 .fsec{background:#2E7D32;color:#fff;padding:2px 7px;font-size:7.5pt;font-weight:700;text-transform:uppercase;margin:7px 0 4px;border-radius:2px;}
 .fl{display:flex;border-bottom:1px solid #bbb;padding:2px 0;align-items:flex-end;gap:6px;margin-bottom:2px;}
 .fr{font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;white-space:nowrap;flex-shrink:0;}
@@ -91,11 +93,12 @@ h2{color:var(--v);border-bottom:2px solid var(--vm);padding-bottom:7px;margin-bo
 .dlinha{border-top:1px solid #000;width:58%;margin:0 auto 3px;}
 /* OFÍCIO */
 .ow{font-family:Arial,sans-serif;font-size:10pt;line-height:1.65;text-align:justify;}
-.ocab{display:flex;align-items:center;gap:14px;border-bottom:2px solid #2E7D32;padding-bottom:8px;margin-bottom:14px;}
-.ocab img{width:70px;height:auto;display:block;}
-.oct{flex:1;}
-.oct h3{color:#1B5E20;font-size:11pt;margin:0;text-transform:uppercase;}
-.oct p{color:#388E3C;font-size:8pt;margin:0;}
+.ocab{display:flex;align-items:center;gap:16px;border-bottom:3px solid #2E7D32;padding-bottom:10px;margin-bottom:16px;}
+.ocab img{width:72px;height:auto;display:block;flex-shrink:0;}
+.oct{flex:1;text-align:center;}
+.oct h3{color:#1B5E20;font-size:12pt;margin:0 0 3px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;}
+.oct .oct-unidade{color:#2E7D32;font-size:9pt;font-weight:700;margin:0 0 1px;}
+.oct .oct-dir{color:#388E3C;font-size:8pt;margin:0;}
 .onlrow{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;border-bottom:1px solid #C8E6C9;padding-bottom:7px;}
 .onl{font-size:9.5pt;font-weight:700;color:#1B5E20;}
 .odt{font-size:9.5pt;font-weight:700;color:#333;}
@@ -336,8 +339,9 @@ h2{color:var(--v);border-bottom:2px solid var(--vm);padding-bottom:7px;margin-bo
         <img id="lFicha" alt="DPE-PI">
         <div class="ftxt">
           <h2>Ficha de Atendimento</h2>
-          <p>Defensoria Pública do Estado do Piauí &nbsp;·&nbsp; Diretoria Itinerante</p>
-          <p style="color:#777;font-size:7pt;">Uso exclusivo do serviço · Tratamento sigiloso</p>
+          <div class="ftxt-inst">Defensoria Pública do Estado do Piauí</div>
+          <div class="ftxt-sub">Diretoria Itinerante</div>
+          <div class="ftxt-sigi">Uso exclusivo do serviço · Tratamento sigiloso</div>
         </div>
       </div>
       <div class="fsec">Identificação do(a) Requerente</div>
@@ -393,8 +397,8 @@ h2{color:var(--v);border-bottom:2px solid var(--vm);padding-bottom:7px;margin-bo
         <img id="lOficio" alt="DPE-PI">
         <div class="oct">
           <h3>Defensoria Pública do Estado do Piauí</h3>
-          <p id="o_unidade"></p>
-          <p style="color:#555;font-size:7.5pt;">Diretoria Itinerante</p>
+          <div class="oct-unidade" id="o_unidade"></div>
+          <div class="oct-dir">Diretoria Itinerante</div>
         </div>
       </div>
       <div class="onlrow">
@@ -431,11 +435,12 @@ h2{color:var(--v);border-bottom:2px solid var(--vm);padding-bottom:7px;margin-bo
   <div id="pManual" style="display:none;">
     <div style="font-family:Arial,sans-serif;font-size:8.5pt;">
       <div style="display:flex;align-items:center;gap:12px;border-bottom:3px solid #2E7D32;padding-bottom:9px;margin-bottom:10px;">
-        <img id="lManual" alt="DPE-PI" style="width:70px;height:auto;display:block;">
+        <img id="lManual" alt="DPE-PI" style="width:72px;height:auto;display:block;flex-shrink:0;">
         <div style="flex:1;text-align:center;">
-          <div style="color:#1B5E20;font-size:12pt;font-weight:700;text-transform:uppercase;">Ficha de Atendimento</div>
-          <div style="color:#388E3C;font-size:8pt;">Defensoria Pública do Estado do Piauí &nbsp;·&nbsp; Diretoria Itinerante</div>
-          <div style="color:#777;font-size:7pt;">Uso exclusivo do serviço · Tratamento sigiloso</div>
+          <div style="color:#1B5E20;font-size:12pt;font-weight:700;text-transform:uppercase;letter-spacing:.5px;">Ficha de Atendimento</div>
+          <div style="color:#2E7D32;font-size:8.5pt;font-weight:700;margin-top:2px;">Defensoria Pública do Estado do Piauí</div>
+          <div style="color:#388E3C;font-size:7.5pt;">Diretoria Itinerante</div>
+          <div style="color:#777;font-size:7pt;margin-top:1px;">Uso exclusivo do serviço · Tratamento sigiloso</div>
         </div>
       </div>
       <div style="background:#2E7D32;color:#fff;padding:2px 7px;font-size:7.5pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:6px;">Identificação do(a) Requerente</div>
@@ -580,6 +585,8 @@ function chaveSeq(jid){return 'dpe_seq_'+jid;}
 /* ===== INIT ===== */
 window.onload=function(){
   aplicarLogos();
+  /* Reaplica logos logo antes de imprimir, garantindo carregamento */
+  window.addEventListener('beforeprint', function(){ aplicarLogos(); });
   renderizarPerfis();
   carregarJornadasSelect();
   try{
@@ -594,7 +601,10 @@ window.onload=function(){
 function aplicarLogos(){
   ['lFicha','lOficio','lManual'].forEach(function(id){
     var el=document.getElementById(id);
-    if(el){el.src=LOGO;el.style.cssText='width:70px;height:auto;display:block;';}
+    if(!el) return;
+    el.src=LOGO;
+    el.style.cssText='width:72px;height:auto;display:block;flex-shrink:0;';
+    el.onerror=function(){this.style.visibility='hidden';};
   });
 }
 
