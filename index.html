@@ -164,6 +164,7 @@ h2{color:var(--v);border-bottom:2px solid var(--vm);padding-bottom:7px;margin-bo
   <div class="tabs">
     <div class="tab on" id="tabNovo" onclick="aba('novo')">Novo Atendimento</div>
     <div class="tab" id="tabHist" onclick="aba('historico')">Histórico</div>
+    <div class="tab" id="tabBusca" onclick="aba('busca')">🔍 Busca Global</div>
   </div>
 
   <!-- ABA NOVO -->
@@ -298,7 +299,45 @@ h2{color:var(--v);border-bottom:2px solid var(--vm);padding-bottom:7px;margin-bo
     </div>
   </div>
 
-  <!-- ABA HISTÓRICO -->
+  <!-- ABA BUSCA GLOBAL -->
+  <div id="abaBusca" style="display:none;">
+    <div class="card">
+      <h2>🔍 Busca Global — Todas as Jornadas</h2>
+
+      <!-- Autenticação da busca -->
+      <div id="buscaAuth">
+        <div style="background:#fff8e1;border-left:4px solid #f9a825;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#5d4037;border-radius:0 4px 4px 0;">
+          🔒 A busca global requer autenticação para proteger os dados dos assistidos.
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
+          <div class="fg" style="max-width:220px;">
+            <label>Senha de acesso:</label>
+            <input type="password" id="buscaSenha" placeholder="••••••••" onkeydown="if(event.key==='Enter')autenticarBusca()">
+          </div>
+          <button class="btn bv" style="height:38px;" onclick="autenticarBusca()">🔓 Acessar Busca</button>
+        </div>
+        <div class="errmsg" id="buscaErro" style="text-align:left;margin-top:8px;">❌ Senha incorreta.</div>
+      </div>
+
+      <!-- Painel de busca (visível após autenticação) -->
+      <div id="buscaPainel" style="display:none;">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:flex-end;">
+          <div class="fg">
+            <label>Buscar por nome (requerente ou titular):</label>
+            <input type="text" id="buscaNome" placeholder="Digite parte do nome..." oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')executarBusca()">
+          </div>
+          <div class="fg" style="max-width:200px;">
+            <label>Buscar por CPF:</label>
+            <input type="text" id="buscaCPF" placeholder="000.000.000-00" maxlength="14" oninput="mCPF(this)" onkeydown="if(event.key==='Enter')executarBusca()">
+          </div>
+          <button class="btn bv" style="height:38px;padding:0 20px;" onclick="executarBusca()">🔍 Buscar</button>
+          <button class="btn bo" style="height:38px;padding:0 14px;" onclick="limparBusca()">✕ Limpar</button>
+        </div>
+        <div id="buscaInfo" style="font-size:12px;color:#666;margin-bottom:10px;"></div>
+        <div id="buscaResultados"></div>
+      </div>
+    </div>
+  </div>
   <div id="abaHist" style="display:none;">
     <div class="card">
       <h2>📚 Histórico da Jornada</h2>
@@ -688,6 +727,15 @@ function aba(nome){
     document.getElementById('abaHist').style.display='none';
     document.getElementById('tabNovo').classList.add('on');document.getElementById('tabHist').classList.remove('on');
     document.getElementById('titPag').innerText='Novo Atendimento';
+    /* Se vem do histórico, zera tudo para novo cadastro */
+    if(atendAtual){
+      document.querySelectorAll('#abaNovo input[type="text"],#abaNovo textarea').forEach(function(i){i.value='';});
+      document.querySelectorAll('#abaNovo input[type="checkbox"],#abaNovo input[type="radio"]').forEach(function(i){i.checked=false;});
+      document.querySelectorAll('#abaNovo select').forEach(function(s){s.value='';});
+      document.getElementById('aOutras').style.display='none';
+      certidoes=[];atendAtual=null;
+      renderizarCertLista();
+    }
   }else{
     document.getElementById('abaNovo').style.display='none';
     document.getElementById('abaHist').style.display='block';
@@ -1026,7 +1074,108 @@ function limparForm(){
   atualizarBadge();
 }
 
-/* ===== FICHA MANUAL ===== */
+/* ===== BUSCA GLOBAL ===== */
+var buscaAutenticada=false;
+
+function autenticarBusca(){
+  var s=(document.getElementById('buscaSenha').value||'').trim();
+  var err=document.getElementById('buscaErro');
+  if(s!==SENHA){err.style.display='block';document.getElementById('buscaSenha').value='';return;}
+  err.style.display='none';
+  buscaAutenticada=true;
+  document.getElementById('buscaAuth').style.display='none';
+  document.getElementById('buscaPainel').style.display='block';
+}
+
+function executarBusca(){
+  if(!buscaAutenticada)return;
+  var termNome=(document.getElementById('buscaNome').value||'').trim().toUpperCase();
+  var termCPF=(document.getElementById('buscaCPF').value||'').trim();
+  if(!termNome&&!termCPF){
+    document.getElementById('buscaInfo').innerText='Informe ao menos um critério de busca.';
+    document.getElementById('buscaResultados').innerHTML='';
+    return;
+  }
+  var jornadas=getJornadas();
+  var resultados=[];
+  jornadas.forEach(function(j){
+    var lista=JSON.parse(localStorage.getItem(chaveAtend(j.id))||'[]');
+    lista.forEach(function(att){
+      var match=false;
+      /* Busca por CPF do requerente */
+      if(termCPF&&att.req&&att.req.cpf&&att.req.cpf.replace(/\D/g,'')===termCPF.replace(/\D/g,''))match=true;
+      /* Busca por nome do requerente */
+      if(termNome&&att.req&&att.req.nome&&att.req.nome.toUpperCase().indexOf(termNome)>=0)match=true;
+      /* Busca por nome do titular em qualquer certidão */
+      if(termNome&&att.certs){
+        att.certs.forEach(function(c){
+          if(c.nome&&c.nome.toUpperCase().indexOf(termNome)>=0)match=true;
+          if(termCPF&&c.cpf&&c.cpf.replace(/\D/g,'')===termCPF.replace(/\D/g,''))match=true;
+        });
+      }
+      if(match)resultados.push({jornada:j,att:att});
+    });
+  });
+
+  var info=document.getElementById('buscaInfo');
+  var div=document.getElementById('buscaResultados');
+  if(!resultados.length){
+    info.innerText='Nenhum resultado encontrado.';div.innerHTML='';return;
+  }
+  info.innerText=resultados.length+' resultado(s) encontrado(s) em '+(new Set(resultados.map(function(r){return r.jornada.id;}))).size+' jornada(s):';
+  div.innerHTML='';
+
+  /* Agrupa por jornada */
+  var grupos={};
+  resultados.forEach(function(r){
+    if(!grupos[r.jornada.id])grupos[r.jornada.id]={nome:r.jornada.nome,itens:[]};
+    grupos[r.jornada.id].itens.push(r.att);
+  });
+
+  Object.keys(grupos).forEach(function(jid){
+    var g=grupos[jid];
+    var secTit=document.createElement('div');
+    secTit.style.cssText='background:var(--v3);color:#fff;padding:5px 10px;border-radius:4px;font-size:12px;font-weight:700;margin-bottom:8px;margin-top:12px;';
+    secTit.innerText='📍 '+g.nome+' ('+g.itens.length+' atendimento(s))';
+    div.appendChild(secTit);
+
+    g.itens.forEach(function(att){
+      var item=document.createElement('div');
+      item.className='hist-item';
+      var certDesc=att.certs?att.certs.map(function(c){
+        var t=tipoLabel(c.tipo);
+        var tn=c.nome?(' — '+c.nome):'';
+        return t+tn;
+      }).join(' | '):'';
+      item.innerHTML='<div>'
+        +'<h3>'+att.numOficio+' — '+(att.req&&att.req.nome?att.req.nome:'')+'</h3>'
+        +'<p>Data: '+att.data
+        +(att.req&&att.req.cpf?' | CPF: '+att.req.cpf:'')
+        +(certDesc?' | '+certDesc:'')
+        +'</p>'
+        +'</div>'
+        +'<div style="display:flex;gap:7px;">'
+        +'<button class="btn bv bsm" onclick="reimprimirBusca(\''+jid+'\','+att.id+')">🖨️ Reimprimir</button>'
+        +'</div>';
+      div.appendChild(item);
+    });
+  });
+}
+
+function reimprimirBusca(jid,id){
+  var lista=JSON.parse(localStorage.getItem(chaveAtend(jid))||'[]');
+  var att=lista.find(function(a){return a.id===id;});
+  if(!att)return;
+  preencherFicha(att);preencherOficio(att);aplicarLogos();
+  setTimeout(function(){window.print();},300);
+}
+
+function limparBusca(){
+  document.getElementById('buscaNome').value='';
+  document.getElementById('buscaCPF').value='';
+  document.getElementById('buscaInfo').innerText='';
+  document.getElementById('buscaResultados').innerHTML='';
+}
 function imprimirManual(){
   var pf=document.getElementById('pFicha');
   var po=document.getElementById('pOficio');
