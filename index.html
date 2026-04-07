@@ -502,6 +502,7 @@ h2{color:var(--v);border-bottom:2px solid var(--vm);padding-bottom:7px;margin-bo
 (function() {
 var PW = 'DITI2027';
 var LURL = 'https://raw.githubusercontent.com/dpepigpt-glitch/rr/main/logo-dpe.png';
+var LURL2 = 'https://raw.githubusercontent.com/dpepigpt-glitch/calculadora-alimentar-dpe/main/public/logo-dpe.png';
 var LB = '';
 var MSS = ['janeiro','fevereiro','marco','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 var PF = [
@@ -552,14 +553,40 @@ function kA(id){return 'dpe_a_'+id;}
 function kS(id){return 'dpe_s_'+id;}
 
 function carregarLogo(){
-  var img=new Image();img.crossOrigin='anonymous';
+  var img=new Image();
+  img.crossOrigin='anonymous';
   img.onload=function(){
-    try{var cv=document.createElement('canvas');cv.width=img.naturalWidth;cv.height=img.naturalHeight;cv.getContext('2d').drawImage(img,0,0);LB=cv.toDataURL('image/png');}
-    catch(e){LB=LURL;}
+    try{
+      var cv=document.createElement('canvas');
+      cv.width=img.naturalWidth;cv.height=img.naturalHeight;
+      cv.getContext('2d').drawImage(img,0,0);
+      LB=cv.toDataURL('image/png');
+    }catch(e){
+      /* Canvas bloqueado por CORS — usa src direto */
+      LB=img.src;
+    }
     alogos();
   };
-  img.onerror=function(){LB=LURL;alogos();};
+  img.onerror=function(){
+    /* Tenta sem crossOrigin como ultimo recurso */
+    var img2=new Image();
+    img2.onload=function(){LB=LURL;alogos();};
+    img2.onerror=function(){LB='';alogos();};
+    img2.src=LURL;
+  };
   img.src=LURL+'?t='+Date.now();
+}
+function alogos(){
+  var src=LB||LURL;
+  ['lgF','lgO','lgM'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el)return;
+    el.src=src;
+    el.style.width='80px';
+    el.style.height='auto';
+    el.style.display='block';
+    el.style.flexShrink='0';
+  });
 }
 function alogos(){
   var src=LB||LURL;
@@ -597,8 +624,8 @@ function rjornadas(){
   var sel=document.getElementById('lgJ');if(!sel)return;
   var jj=gJ();sel.innerHTML='<option value="">Selecione...</option>';
   var campo=jj.filter(function(j){return !j.fix;}),fixas=jj.filter(function(j){return j.fix;});
-  if(campo.length){var g1=document.createElement('optgroup');g1.label='Jornadas de Campo';campo.forEach(function(j){var o=document.createElement('option');o.value=j.id;o.textContent=j.nm;g1.appendChild(o);});sel.appendChild(g1);}
-  if(fixas.length){var g2=document.createElement('optgroup');g2.label='Defensorias (atendimento diario)';fixas.forEach(function(j){var o=document.createElement('option');o.value=j.id;o.textContent=j.nm;g2.appendChild(o);});sel.appendChild(g2);}
+  if(campo.length){var g1=document.createElement('optgroup');g1.label='Jornadas Itinerantes';campo.forEach(function(j){var o=document.createElement('option');o.value=j.id;o.textContent=j.nm;g1.appendChild(o);});sel.appendChild(g1);}
+  if(fixas.length){var g2=document.createElement('optgroup');g2.label='Defensorias (atendimento di\u00e1rio)';fixas.forEach(function(j){var o=document.createElement('option');o.value=j.id;o.textContent=j.nm;g2.appendChild(o);});sel.appendChild(g2);}
 }
 
 function carregarRlSel(){
@@ -637,9 +664,18 @@ window.doLogin=function(){
   var pf=PF.find(function(p){return p.id===pid;});
   var jid=document.getElementById('lgJ').value;
   var pw=document.getElementById('lgS').value;
-  if(!jid||pw!==PW){document.getElementById('lerr').style.display='block';return;}
+  if(!jid||!pw){document.getElementById('lerr').style.display='block';return;}
+  var jj=gJ();
+  var jorn=jj.find(function(j){return j.id===jid;});
+  /* Valida senha e perfil para defensorias fixas */
+  if(jorn&&jorn.fix){
+    if(pw!==jorn.pw){document.getElementById('lerr').innerText='Senha incorreta para esta defensoria.';document.getElementById('lerr').style.display='block';return;}
+    if(jorn.perfil&&pid!==jorn.perfil){document.getElementById('lerr').innerText='Este perfil nao tem acesso a esta defensoria.';document.getElementById('lerr').style.display='block';return;}
+  } else {
+    if(pw!==PW){document.getElementById('lerr').innerText='Senha, perfil ou jornada incorretos.';document.getElementById('lerr').style.display='block';return;}
+  }
   document.getElementById('lerr').style.display='none';
-  var jj=gJ();var jorn=jj.find(function(j){return j.id===jid;});
+  document.getElementById('lerr').innerText='Senha, perfil ou jornada incorretos.';
   var unEf=jorn&&jorn.fix?jorn.nm:pf.un;
   SS={pid:pid,nm:pf.nm,un:unEf,adm:pf.adm,jid:jid,jnm:jorn?jorn.nm:jid};
   try{localStorage.setItem('dpe_ss',JSON.stringify(SS));}catch(e){}
