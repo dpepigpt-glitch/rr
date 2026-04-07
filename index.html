@@ -89,16 +89,18 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 .oficio-cab img{width:70px;height:auto;}
 .oficio-cab-txt h3{color:#1B5E20;font-size:11pt;margin:0;text-transform:uppercase;letter-spacing:.3px;}
 .oficio-cab-txt p{color:#388E3C;font-size:8pt;margin:0;}
-.oficio-numero{font-size:9.5pt;font-weight:700;margin-bottom:14px;}
+.oficio-numloc-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;border-bottom:1px solid #C8E6C9;padding-bottom:8px;}
+.oficio-numloc-esq{font-size:9.5pt;font-weight:700;color:#1B5E20;}
+.oficio-numloc-dir{font-size:9.5pt;font-weight:700;color:#333;}
 .oficio-dest{margin-bottom:10px;font-size:9.5pt;}
-.oficio-assunto{margin-bottom:10px;font-weight:700;font-size:9.5pt;}
-.oficio-p{margin-bottom:9px;text-indent:28px;font-size:9.5pt;}
+.oficio-assunto{margin-bottom:12px;font-weight:700;font-size:9.5pt;padding:5px 8px;background:#f1f8e9;border-left:3px solid #2E7D32;border-radius:0 3px 3px 0;}
+.oficio-p{margin-bottom:9px;text-indent:28px;font-size:9.5pt;text-align:justify;}
 .oficio-fund{margin:10px 0;font-size:9.5pt;}
 .oficio-fund ol{padding-left:18px;margin-top:4px;}
-.oficio-fund li{margin-bottom:5px;}
-.oficio-obs{font-style:italic;padding:4px 0 4px 8px;border-left:3px solid #C8E6C9;margin:7px 0;font-size:9.5pt;}
-.oficio-assin-area{margin-top:36px;text-align:center;}
-.oficio-data-assin{font-size:9.5pt;margin-bottom:26px;}
+.oficio-fund li{margin-bottom:5px;text-align:justify;}
+.oficio-obs{font-style:italic;padding:5px 8px;border-left:3px solid #C8E6C9;margin:8px 0;font-size:9.5pt;background:#f9fbe7;}
+.oficio-assin-area{margin-top:40px;text-align:center;}
+.oficio-data-assin{font-size:9.5pt;margin-bottom:28px;}
 .oficio-assin-linha{border-top:1px solid #000;width:55%;margin:0 auto 4px;}
 .oficio-assin-nome{font-weight:700;font-size:10pt;}
 .oficio-rodape{border-top:1px solid #ccc;margin-top:18px;padding-top:5px;font-size:7.5pt;color:#555;}
@@ -288,8 +290,118 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
   </div>
 </div>
 
+<!-- BOTÃO FLUTUANTE FICHA MANUAL -->
+<div class="no-print" style="position:fixed;bottom:18px;right:18px;z-index:999;">
+  <button onclick="imprimirFichaManual()" style="background:#1B5E20;color:#fff;border:none;border-radius:8px;padding:11px 16px;font-size:12px;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,0.25);line-height:1.3;text-align:center;">📋 Gerar Ficha<br>Manual (caneta)</button>
+</div>
+
 <!-- ÁREA DE IMPRESSÃO -->
 <div class="area-print">
+
+  <!-- PÁG FICHA MANUAL -->
+  <div id="printFichaManual" style="display:none;">
+    <div class="ficha-wrap">
+      <div class="ficha-topo">
+        <img src="https://raw.githubusercontent.com/dpepigpt-glitch/rr/main/logo-dpe.png" alt="DPE-PI" style="width:68px;height:auto;" onerror="this.style.display='none'">
+        <div class="ficha-topo-txt">
+          <h2>Ficha de Atendimento</h2>
+          <p>Defensoria Pública do Estado do Piauí &nbsp;·&nbsp; Diretoria Itinerante</p>
+          <p style="color:#777;font-size:7pt;margin-top:1px;">Uso exclusivo do serviço · Tratamento sigiloso</p>
+        </div>
+      </div>
+
+      <!-- IDENTIFICAÇÃO -->
+      <div class="ficha-sec">Identificação do(a) Requerente</div>
+      <div class="ficha-linha"><span class="ficha-rot">Nome Completo:</span><span class="ficha-val"></span></div>
+      <div style="display:flex;gap:8px;">
+        <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">CPF:</span><span class="ficha-val"></span></div></div>
+        <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Data Nascimento:</span><span class="ficha-val"></span></div></div>
+        <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Telefone:</span><span class="ficha-val"></span></div></div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Nome do Pai:</span><span class="ficha-val"></span></div></div>
+        <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Nome da Mãe:</span><span class="ficha-val"></span></div></div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Estado Civil:</span><span class="ficha-val"></span></div></div>
+        <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Profissão:</span><span class="ficha-val"></span></div></div>
+        <div style="flex:2;"><div class="ficha-linha"><span class="ficha-rot">Renda Familiar:</span><span class="ficha-val"></span></div></div>
+      </div>
+      <div class="ficha-linha"><span class="ficha-rot">Endereço:</span><span class="ficha-val"></span></div>
+
+      <!-- COR/RAÇA + AÇÃO PRETENDIDA -->
+      <div style="display:flex;gap:0;margin-top:8px;border:1px solid #C8E6C9;border-radius:3px;overflow:hidden;">
+        <div style="flex:1;padding:5px 8px;border-right:2px solid #C8E6C9;">
+          <div style="background:#1B5E20;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:5px;">Cor / Raça (IBGE)</div>
+          <div class="ficha-opcoes">
+            <span class="ficha-opcao"><span class="ficha-check"></span> Branca</span>
+            <span class="ficha-opcao"><span class="ficha-check"></span> Parda</span>
+            <span class="ficha-opcao"><span class="ficha-check"></span> Preta</span>
+            <span class="ficha-opcao"><span class="ficha-check"></span> Amarela</span>
+            <span class="ficha-opcao"><span class="ficha-check"></span> Indígena</span>
+            <span class="ficha-opcao"><span class="ficha-check"></span> Não Declarar</span>
+          </div>
+        </div>
+        <div style="flex:2;padding:5px 8px;">
+          <div style="background:#2E7D32;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:5px;">Ação Pretendida</div>
+          <div class="ficha-opcoes">
+            <span class="ficha-opcao"><span class="ficha-check"></span> Documentos</span>
+            <span class="ficha-opcao"><span class="ficha-check"></span> Alimentos</span>
+            <span class="ficha-opcao"><span class="ficha-check"></span> Guarda/Filiação</span>
+            <span class="ficha-opcao"><span class="ficha-check"></span> Criminal</span>
+            <span class="ficha-opcao"><span class="ficha-check"></span> Saúde</span>
+            <span class="ficha-opcao"><span class="ficha-check"></span> Interdição/Curatela</span>
+            <span class="ficha-opcao"><span class="ficha-check"></span> Previdência/INSS</span>
+            <span class="ficha-opcao"><span class="ficha-check"></span> Outras: <span style="border-bottom:1px dotted #999;display:inline-block;width:60px;">&nbsp;</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DECLARAÇÃO DE HIPOSSUFICIÊNCIA -->
+      <div class="decl-box" style="margin-top:8px;">
+        <div class="decl-titulo">Declaração de Hipossuficiência</div>
+        <div class="decl-p">
+          <strong>DECLARO</strong>, para fins de obtenção de <strong>ASSISTÊNCIA JURÍDICA</strong> pela <strong>DEFENSORIA PÚBLICA DO ESTADO DO PIAUÍ</strong>, que sou pessoa pobre na forma da lei, não podendo arcar com as custas processuais e honorários advocatícios sem prejuízo do próprio sustento e de minha família, nos termos do art. 5.º, LXXIV, da Constituição Federal c.c. os arts. 1.º a 4.º da Lei n.º 1.060/1950 e art. 1.º da Lei n.º 7.115/1983. O(A) Requerente atua como <span style="border-bottom:1px dotted #555;display:inline-block;width:90px;">&nbsp;</span>, auferindo renda média de R  <!-- PÁG 1: FICHA + DECLARAÇÃO -->nbsp;<span style="border-bottom:1px dotted #555;display:inline-block;width:110px;">&nbsp;</span>.
+        </div>
+        <div class="decl-p">
+          Outrossim, declaro estar ciente de que a prestação de informações falsas perante funcionário público poderá tipificar o crime de falsidade ideológica, previsto no art. 299 do Código Penal Brasileiro, cuja pena é de reclusão de 1 (um) a 5 (cinco) anos e multa.
+        </div>
+        <div class="decl-p">
+          <strong>AUTORIZAÇÃO LGPD</strong> — Conforme a Lei Geral de Proteção de Dados Pessoais (Lei n.º 13.709/2018), <strong>AUTORIZO</strong> a Defensoria Pública do Estado do Piauí a incluir meus dados pessoais nas peças processuais e expedientes relacionados à assistência jurídica prestada, para fins exclusivamente legais e processuais.
+        </div>
+
+        <!-- ASSINATURA REQUERENTE -->
+        <div class="decl-assin-area">
+          <div style="height:32px;"></div>
+          <div class="decl-assin-linha"></div>
+          <div style="font-size:7.5pt;color:#555;margin-top:2px;">Assinatura / Impressão Digital do(a) Requerente</div>
+        </div>
+        <div style="text-align:right;margin-top:5px;font-size:7.5pt;">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;de&nbsp;<span style="border-bottom:1px dotted #555;display:inline-block;width:70px;">&nbsp;</span>&nbsp;de&nbsp;<span style="border-bottom:1px dotted #555;display:inline-block;width:38px;">&nbsp;</span>.
+        </div>
+
+        <!-- DADOS DO REGISTRO CIVIL — preenchimento posterior -->
+        <div style="margin-top:14px;border-top:1px dashed #2E7D32;padding-top:8px;">
+          <div style="background:#2E7D32;color:#fff;padding:2px 7px;font-size:7.5pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:6px;display:inline-block;">Dados do Registro Civil (preenchimento posterior)</div>
+          <div class="ficha-linha"><span class="ficha-rot">Titular do Documento:</span><span class="ficha-val"></span></div>
+          <div style="display:flex;gap:8px;">
+            <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Data Nascimento Titular:</span><span class="ficha-val"></span></div></div>
+            <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Parentesco:</span><span class="ficha-val"></span></div></div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <div style="flex:2;"><div class="ficha-linha"><span class="ficha-rot">Cartório / Ofício:</span><span class="ficha-val"></span></div></div>
+            <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Cidade / Comarca:</span><span class="ficha-val"></span></div></div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">N.º Registro / Termo:</span><span class="ficha-val"></span></div></div>
+            <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Livro:</span><span class="ficha-val"></span></div></div>
+            <div style="flex:1;"><div class="ficha-linha"><span class="ficha-rot">Folha:</span><span class="ficha-val"></span></div></div>
+          </div>
+          <div class="ficha-linha"><span class="ficha-rot">Matrícula:</span><span class="ficha-val"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- PÁG 1: FICHA + DECLARAÇÃO -->
   <div id="printFicha" class="quebra">
@@ -357,16 +469,25 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
   <!-- PÁG 2: OFÍCIO -->
   <div id="printOficio">
     <div class="oficio-wrap">
+
+      <!-- CABEÇALHO -->
       <div class="oficio-cab">
-        <img id="logoOficio" src="https://raw.githubusercontent.com/dpepigpt-glitch/rr/main/logo-dpe.png" alt="DPE-PI" onerror="this.style.display='none'">
-        <div class="oficio-cab-txt">
-          <h3>Defensoria Pública do Estado do Piauí</h3>
-          <p id="o_unidade"></p>
-          <p style="color:#555;font-size:7.5pt;" id="o_jornada"></p>
+        <img id="logoOficio" src="https://raw.githubusercontent.com/dpepigpt-glitch/rr/main/logo-dpe.png" alt="DPE-PI"
+          style="width:72px;height:auto;display:block;"
+          onerror="this.style.display='none'">
+        <div class="oficio-cab-txt" style="flex:1;">
+          <h3 style="color:#1B5E20;font-size:11pt;margin:0 0 1px;text-transform:uppercase;letter-spacing:.3px;">Defensoria Pública do Estado do Piauí</h3>
+          <p id="o_unidade" style="color:#388E3C;font-size:8pt;margin:0;"></p>
+          <p style="color:#388E3C;font-size:8pt;margin:0;">Diretoria Itinerante</p>
         </div>
       </div>
 
-      <div class="oficio-numero" id="o_numero"></div>
+      <!-- NÚMERO DO OFÍCIO (esq) + DATA (dir) na mesma linha -->
+      <div class="oficio-numloc-row">
+        <span class="oficio-numloc-esq" id="o_numero"></span>
+        <span class="oficio-numloc-dir" id="o_localdata"></span>
+      </div>
+
       <div class="oficio-dest" id="o_dest"></div>
       <div class="oficio-assunto"><u>Assunto:</u> Requisição de emissão gratuita da 2.ª via de certidão de nascimento</div>
       <div class="oficio-p" id="o_corpo"></div>
@@ -385,7 +506,7 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
       <div id="o_obsWrap" style="display:none;"><div class="oficio-obs" id="o_obs"></div></div>
 
       <div class="oficio-assin-area">
-        <div class="oficio-data-assin" id="o_localdata"></div>
+        <div class="oficio-data-assin" id="o_dataAssin"></div>
         <div class="oficio-assin-linha"></div>
         <div class="oficio-assin-nome" id="o_defNome"></div>
         <div style="font-size:9.5pt;">Defensor(a) Público(a)</div>
@@ -401,6 +522,24 @@ h2{color:var(--verde);border-bottom:2px solid var(--verdeMedio);padding-bottom:7
 <script>
 var atendAtual = null;
 var SENHA = 'DITI2027';
+
+/* ===== FICHA MANUAL ===== */
+function imprimirFichaManual(){
+  /* Oculta os outros documentos, mostra só a ficha manual */
+  var fm=document.getElementById('printFichaManual');
+  var pf=document.getElementById('printFicha');
+  var po=document.getElementById('printOficio');
+  fm.style.display='block';
+  pf.style.display='none';
+  po.style.display='none';
+  window.print();
+  /* Restaura */
+  setTimeout(function(){
+    fm.style.display='none';
+    pf.style.display='block';
+    po.style.display='block';
+  },1000);
+}
 
 /* ===== MÁSCARAS ===== */
 function mascaraCPF(el){var v=el.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);v=v.replace(/(\d{3})(\d)/,'$1.$2');v=v.replace(/(\d{3})(\d)/,'$1.$2');v=v.replace(/(\d{3})(\d{1,2})$/,'$1-$2');el.value=v;}
