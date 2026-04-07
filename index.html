@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistema DPE-PI | Diretoria Itinerante</title>
+<title>DPE-PI | Diretoria Itinerante</title>
 <style>
-:root{--v:#2E7D32;--v2:#388E3C;--v3:#1B5E20;--vc:#E8F5E9;--vm:#C8E6C9;--bg:#f4f6f4;--bd:#ccc;--tx:#222;}
+:root{--v:#2E7D32;--v2:#43A047;--v3:#1B5E20;--vc:#F1F8E9;--vm:#C8E6C9;--bg:#f4f6f4;--bd:#ccc;}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif;}
-body{background:var(--bg);color:var(--tx);padding-bottom:60px;line-height:1.5;}
+body{background:var(--bg);color:#222;padding-bottom:60px;line-height:1.5;}
 .wrap{max-width:1020px;margin:0 auto;padding:20px;}
 .card{background:#fff;padding:22px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.07);margin-bottom:18px;}
 h2{color:var(--v);border-bottom:2px solid var(--vm);padding-bottom:7px;margin-bottom:16px;font-size:16px;}
@@ -16,131 +16,145 @@ h2{color:var(--v);border-bottom:2px solid var(--vm);padding-bottom:7px;margin-bo
 .fg label{display:block;font-size:12px;font-weight:700;margin-bottom:3px;color:var(--v3);}
 .fg input,.fg select,.fg textarea{width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:5px;font-size:13px;}
 .fg input:focus,.fg select:focus{outline:2px solid var(--v2);}
-.btn{padding:9px 16px;border:none;border-radius:5px;cursor:pointer;font-weight:700;font-size:13px;transition:.15s;}
-.bv{background:var(--v);color:#fff;}.bv:hover{background:var(--v3);}
+.btn{padding:9px 16px;border:none;border-radius:5px;cursor:pointer;font-weight:700;font-size:13px;}
+.bv{background:var(--v);color:#fff;} .bv:hover{background:var(--v3);}
 .bo{background:transparent;border:2px solid var(--v);color:var(--v);}
-.bd2{background:#c62828;color:#fff;}
+.br{background:#c62828;color:#fff;}
 .bsm{padding:5px 10px;font-size:12px;}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
 .chip{position:relative;}
 .chip input{position:absolute;opacity:0;width:0;height:0;}
-.chip label{display:flex;align-items:center;gap:5px;padding:6px 12px;border:2px solid var(--bd);border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;color:#555;background:#fff;transition:.15s;white-space:nowrap;}
-.chip label:hover{border-color:var(--v2);color:var(--v2);background:var(--vc);}
-.chip input:checked+label{border-color:var(--v);background:var(--v);color:#fff;}
+.chip label{display:flex;align-items:center;gap:5px;padding:6px 12px;border:2px solid var(--bd);border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;color:#555;background:#fff;white-space:nowrap;}
+.chip label:hover,.chip input:checked+label{border-color:var(--v);background:var(--v);color:#fff;}
 .divid{height:1px;background:var(--bd);margin:16px 0;}
-/* LOGIN */
+.errmsg{color:#c62828;font-size:12px;margin-top:8px;display:none;}
+.pcard{border:2px solid var(--bd);border-radius:8px;padding:11px 14px;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.pcard:hover,.pcard.sel{border-color:var(--v);background:var(--vc);}
 #loginScreen{display:flex;justify-content:center;align-items:center;min-height:90vh;}
-.lbox{max-width:440px;width:100%;}
-.lhd{background:var(--v);color:#fff;padding:18px;border-radius:8px 8px 0 0;text-align:center;}
-.lbd{background:#fff;padding:22px;border-radius:0 0 8px 8px;box-shadow:0 4px 12px rgba(0,0,0,.12);}
-.perfil-cards{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
-.perfil-card{border:2px solid var(--bd);border-radius:8px;padding:12px 16px;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px;}
-.perfil-card:hover{border-color:var(--v2);background:var(--vc);}
-.perfil-card.sel{border-color:var(--v);background:var(--vc);}
-.perfil-card .pc-nome{font-weight:700;font-size:13px;color:var(--v3);}
-.perfil-card .pc-uni{font-size:11px;color:#666;}
-.perfil-card .pc-ico{font-size:22px;}
-.errmsg{color:#c62828;font-size:12px;text-align:center;margin-top:8px;display:none;}
-/* DASHBOARD */
 #dashboard{display:none;}
 .topbar{display:flex;justify-content:space-between;align-items:center;background:#fff;padding:12px 18px;border-radius:8px;margin-bottom:18px;box-shadow:0 2px 6px rgba(0,0,0,.05);flex-wrap:wrap;gap:10px;border-left:5px solid var(--v);}
 .badge{background:var(--vc);border:1px solid var(--vm);padding:4px 11px;border-radius:6px;font-weight:700;color:var(--v3);font-size:13px;}
-.tabs{display:flex;gap:10px;margin-bottom:18px;}
-.tab{padding:8px 18px;background:#fff;border:2px solid var(--bd);border-radius:5px;cursor:pointer;font-weight:700;font-size:13px;}
+.tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+.tab{padding:8px 16px;background:#fff;border:2px solid var(--bd);border-radius:5px;cursor:pointer;font-weight:700;font-size:13px;}
 .tab.on{background:var(--v);color:#fff;border-color:var(--v);}
-.hist-item{background:var(--vc);border:1px solid var(--vm);padding:12px;margin-bottom:8px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
-.hist-item h3{font-size:13px;color:var(--v3);margin-bottom:2px;}
-.hist-item p{font-size:11px;color:#555;}
-/* CERTIDÕES */
-.cert-item{background:#f1f8e9;border:1px solid var(--vm);border-radius:6px;padding:12px;margin-bottom:10px;position:relative;}
-.cert-num{background:var(--v);color:#fff;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-right:6px;}
-.cert-remove{position:absolute;top:8px;right:8px;background:#c62828;color:#fff;border:none;border-radius:4px;padding:2px 8px;font-size:11px;cursor:pointer;}
-/* BOTÕES GERAR */
-.gerar-area{text-align:center;padding:26px 20px;background:var(--vc);border:2px dashed var(--vm);border-radius:8px;}
-.limpar-area{border-top:1px dashed var(--bd);padding-top:16px;margin-top:14px;text-align:center;}
-/* IMPRESSÃO */
+.hi{background:var(--vc);border:1px solid var(--vm);padding:12px;margin-bottom:8px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.hi h3{font-size:13px;color:var(--v3);margin-bottom:2px;}
+.hi p{font-size:11px;color:#555;}
+.ci{background:#F1F8E9;border:1px solid var(--vm);border-radius:6px;padding:11px;margin-bottom:9px;position:relative;font-size:12px;}
+.cnum{background:var(--v);color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-right:5px;}
+.crm{position:absolute;top:8px;right:8px;background:#c62828;color:#fff;border:none;border-radius:4px;padding:2px 8px;font-size:11px;cursor:pointer;}
+.ga{text-align:center;padding:26px 20px;background:var(--vc);border:2px dashed var(--vm);border-radius:8px;}
+.la{border-top:1px dashed var(--bd);padding-top:16px;margin-top:14px;text-align:center;}
+.mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center;}
+.mbox{background:#fff;border-radius:8px;padding:26px;max-width:400px;width:90%;}
+.noprint{}
 .iprint{display:none;}
 @media print{
   body *{visibility:hidden;}
   .iprint,.iprint *{visibility:visible;}
-  .iprint{position:absolute;left:0;top:0;width:100%;display:block!important;padding:0;margin:0;}
+  .iprint{position:absolute;left:0;top:0;width:100%;display:block!important;}
   .noprint{display:none!important;}
   @page{margin:1.2cm 1.8cm;size:A4 portrait;}
   .qbra{page-break-after:always;}
   .qbra:last-child{page-break-after:auto;}
 }
-/* FICHA PDF */
 .fw{font-family:Arial,sans-serif;font-size:8.5pt;}
-.ftopo{display:flex;align-items:center;gap:12px;border-bottom:3px solid #2E7D32;padding-bottom:9px;margin-bottom:9px;}
-.ftopo img{width:72px;height:auto;display:block;flex-shrink:0;}
-.ftxt{flex:1;text-align:center;}
-.ftxt h2{color:#1B5E20;font-size:12pt;margin:0 0 2px;text-transform:uppercase;letter-spacing:.5px;border:none;padding:0;font-weight:700;}
-.ftxt .ftxt-inst{color:#2E7D32;font-size:8.5pt;font-weight:700;margin:0 0 1px;}
-.ftxt .ftxt-sub{color:#388E3C;font-size:7.5pt;margin:0;}
-.ftxt .ftxt-sigi{color:#777;font-size:7pt;margin-top:1px;}
-.fsec{background:#2E7D32;color:#fff;padding:2px 7px;font-size:7.5pt;font-weight:700;text-transform:uppercase;margin:7px 0 4px;border-radius:2px;}
-.fl{display:flex;border-bottom:1px solid #bbb;padding:2px 0;align-items:flex-end;gap:6px;margin-bottom:2px;}
-.fr{font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;white-space:nowrap;flex-shrink:0;}
-.fv{flex:1;border-bottom:1px dotted #999;min-height:12px;font-size:8pt;padding-left:3px;}
-.fopts{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0;}
-.fopt{display:flex;align-items:center;gap:2px;font-size:7.5pt;}
-.fchk{width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-flex;align-items:center;justify-content:center;font-size:6.5pt;flex-shrink:0;}
-/* DECLARAÇÃO */
-.dbox{margin-top:8px;padding:8px;border:1.5px solid #2E7D32;font-size:7.5pt;line-height:1.35;text-align:justify;}
-.dtit{font-weight:700;text-transform:uppercase;text-align:center;margin-bottom:6px;font-size:8.5pt;color:#1B5E20;}
+.ftp{display:flex;align-items:center;gap:14px;border-bottom:3px solid #4CAF50;padding-bottom:10px;margin-bottom:10px;}
+.ftp img{width:80px;height:auto;display:block;flex-shrink:0;}
+.ftx{flex:1;text-align:center;}
+.ftx .ft1{color:#2E7D32;font-size:12pt;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+.ftx .ft2{color:#43A047;font-size:8.5pt;font-weight:700;margin-top:2px;}
+.ftx .ft3{color:#66BB6A;font-size:7.5pt;}
+.ftx .ft4{color:#888;font-size:7pt;margin-top:1px;}
+.fsc{background:#43A047;color:#fff;padding:2px 7px;font-size:7.5pt;font-weight:700;text-transform:uppercase;margin:7px 0 4px;border-radius:2px;}
+.fl{display:flex;border-bottom:1px solid #ccc;padding:2px 0;align-items:flex-end;gap:6px;margin-bottom:2px;}
+.fr{font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;white-space:nowrap;flex-shrink:0;}
+.fv{flex:1;border-bottom:1px dotted #aaa;min-height:12px;font-size:8pt;padding-left:3px;}
+.fop{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0;}
+.fo{display:flex;align-items:center;gap:2px;font-size:7.5pt;}
+.fck{width:8px;height:8px;border:1.5px solid #43A047;display:inline-flex;align-items:center;justify-content:center;font-size:6.5pt;flex-shrink:0;}
+.dbox{margin-top:8px;padding:8px;border:1.5px solid #66BB6A;font-size:7.5pt;line-height:1.35;text-align:justify;background:#fafff8;}
+.dtit{font-weight:700;text-transform:uppercase;text-align:center;margin-bottom:6px;font-size:8.5pt;color:#2E7D32;}
 .dp{margin-bottom:6px;}
-.dassin{margin-top:26px;text-align:center;}
-.dlinha{border-top:1px solid #000;width:58%;margin:0 auto 3px;}
-/* OFÍCIO */
+.das{margin-top:26px;text-align:center;}
+.dln{border-top:1px solid #000;width:58%;margin:0 auto 3px;}
 .ow{font-family:Arial,sans-serif;font-size:10pt;line-height:1.65;text-align:justify;}
-.ocab{display:flex;align-items:center;gap:16px;border-bottom:3px solid #2E7D32;padding-bottom:10px;margin-bottom:16px;}
-.ocab img{width:72px;height:auto;display:block;flex-shrink:0;}
-.oct{flex:1;text-align:center;}
-.oct h3{color:#1B5E20;font-size:12pt;margin:0 0 3px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;}
-.oct .oct-unidade{color:#2E7D32;font-size:9pt;font-weight:700;margin:0 0 1px;}
-.oct .oct-dir{color:#388E3C;font-size:8pt;margin:0;}
-.onlrow{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;border-bottom:1px solid #C8E6C9;padding-bottom:7px;}
-.onl{font-size:9.5pt;font-weight:700;color:#1B5E20;}
+.otp{display:flex;align-items:center;gap:16px;border-bottom:3px solid #4CAF50;padding-bottom:10px;margin-bottom:16px;}
+.otp img{width:80px;height:auto;display:block;flex-shrink:0;}
+.otx{flex:1;text-align:center;}
+.otx .ot1{color:#2E7D32;font-size:12pt;font-weight:700;text-transform:uppercase;letter-spacing:.3px;}
+.otx .ot2{color:#43A047;font-size:9pt;font-weight:700;margin-top:1px;}
+.otx .ot3{color:#66BB6A;font-size:8pt;}
+.onr{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;border-bottom:1px solid #A5D6A7;padding-bottom:7px;}
+.onl{font-size:9.5pt;font-weight:700;color:#2E7D32;}
 .odt{font-size:9.5pt;font-weight:700;color:#333;}
-.odest{margin-bottom:10px;font-size:9.5pt;}
-.oass{margin-bottom:11px;font-weight:700;font-size:9.5pt;padding:4px 8px;background:#f1f8e9;border-left:3px solid #2E7D32;border-radius:0 3px 3px 0;}
-.op{margin-bottom:9px;text-indent:28px;font-size:9.5pt;text-align:justify;}
-.ofund{margin:10px 0;font-size:9.5pt;}
-.ofund ol{padding-left:18px;margin-top:4px;}
-.ofund li{margin-bottom:5px;text-align:justify;}
-.oobs{font-style:italic;padding:4px 8px;border-left:3px solid #C8E6C9;margin:8px 0;font-size:9.5pt;background:#f9fbe7;}
-.oassin{margin-top:38px;text-align:center;}
-.oassindt{font-size:9.5pt;margin-bottom:26px;}
-.oasslin{border-top:1px solid #000;width:55%;margin:0 auto 4px;}
-.oasnome{font-weight:700;font-size:10pt;}
-.orod{border-top:1px solid #ccc;margin-top:16px;padding-top:5px;font-size:7.5pt;color:#555;}
-.cert-bloco{border:1px solid #C8E6C9;border-radius:4px;padding:7px 10px;margin-bottom:8px;background:#f9fbe7;}
-.cert-bloco-tit{font-weight:700;font-size:9pt;color:#1B5E20;margin-bottom:4px;}
+.ode{margin-bottom:10px;font-size:9.5pt;}
+.oas{margin-bottom:11px;font-weight:700;font-size:9.5pt;padding:4px 8px;background:#F1F8E9;border-left:3px solid #66BB6A;border-radius:0 3px 3px 0;}
+.op{margin-bottom:9px;text-indent:28px;font-size:9.5pt;}
+.ofu{margin:10px 0;font-size:9.5pt;}
+.ofu ol{padding-left:18px;margin-top:4px;}
+.ofu li{margin-bottom:5px;}
+.oob{font-style:italic;padding:4px 8px;border-left:3px solid #A5D6A7;margin:8px 0;font-size:9.5pt;background:#F9FBE7;}
+.osn{margin-top:38px;text-align:center;}
+.osl{border-top:1px solid #000;width:55%;margin:0 auto 4px;}
+.osn2{font-weight:700;font-size:10pt;}
+.ord{border-top:1px solid #ddd;margin-top:16px;padding-top:5px;font-size:7.5pt;color:#666;}
+.cb{border:1px solid #A5D6A7;border-radius:4px;padding:7px 10px;margin-bottom:8px;background:#F9FBE7;}
+.cbt{font-weight:700;font-size:9pt;color:#2E7D32;margin-bottom:4px;}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- TELA INICIAL -->
 <div id="loginScreen" class="noprint">
-<div class="lbox">
-  <div class="lhd">
-    <div style="font-size:13px;font-weight:700;letter-spacing:.5px;">DEFENSORIA PÚBLICA DO ESTADO DO PIAUÍ</div>
-    <div style="font-size:11px;margin-top:2px;opacity:.9;">Diretoria Itinerante — Sistema de Ofícios</div>
+<div style="max-width:500px;width:100%;margin:0 auto;padding:20px;">
+  <div style="display:flex;gap:0;border-radius:8px 8px 0 0;overflow:hidden;">
+    <div id="ltab1" onclick="ltab('login')" style="flex:1;padding:11px;text-align:center;background:var(--v);color:#fff;font-weight:700;font-size:13px;cursor:pointer;">Entrar no Sistema</div>
+    <div id="ltab2" onclick="ltab('busca')" style="flex:1;padding:11px;text-align:center;background:#888;color:#fff;font-weight:700;font-size:13px;cursor:pointer;">Busca de Atendimentos</div>
   </div>
-  <div class="lbd">
-    <div style="font-size:12px;font-weight:700;color:var(--v3);margin-bottom:10px;">Selecione o perfil:</div>
-    <div class="perfil-cards" id="perfilCards"></div>
 
-    <div class="fg" style="margin-bottom:10px;">
-      <label>Jornada:</label>
-      <select id="lgJornada"><option value="">Selecione a jornada</option></select>
+  <div id="lPanelLogin" style="background:#fff;padding:22px;border-radius:0 0 8px 8px;box-shadow:0 4px 12px rgba(0,0,0,.12);">
+    <div style="font-size:13px;font-weight:700;color:var(--v3);text-align:center;margin-bottom:14px;">DEFENSORIA PUBLICA DO ESTADO DO PIAUI<br><span style="font-size:11px;font-weight:400;color:#666;">Diretoria Itinerante</span></div>
+    <div style="font-size:12px;font-weight:700;color:var(--v3);margin-bottom:10px;">Selecione o perfil:</div>
+    <div id="pcards"></div>
+    <div class="fg" style="margin-bottom:10px;"><label>Jornada / Defensoria:</label><select id="lgJ"><option value="">Selecione...</option></select></div>
+    <div class="fg" style="margin-bottom:14px;"><label>Senha:</label><input type="password" id="lgS" placeholder="..." onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn bv" style="width:100%;" onclick="doLogin()">ENTRAR</button>
+    <div class="errmsg" id="lerr" style="text-align:center;">Senha, perfil ou jornada incorretos.</div>
+    <div style="border-top:1px dashed var(--bd);margin-top:16px;padding-top:14px;">
+      <div style="font-size:12px;font-weight:700;color:var(--v3);margin-bottom:8px;">Reabrir Jornada Encerrada:</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;">
+        <div class="fg"><select id="rlSel"><option value="">Selecione jornada encerrada...</option></select></div>
+        <button class="btn bo bsm" onclick="doReabrir()" style="height:38px;">Reabrir</button>
+      </div>
+      <div style="font-size:11px;color:#888;margin-top:5px;">A numeracao retoma de onde parou.</div>
     </div>
-    <div class="fg" style="margin-bottom:14px;">
-      <label>Senha de acesso:</label>
-      <input type="password" id="lgSenha" placeholder="••••••••" onkeydown="if(event.key==='Enter')fazerLogin()">
+  </div>
+
+  <div id="lPanelBusca" style="display:none;background:#fff;padding:22px;border-radius:0 0 8px 8px;box-shadow:0 4px 12px rgba(0,0,0,.12);">
+    <div style="font-size:13px;font-weight:700;color:var(--v3);text-align:center;margin-bottom:14px;">BUSCA GLOBAL DE ATENDIMENTOS<br><span style="font-size:11px;font-weight:400;color:#666;">Todas as jornadas</span></div>
+    <div id="lbAuth">
+      <div style="background:#fff8e1;border-left:4px solid #f9a825;padding:10px;margin-bottom:12px;font-size:12px;color:#5d4037;border-radius:0 4px 4px 0;">Acesso restrito. Informe a senha para buscar em todas as jornadas.</div>
+      <div style="display:flex;gap:8px;align-items:flex-end;">
+        <div class="fg"><label>Senha:</label><input type="password" id="lbSe" onkeydown="if(event.key==='Enter')doAutBusca()"></div>
+        <button class="btn bv" style="height:38px;" onclick="doAutBusca()">Acessar</button>
+      </div>
+      <div class="errmsg" id="lbErr">Senha incorreta.</div>
     </div>
-    <button class="btn bv" style="width:100%;" onclick="fazerLogin()">🔐 ENTRAR NO SISTEMA</button>
-    <div class="errmsg" id="erroLogin">❌ Verifique perfil, jornada e senha.</div>
+    <div id="lbPain" style="display:none;">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:flex-end;">
+        <div class="fg"><label>Nome:</label><input type="text" id="lbNm" placeholder="Requerente ou titular..." oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')doLbuscar()"></div>
+        <div class="fg" style="max-width:190px;"><label>CPF:</label><input type="text" id="lbCP" placeholder="000.000.000-00" maxlength="14" oninput="mcpf(this)" onkeydown="if(event.key==='Enter')doLbuscar()"></div>
+        <button class="btn bv" style="height:38px;padding:0 18px;" onclick="doLbuscar()">Buscar</button>
+        <button class="btn bo" style="height:38px;padding:0 12px;" onclick="doLlimpar()">Limpar</button>
+      </div>
+      <div id="lbInfo" style="font-size:12px;color:#666;margin-bottom:8px;"></div>
+      <div id="lbRes" style="max-height:350px;overflow-y:auto;"></div>
+      <div style="margin-top:18px;">
+        <div style="font-weight:700;font-size:13px;color:var(--v3);border-bottom:2px solid var(--vm);padding-bottom:5px;margin-bottom:10px;">Relatorios Salvos</div>
+        <div id="lbRel" style="max-height:280px;overflow-y:auto;"></div>
+      </div>
+    </div>
   </div>
 </div>
 </div>
@@ -151,1162 +165,843 @@ h2{color:var(--v);border-bottom:2px solid var(--vm);padding-bottom:7px;margin-bo
   <div class="topbar">
     <div>
       <div style="font-weight:700;font-size:15px;color:var(--v3);" id="titPag">Novo Atendimento</div>
-      <div style="font-size:11px;color:#666;" id="infoSess"></div>
+      <div style="font-size:11px;color:#666;" id="infoS"></div>
     </div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-      <div class="badge" id="badgeNum">Próximo: Ofício nº 001</div>
-      <button class="btn bv bsm" id="btnNovaJornada" style="display:none;" onclick="abrirModalJornada()">➕ Nova Jornada</button>
-      <button class="btn bd2 bsm" onclick="encerrarJornada()">🏁 Encerrar Jornada</button>
-      <button class="btn bo bsm" onclick="sair()">Sair</button>
+      <div class="badge" id="bdg">Proximo: 001</div>
+      <button class="btn bv bsm" id="btnNJ" style="display:none;" onclick="abrirModal()">+ Nova Jornada</button>
+      <button class="btn br bsm" onclick="doEncerrar()">Encerrar Jornada</button>
+      <button class="btn bo bsm" onclick="doSair()">Sair</button>
     </div>
   </div>
-
   <div class="tabs">
-    <div class="tab on" id="tabNovo" onclick="aba('novo')">Novo Atendimento</div>
-    <div class="tab" id="tabHist" onclick="aba('historico')">Histórico</div>
-    <div class="tab" id="tabBusca" onclick="aba('busca')">🔍 Busca Global</div>
+    <div class="tab on" id="tN" onclick="aba('n')">Novo Atendimento</div>
+    <div class="tab" id="tH" onclick="aba('h')">Historico</div>
   </div>
 
-  <!-- ABA NOVO -->
-  <div id="abaNovo">
-    <!-- REQUERENTE -->
+  <div id="abaN">
     <div class="card">
-      <h2>🧑 Dados do(a) Requerente</h2>
-      <div style="background:var(--vc);border-left:4px solid var(--v);padding:9px 12px;margin-bottom:14px;font-size:12px;color:var(--v3);border-radius:0 4px 4px 0;">
-        ℹ️ Dados do(a) requerente vão para a Ficha de Atendimento e para a Declaração de Hipossuficiência.
+      <h2>Dados do Requerente</h2>
+      <div style="background:var(--vc);border-left:4px solid var(--v);padding:9px 12px;margin-bottom:14px;font-size:12px;color:var(--v3);border-radius:0 4px 4px 0;">Os dados do requerente vao para a Ficha e para a Declaracao de Hipossuficiencia.</div>
+      <div class="row">
+        <div class="fg" style="flex:3;"><label>Nome Completo:</label><input id="rN" type="text" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="fg"><label>CPF:</label><input id="rC" type="text" maxlength="14" placeholder="000.000.000-00" oninput="mcpf(this)"></div>
       </div>
       <div class="row">
-        <div class="fg" style="flex:3;"><label>Nome Completo:</label><input type="text" id="rNome" oninput="this.value=this.value.toUpperCase()"></div>
-        <div class="fg"><label>CPF:</label><input type="text" id="rCPF" maxlength="14" placeholder="000.000.000-00" oninput="mCPF(this)"></div>
+        <div class="fg"><label>Data Nascimento:</label><input id="rD" type="text" maxlength="10" placeholder="DD/MM/AAAA" oninput="mdat(this)"></div>
+        <div class="fg"><label>Telefone:</label><input id="rT" type="text" maxlength="15" placeholder="(00) 00000-0000" oninput="mtel(this)"></div>
+        <div class="fg"><label>Estado Civil:</label><select id="rEC"><option value="">-</option><option>Solteiro(a)</option><option>Casado(a)</option><option>Divorciado(a)</option><option>Viuvo(a)</option><option>Uniao Estavel</option></select></div>
       </div>
       <div class="row">
-        <div class="fg"><label>Data de Nascimento:</label><input type="text" id="rNasc" maxlength="10" placeholder="DD/MM/AAAA" oninput="mData(this)"></div>
-        <div class="fg"><label>Telefone / WhatsApp:</label><input type="text" id="rTel" maxlength="15" placeholder="(00) 00000-0000" oninput="mTel(this)"></div>
-        <div class="fg"><label>Estado Civil:</label>
-          <select id="rCivil"><option value="">Selecione</option><option>Solteiro(a)</option><option>Casado(a)</option><option>Divorciado(a)</option><option>Viúvo(a)</option><option>União Estável</option></select>
-        </div>
+        <div class="fg"><label>Nome do Pai:</label><input id="rP" type="text" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="fg"><label>Nome da Mae:</label><input id="rM" type="text" oninput="this.value=this.value.toUpperCase()"></div>
       </div>
       <div class="row">
-        <div class="fg"><label>Nome do Pai:</label><input type="text" id="rPai" oninput="this.value=this.value.toUpperCase()"></div>
-        <div class="fg"><label>Nome da Mãe:</label><input type="text" id="rMae" oninput="this.value=this.value.toUpperCase()"></div>
-      </div>
-      <div class="row">
-        <div class="fg"><label>Profissão:</label><input type="text" id="rProf" oninput="this.value=capTit(this.value)"></div>
-        <div class="fg"><label>Renda Média Familiar:</label><input type="text" id="rRenda" placeholder="R$ 0,00" oninput="mRenda(this)" onfocus="iRenda(this)"></div>
-        <div class="fg" style="flex:2;"><label>Endereço Completo:</label><input type="text" id="rEnd" oninput="this.value=capTit(this.value)"></div>
+        <div class="fg"><label>Profissao:</label><input id="rPr" type="text" oninput="this.value=ctit(this.value)"></div>
+        <div class="fg"><label>Renda Media Familiar:</label><input id="rR" type="text" placeholder="R$ 0,00" oninput="mrnd(this)" onfocus="irnd(this)"></div>
+        <div class="fg" style="flex:2;"><label>Endereco:</label><input id="rE" type="text" oninput="this.value=ctit(this.value)"></div>
       </div>
       <div class="divid"></div>
       <div>
-        <span style="font-size:12px;font-weight:700;color:var(--v3);">🎨 Cor / Raça — Autodeclaração (IBGE)</span>
-        <div class="chips" style="margin-top:8px;">
-          <div class="chip"><input type="radio" name="cor" id="c1" value="Branca"><label for="c1">Branca</label></div>
-          <div class="chip"><input type="radio" name="cor" id="c2" value="Parda"><label for="c2">Parda</label></div>
-          <div class="chip"><input type="radio" name="cor" id="c3" value="Preta"><label for="c3">Preta</label></div>
-          <div class="chip"><input type="radio" name="cor" id="c4" value="Amarela"><label for="c4">Amarela</label></div>
-          <div class="chip"><input type="radio" name="cor" id="c5" value="Indígena"><label for="c5">Indígena</label></div>
-          <div class="chip"><input type="radio" name="cor" id="c6" value="Não Declarar"><label for="c6">Não Declarar</label></div>
+        <span style="font-size:12px;font-weight:700;color:var(--v3);">Cor / Raca (IBGE)</span>
+        <div class="chips">
+          <div class="chip"><input type="radio" name="cor" id="cr1" value="Branca"><label for="cr1">Branca</label></div>
+          <div class="chip"><input type="radio" name="cor" id="cr2" value="Parda"><label for="cr2">Parda</label></div>
+          <div class="chip"><input type="radio" name="cor" id="cr3" value="Preta"><label for="cr3">Preta</label></div>
+          <div class="chip"><input type="radio" name="cor" id="cr4" value="Amarela"><label for="cr4">Amarela</label></div>
+          <div class="chip"><input type="radio" name="cor" id="cr5" value="Indigena"><label for="cr5">Indigena</label></div>
+          <div class="chip"><input type="radio" name="cor" id="cr6" value="Nao Declarar"><label for="cr6">Nao Declarar</label></div>
         </div>
       </div>
       <div class="divid"></div>
       <div>
-        <span style="font-size:12px;font-weight:700;color:var(--v3);">⚖️ Ação Pretendida — pode marcar mais de uma</span>
-        <div class="chips" style="margin-top:8px;">
-          <div class="chip"><input type="checkbox" name="acao" id="a1" value="Documentos"><label for="a1">📄 Documentos</label></div>
-          <div class="chip"><input type="checkbox" name="acao" id="a2" value="Alimentos"><label for="a2">🍽️ Alimentos</label></div>
-          <div class="chip"><input type="checkbox" name="acao" id="a3" value="Guarda/Filiação"><label for="a3">👶 Guarda/Filiação</label></div>
-          <div class="chip"><input type="checkbox" name="acao" id="a4" value="Criminal"><label for="a4">⚖️ Criminal</label></div>
-          <div class="chip"><input type="checkbox" name="acao" id="a5" value="Saúde"><label for="a5">🏥 Saúde</label></div>
-          <div class="chip"><input type="checkbox" name="acao" id="a6" value="Interdição/Curatela"><label for="a6">🔒 Interdição/Curatela</label></div>
-          <div class="chip"><input type="checkbox" name="acao" id="a7" value="Previdência/INSS"><label for="a7">💰 Previdência/INSS</label></div>
-          <div class="chip"><input type="checkbox" name="acao" id="a8" value="Outras"><label for="a8">➕ Outras</label></div>
+        <span style="font-size:12px;font-weight:700;color:var(--v3);">Acao Pretendida</span>
+        <div class="chips">
+          <div class="chip"><input type="checkbox" name="ac" id="a1" value="Documentos"><label for="a1">Documentos</label></div>
+          <div class="chip"><input type="checkbox" name="ac" id="a2" value="Alimentos"><label for="a2">Alimentos</label></div>
+          <div class="chip"><input type="checkbox" name="ac" id="a3" value="Guarda/Filiacao"><label for="a3">Guarda/Filiacao</label></div>
+          <div class="chip"><input type="checkbox" name="ac" id="a4" value="Criminal"><label for="a4">Criminal</label></div>
+          <div class="chip"><input type="checkbox" name="ac" id="a5" value="Saude"><label for="a5">Saude</label></div>
+          <div class="chip"><input type="checkbox" name="ac" id="a6" value="Interdicao/Curatela"><label for="a6">Interdicao/Curatela</label></div>
+          <div class="chip"><input type="checkbox" name="ac" id="a7" value="Previdencia/INSS"><label for="a7">Previdencia/INSS</label></div>
+          <div class="chip"><input type="checkbox" name="ac" id="a8" value="Outras"><label for="a8">Outras</label></div>
         </div>
-        <input type="text" id="aOutras" placeholder="Especifique 'Outras'..." style="display:none;margin-top:8px;width:100%;padding:7px 10px;border:1px solid var(--bd);border-radius:4px;font-size:12px;">
+        <input type="text" id="aOu" placeholder="Especifique Outras..." style="display:none;margin-top:8px;width:100%;padding:7px 10px;border:1px solid var(--bd);border-radius:4px;font-size:12px;">
       </div>
     </div>
 
-    <!-- CERTIDÕES -->
     <div class="card">
-      <h2>📄 Certidão(ões) Solicitada(s)</h2>
-      <div style="background:#fff8e1;border-left:4px solid #f9a825;padding:9px 12px;margin-bottom:14px;font-size:12px;color:#5d4037;border-radius:0 4px 4px 0;">
-        ⚠️ Adicione uma certidão por vez. Use <strong>"Salvar e incluir nova"</strong> para adicionar mais. Ao terminar, clique em <strong>"Salvar e concluir"</strong>.
-      </div>
-      <div id="certListaView"></div>
-
-      <!-- FORMULÁRIO DE CERTIDÃO -->
-      <div id="certForm" style="border:2px solid var(--vm);border-radius:8px;padding:14px;background:#f9fbe7;">
-        <div style="font-weight:700;font-size:13px;color:var(--v3);margin-bottom:10px;" id="certFormTit">📋 Certidão #1</div>
+      <h2>Certidao(oes) Solicitada(s)</h2>
+      <div style="background:#fff8e1;border-left:4px solid #f9a825;padding:9px 12px;margin-bottom:14px;font-size:12px;color:#5d4037;border-radius:0 4px 4px 0;">Adicione uma certidao por vez. Use "Salvar e incluir nova" para adicionar mais.</div>
+      <div id="cLista"></div>
+      <div id="cForm" style="border:2px solid var(--vm);border-radius:8px;padding:14px;background:#F9FBE7;">
+        <div style="font-weight:700;font-size:13px;color:var(--v3);margin-bottom:10px;" id="cFT">Certidao #1</div>
         <div class="row">
-          <div class="fg" style="flex:2;">
-            <label>Tipo de Documento:</label>
-            <select id="cTipo">
-              <option value="">Selecione o tipo</option>
-              <option value="nascimento">2ª Via da Certidão de Nascimento</option>
-              <option value="casamento">2ª Via da Certidão de Casamento</option>
-              <option value="obito">2ª Via da Certidão de Óbito</option>
-              <option value="inteiro_teor">Certidão de Inteiro Teor</option>
+          <div class="fg" style="flex:2;"><label>Tipo de Documento:</label>
+            <select id="cTi">
+              <option value="">Selecione...</option>
+              <option value="nasc">2a Via da Certidao de Nascimento</option>
+              <option value="cas">2a Via da Certidao de Casamento</option>
+              <option value="obi">2a Via da Certidao de Obito</option>
+              <option value="int">Certidao de Inteiro Teor</option>
             </select>
           </div>
-          <div class="fg"><label>Parentesco do Req. com o Titular:</label>
-            <select id="cPar">
-              <option value="">Selecione</option>
-              <option>Próprio(a)</option><option>Genitor(a)</option><option>Avô/Avó</option>
+          <div class="fg"><label>Parentesco Req. com Titular:</label>
+            <select id="cPa">
+              <option value="">-</option>
+              <option>Proprio(a)</option><option>Genitor(a)</option><option>Avo/Avo</option>
               <option>Esposo(a)</option><option>Tio(a)</option><option>Tutor(a)/Curador(a)</option>
               <option>Filho(a)</option><option>Convivente</option><option>Outro(a)</option>
             </select>
           </div>
         </div>
         <div class="row">
-          <div class="fg" style="flex:3;"><label>Nome Completo do Titular:</label><input type="text" id="cNome" placeholder="Deixe em branco se for o próprio requerente" oninput="this.value=this.value.toUpperCase()"></div>
-          <div class="fg"><label>CPF do Titular:</label><input type="text" id="cCPF" maxlength="14" placeholder="000.000.000-00" oninput="mCPF(this)"></div>
+          <div class="fg" style="flex:3;"><label>Nome do Titular:</label><input id="cNo" type="text" placeholder="Em branco se for o proprio requerente" oninput="this.value=this.value.toUpperCase()"></div>
+          <div class="fg"><label>CPF do Titular:</label><input id="cCP" type="text" maxlength="14" placeholder="000.000.000-00" oninput="mcpf(this)"></div>
         </div>
         <div class="row">
-          <div class="fg"><label>Data de Nascimento do Titular:</label><input type="text" id="cNasc" maxlength="10" placeholder="DD/MM/AAAA" oninput="mData(this)"></div>
-          <div class="fg" style="flex:2;"><label>Cartório / Ofício:</label><input type="text" id="cCartorio" oninput="this.value=capTit(this.value)"></div>
-          <div class="fg"><label>Cidade / Comarca:</label><input type="text" id="cCidade" oninput="this.value=capTit(this.value)"></div>
+          <div class="fg"><label>Data Nascimento Titular:</label><input id="cDN" type="text" maxlength="10" placeholder="DD/MM/AAAA" oninput="mdat(this)"></div>
+          <div class="fg" style="flex:2;"><label>Cartorio / Oficio:</label><input id="cCa" type="text" oninput="this.value=ctit(this.value)"></div>
+          <div class="fg"><label>Cidade / Comarca:</label><input id="cCi" type="text" oninput="this.value=ctit(this.value)"></div>
         </div>
         <div class="row">
-          <div class="fg"><label>N.º Registro / Termo:</label><input type="text" id="cNum"></div>
-          <div class="fg"><label>Livro:</label><input type="text" id="cLivro" oninput="this.value=this.value.toUpperCase()"></div>
-          <div class="fg"><label>Folha:</label><input type="text" id="cFolha"></div>
-          <div class="fg" style="flex:2;"><label>Matrícula (opcional):</label><input type="text" id="cMatricula"></div>
+          <div class="fg"><label>N. Registro / Termo:</label><input id="cNR" type="text"></div>
+          <div class="fg"><label>Livro:</label><input id="cLi" type="text" oninput="this.value=this.value.toUpperCase()"></div>
+          <div class="fg"><label>Folha:</label><input id="cFo" type="text"></div>
+          <div class="fg" style="flex:2;"><label>Matricula (opcional):</label><input id="cMa" type="text"></div>
         </div>
         <div style="display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;">
-          <button class="btn bv" onclick="salvarCert(false)">💾 Salvar e incluir nova certidão</button>
-          <button class="btn bo" onclick="salvarCert(true)">✅ Salvar e concluir</button>
+          <button class="btn bv" onclick="scert(false)">Salvar e incluir nova certidao</button>
+          <button class="btn bo" onclick="scert(true)">Salvar e concluir</button>
         </div>
       </div>
-
-      <div id="certConcluido" style="display:none;text-align:center;padding:14px;background:var(--vc);border-radius:8px;border:1px solid var(--vm);">
-        <div style="font-weight:700;color:var(--v3);margin-bottom:8px;" id="certConcluidoMsg"></div>
-        <button class="btn bo bsm" onclick="reabrirCerts()">✏️ Editar certidões</button>
+      <div id="cConc" style="display:none;text-align:center;padding:14px;background:var(--vc);border-radius:8px;border:1px solid var(--vm);margin-top:10px;">
+        <div style="font-weight:700;color:var(--v3);margin-bottom:8px;" id="cConcMsg"></div>
+        <button class="btn bo bsm" onclick="reabrirC()">Editar certidoes</button>
       </div>
     </div>
 
-    <!-- OBSERVAÇÕES -->
     <div class="card">
-      <h2>📝 Observações para o Ofício (opcional)</h2>
-      <textarea id="fObs" rows="2" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:5px;font-size:13px;" placeholder="Ex: O pedido também foi encaminhado pelo sistema CRC JUD..."></textarea>
+      <h2>Observacoes para o Oficio (opcional)</h2>
+      <textarea id="fOb" rows="2" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:5px;font-size:13px;" placeholder="Ex: Pedido enviado pelo CRC JUD..."></textarea>
     </div>
 
-    <!-- BOTÕES GERAR -->
-    <div class="gerar-area">
-      <div style="font-weight:700;font-size:15px;color:var(--v3);margin-bottom:16px;">📋 Gerar Documentos</div>
-      <button class="btn bv" style="padding:13px 32px;font-size:14px;border-radius:8px;" onclick="salvarEGerar()">🖨️ Salvar e Gerar PDF (Ficha + Declaração + Ofício)</button>
-      <div class="limpar-area">
-        <p style="font-size:12px;color:#888;margin-bottom:10px;">Os dados já salvos no histórico não serão perdidos.</p>
-        <button class="btn bo bsm" onclick="limparForm()">🔄 Limpar Formulário</button>
+    <div class="ga">
+      <div style="font-weight:700;font-size:15px;color:var(--v3);margin-bottom:16px;">Gerar Documentos</div>
+      <button class="btn bv" style="padding:13px 32px;font-size:14px;border-radius:8px;" onclick="doGerar()">Salvar e Gerar PDF</button>
+      <div class="la">
+        <p style="font-size:12px;color:#888;margin-bottom:10px;">Os dados salvos no historico nao serao perdidos.</p>
+        <button class="btn bo bsm" onclick="doLimpar()">Limpar Formulario</button>
       </div>
     </div>
   </div>
 
-  <!-- ABA BUSCA GLOBAL -->
-  <div id="abaBusca" style="display:none;">
-    <div class="card">
-      <h2>🔍 Busca Global — Todas as Jornadas</h2>
-
-      <!-- Autenticação da busca -->
-      <div id="buscaAuth">
-        <div style="background:#fff8e1;border-left:4px solid #f9a825;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#5d4037;border-radius:0 4px 4px 0;">
-          🔒 A busca global requer autenticação para proteger os dados dos assistidos.
-        </div>
-        <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
-          <div class="fg" style="max-width:220px;">
-            <label>Senha de acesso:</label>
-            <input type="password" id="buscaSenha" placeholder="••••••••" onkeydown="if(event.key==='Enter')autenticarBusca()">
-          </div>
-          <button class="btn bv" style="height:38px;" onclick="autenticarBusca()">🔓 Acessar Busca</button>
-        </div>
-        <div class="errmsg" id="buscaErro" style="text-align:left;margin-top:8px;">❌ Senha incorreta.</div>
-      </div>
-
-      <!-- Painel de busca (visível após autenticação) -->
-      <div id="buscaPainel" style="display:none;">
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:flex-end;">
-          <div class="fg">
-            <label>Buscar por nome (requerente ou titular):</label>
-            <input type="text" id="buscaNome" placeholder="Digite parte do nome..." oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')executarBusca()">
-          </div>
-          <div class="fg" style="max-width:200px;">
-            <label>Buscar por CPF:</label>
-            <input type="text" id="buscaCPF" placeholder="000.000.000-00" maxlength="14" oninput="mCPF(this)" onkeydown="if(event.key==='Enter')executarBusca()">
-          </div>
-          <button class="btn bv" style="height:38px;padding:0 20px;" onclick="executarBusca()">🔍 Buscar</button>
-          <button class="btn bo" style="height:38px;padding:0 14px;" onclick="limparBusca()">✕ Limpar</button>
-        </div>
-        <div id="buscaInfo" style="font-size:12px;color:#666;margin-bottom:10px;"></div>
-        <div id="buscaResultados"></div>
-
-        <!-- RELATÓRIOS SALVOS -->
-        <div style="margin-top:24px;">
-          <div style="font-weight:700;font-size:14px;color:var(--v3);border-bottom:2px solid var(--vm);padding-bottom:6px;margin-bottom:12px;">📁 Relatórios de Jornadas Encerradas</div>
-          <div id="listaRelatorios"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="abaHist" style="display:none;">
-    <div class="card">
-      <h2>📚 Histórico da Jornada</h2>
-      <div id="listaHist"></div>
-    </div>
-  </div>
+  <div id="abaH" style="display:none;"><div class="card"><h2>Historico da Jornada</h2><div id="lHist"></div></div></div>
 </div>
 </div>
 
-<!-- MODAL NOVA JORNADA -->
-<div id="modalJornada" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:8px;padding:28px;max-width:400px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,.2);">
-    <h2 style="margin-bottom:14px;">➕ Nova Jornada</h2>
-    <div class="fg" style="margin-bottom:12px;"><label>Nome da Jornada:</label><input type="text" id="novaJornadaNome" placeholder="Ex: Jornada de Oeiras" oninput="this.value=capTit(this.value)"></div>
-    <div style="display:flex;gap:10px;">
-      <button class="btn bv" style="flex:1;" onclick="criarJornada()">✅ Criar</button>
-      <button class="btn bo" style="flex:1;" onclick="fecharModalJornada()">Cancelar</button>
-    </div>
-    <div style="margin-top:14px;">
-      <div style="font-size:12px;font-weight:700;color:var(--v3);margin-bottom:8px;">Jornadas existentes:</div>
-      <div id="listaJornadasAdmin"></div>
-    </div>
+<!-- MODAL JORNADA -->
+<div class="mbg" id="mJor">
+<div class="mbox">
+  <h2 style="margin-bottom:14px;">Nova Jornada</h2>
+  <div class="fg" style="margin-bottom:12px;"><label>Nome:</label><input type="text" id="nJN" placeholder="Ex: Jornada de Oeiras" oninput="this.value=ctit(this.value)"></div>
+  <div style="display:flex;gap:10px;margin-bottom:14px;">
+    <button class="btn bv" style="flex:1;" onclick="doCriarJ()">Criar</button>
+    <button class="btn bo" style="flex:1;" onclick="fecharModal()">Cancelar</button>
   </div>
+  <div style="font-size:12px;font-weight:700;color:var(--v3);margin-bottom:8px;">Jornadas existentes:</div>
+  <div id="lJA"></div>
+</div>
 </div>
 
-<!-- BOTÃO FICHA MANUAL -->
+<!-- BOTAO FICHA MANUAL -->
 <div class="noprint" style="position:fixed;bottom:18px;right:18px;z-index:998;">
-  <button onclick="imprimirManual()" style="background:#1B5E20;color:#fff;border:none;border-radius:8px;padding:10px 14px;font-size:11px;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.25);line-height:1.3;text-align:center;">📋 Ficha Manual<br>(caneta)</button>
+  <button onclick="doFichaManual()" style="background:#1B5E20;color:#fff;border:none;border-radius:8px;padding:10px 14px;font-size:11px;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.25);line-height:1.3;text-align:center;">Ficha Manual<br>(caneta)</button>
 </div>
 
-<!-- ÁREA DE IMPRESSÃO -->
+<!-- IMPRESSAO -->
 <div class="iprint">
+<div id="pF" class="qbra">
+<div class="fw">
+  <div class="ftp">
+    <img id="lgF" alt="DPE" style="width:80px;height:auto;display:block;flex-shrink:0;">
+    <div class="ftx">
+      <div class="ft1">Ficha de Atendimento</div>
+      <div class="ft2">Defensoria Publica do Estado do Piaui</div>
+      <div class="ft3">Diretoria Itinerante</div>
+      <div class="ft4">Uso exclusivo do servico - Tratamento sigiloso</div>
+    </div>
+  </div>
+  <div class="fsc">Identificacao do Requerente</div>
+  <div class="fl"><span class="fr">Nome:</span><span class="fv" id="pRN"></span></div>
+  <div style="display:flex;gap:8px;">
+    <div style="flex:1;"><div class="fl"><span class="fr">CPF:</span><span class="fv" id="pRC"></span></div></div>
+    <div style="flex:1;"><div class="fl"><span class="fr">Nasc.:</span><span class="fv" id="pRD"></span></div></div>
+    <div style="flex:1;"><div class="fl"><span class="fr">Tel.:</span><span class="fv" id="pRT"></span></div></div>
+  </div>
+  <div style="display:flex;gap:8px;">
+    <div style="flex:1;"><div class="fl"><span class="fr">Pai:</span><span class="fv" id="pRP"></span></div></div>
+    <div style="flex:1;"><div class="fl"><span class="fr">Mae:</span><span class="fv" id="pRM"></span></div></div>
+  </div>
+  <div style="display:flex;gap:8px;">
+    <div style="flex:1;"><div class="fl"><span class="fr">Est. Civil:</span><span class="fv" id="pREC"></span></div></div>
+    <div style="flex:1;"><div class="fl"><span class="fr">Profissao:</span><span class="fv" id="pRPr"></span></div></div>
+    <div style="flex:2;"><div class="fl"><span class="fr">Renda:</span><span class="fv" id="pRR"></span></div></div>
+  </div>
+  <div class="fl"><span class="fr">Endereco:</span><span class="fv" id="pRE"></span></div>
+  <div style="display:flex;gap:0;margin-top:8px;border:1px solid #A5D6A7;border-radius:3px;overflow:hidden;">
+    <div style="flex:1;padding:5px 8px;border-right:2px solid #A5D6A7;">
+      <div style="background:#43A047;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:4px;">Cor / Raca</div>
+      <div class="fop" id="pCor"></div>
+    </div>
+    <div style="flex:2;padding:5px 8px;">
+      <div style="background:#2E7D32;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:4px;">Acao Pretendida</div>
+      <div class="fop" id="pAc"></div>
+      <div id="pOu" style="font-size:7pt;font-style:italic;margin-top:2px;"></div>
+    </div>
+  </div>
+  <div class="dbox">
+    <div class="dtit">Declaracao de Hipossuficiencia</div>
+    <div class="dp" id="pDecl"></div>
+    <div class="dp">Outrossim, declaro estar ciente de que a prestacao de informacoes falsas perante funcionario publico podera tipificar o crime de falsidade ideologica, previsto no art. 299 do Codigo Penal Brasileiro, cuja pena e de reclusao de 1 a 5 anos e multa.</div>
+    <div class="dp"><strong>AUTORIZACAO LGPD</strong> - Conforme a Lei 13.709/2018, AUTORIZO a Defensoria Publica do Estado do Piaui a incluir meus dados pessoais nas pecas processuais relacionadas a assistencia juridica prestada, para fins exclusivamente legais.</div>
+    <div class="das"><div style="height:28px;"></div><div class="dln"></div><div style="font-size:8pt;margin-top:2px;" id="pNAs"></div><div style="font-size:7.5pt;color:#555;">Requerente</div></div>
+    <div style="text-align:right;margin-top:5px;font-size:7.5pt;" id="pDtF"></div>
+  </div>
+</div>
+</div>
 
-  <!-- PÁG 1: FICHA + HIPO -->
-  <div id="pFicha" class="qbra">
-    <div class="fw">
-      <div class="ftopo">
-        <img id="lFicha" alt="DPE-PI">
-        <div class="ftxt">
-          <h2>Ficha de Atendimento</h2>
-          <div class="ftxt-inst">Defensoria Pública do Estado do Piauí</div>
-          <div class="ftxt-sub">Diretoria Itinerante</div>
-          <div class="ftxt-sigi">Uso exclusivo do serviço · Tratamento sigiloso</div>
-        </div>
-      </div>
-      <div class="fsec">Identificação do(a) Requerente</div>
-      <div class="fl"><span class="fr">Nome Completo:</span><span class="fv" id="o_rNome"></span></div>
-      <div style="display:flex;gap:8px;">
-        <div style="flex:1;"><div class="fl"><span class="fr">CPF:</span><span class="fv" id="o_rCPF"></span></div></div>
-        <div style="flex:1;"><div class="fl"><span class="fr">Data Nascimento:</span><span class="fv" id="o_rNasc"></span></div></div>
-        <div style="flex:1;"><div class="fl"><span class="fr">Telefone:</span><span class="fv" id="o_rTel"></span></div></div>
-      </div>
-      <div style="display:flex;gap:8px;">
-        <div style="flex:1;"><div class="fl"><span class="fr">Nome do Pai:</span><span class="fv" id="o_rPai"></span></div></div>
-        <div style="flex:1;"><div class="fl"><span class="fr">Nome da Mãe:</span><span class="fv" id="o_rMae"></span></div></div>
-      </div>
-      <div style="display:flex;gap:8px;">
-        <div style="flex:1;"><div class="fl"><span class="fr">Estado Civil:</span><span class="fv" id="o_rCivil"></span></div></div>
-        <div style="flex:1;"><div class="fl"><span class="fr">Profissão:</span><span class="fv" id="o_rProf"></span></div></div>
-        <div style="flex:2;"><div class="fl"><span class="fr">Renda Familiar:</span><span class="fv" id="o_rRenda"></span></div></div>
-      </div>
-      <div class="fl"><span class="fr">Endereço:</span><span class="fv" id="o_rEnd"></span></div>
+<div id="pO">
+<div class="ow">
+  <div class="otp">
+    <img id="lgO" alt="DPE" style="width:80px;height:auto;display:block;flex-shrink:0;">
+    <div class="otx">
+      <div class="ot1">Defensoria Publica do Estado do Piaui</div>
+      <div class="ot2" id="oUni"></div>
+      <div class="ot3">Diretoria Itinerante</div>
+    </div>
+  </div>
+  <div class="onr"><span class="onl" id="oNum"></span><span class="odt" id="oDt"></span></div>
+  <div class="ode" id="oDest"></div>
+  <div class="oas">Assunto: <span id="oAss"></span></div>
+  <div class="op" id="oInt"></div>
+  <div class="op" id="oSit"></div>
+  <div id="oCerts"></div>
+  <div class="ofu"><strong>FUNDAMENTACAO LEGAL:</strong><ol>
+    <li><strong>Lei 9.534/1997:</strong> Garante a gratuidade das certidoes para os reconhecidamente pobres.</li>
+    <li><strong>Lei 1.060/1950:</strong> Assegura o acesso a justica a pessoas em situacao de vulnerabilidade economica.</li>
+    <li><strong>LC 80/1994, art. 4, VII:</strong> Atribui a Defensoria Publica o poder de requisitar documentos necessarios a defesa dos assistidos.</li>
+  </ol></div>
+  <div class="op" id="oEnc"></div>
+  <div id="oObsW" style="display:none;"><div class="oob" id="oObs"></div></div>
+  <div class="osn">
+    <div style="font-size:9.5pt;margin-bottom:26px;" id="oDtAs"></div>
+    <div class="osl"></div>
+    <div class="osn2" id="oDef"></div>
+    <div style="font-size:9.5pt;">Defensor(a) Publico(a)</div>
+    <div style="font-size:9.5pt;" id="oUni2"></div>
+  </div>
+  <div class="ord" id="oRod"></div>
+</div>
+</div>
 
-      <div style="display:flex;gap:0;margin-top:8px;border:1px solid #C8E6C9;border-radius:3px;overflow:hidden;">
-        <div style="flex:1;padding:5px 8px;border-right:2px solid #C8E6C9;">
-          <div style="background:#1B5E20;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:4px;">Cor / Raça (IBGE)</div>
-          <div class="fopts" id="o_cor"></div>
-        </div>
-        <div style="flex:2;padding:5px 8px;">
-          <div style="background:#2E7D32;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:4px;">Ação Pretendida</div>
-          <div class="fopts" id="o_acoes"></div>
-          <div id="o_outras" style="font-size:7pt;font-style:italic;margin-top:2px;"></div>
-        </div>
+<div id="pM" style="display:none;">
+<div style="font-family:Arial,sans-serif;font-size:8.5pt;">
+  <div style="display:flex;align-items:center;gap:14px;border-bottom:3px solid #4CAF50;padding-bottom:10px;margin-bottom:10px;">
+    <img id="lgM" alt="DPE" style="width:80px;height:auto;display:block;flex-shrink:0;">
+    <div style="flex:1;text-align:center;">
+      <div style="color:#2E7D32;font-size:12pt;font-weight:700;text-transform:uppercase;">Ficha de Atendimento</div>
+      <div style="color:#43A047;font-size:8.5pt;font-weight:700;margin-top:2px;">Defensoria Publica do Estado do Piaui</div>
+      <div style="color:#66BB6A;font-size:7.5pt;">Diretoria Itinerante</div>
+      <div style="color:#888;font-size:7pt;margin-top:1px;">Uso exclusivo do servico - Tratamento sigiloso</div>
+    </div>
+  </div>
+  <div style="background:#43A047;color:#fff;padding:2px 7px;font-size:7.5pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:6px;">Identificacao do Requerente</div>
+  <div style="margin-bottom:7px;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Nome Completo:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
+  <div style="display:flex;gap:10px;margin-bottom:7px;">
+    <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">CPF:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
+    <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Data de Nascimento:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
+    <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Telefone:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
+  </div>
+  <div style="display:flex;gap:10px;margin-bottom:7px;">
+    <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Nome do Pai:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
+    <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Nome da Mae:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
+  </div>
+  <div style="display:flex;gap:10px;margin-bottom:7px;">
+    <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Estado Civil:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
+    <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Profissao:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
+    <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Renda Familiar:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
+  </div>
+  <div style="margin-bottom:8px;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Endereco:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
+  <div style="display:flex;gap:0;margin-bottom:8px;border:1px solid #A5D6A7;border-radius:3px;overflow:hidden;">
+    <div style="flex:1;padding:5px 8px;border-right:2px solid #A5D6A7;">
+      <div style="background:#43A047;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:4px;">Cor / Raca</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;">
+        <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>Branca</span>
+        <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>Parda</span>
+        <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>Preta</span>
+        <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>Amarela</span>
+        <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>Indigena</span>
+        <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>Nao Declarar</span>
       </div>
-
-      <div class="dbox">
-        <div class="dtit">Declaração de Hipossuficiência</div>
-        <div class="dp" id="o_declTexto"></div>
-        <div class="dp">Outrossim, declaro estar ciente de que a prestação de informações falsas perante funcionário público poderá tipificar o crime de falsidade ideológica, previsto no art. 299 do Código Penal Brasileiro, cuja pena é de reclusão de 1 (um) a 5 (cinco) anos e multa.</div>
-        <div class="dp"><strong>AUTORIZAÇÃO LGPD</strong> — Conforme a Lei Geral de Proteção de Dados Pessoais (Lei n.º 13.709/2018), <strong>AUTORIZO</strong> a Defensoria Pública do Estado do Piauí a incluir meus dados pessoais nas peças processuais e expedientes relacionados à assistência jurídica prestada, para fins exclusivamente legais e processuais.</div>
-        <div class="dassin">
-          <div style="height:28px;"></div>
-          <div class="dlinha"></div>
-          <div style="font-size:8pt;margin-top:2px;" id="o_rNomeAssin"></div>
-          <div style="font-size:7.5pt;color:#555;">Requerente</div>
-        </div>
-        <div style="text-align:right;margin-top:5px;font-size:7.5pt;" id="o_dataFicha"></div>
+    </div>
+    <div style="flex:2;padding:5px 8px;">
+      <div style="background:#2E7D32;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:4px;">Acao Pretendida</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;">
+        <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>Documentos</span>
+        <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>Alimentos</span>
+        <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>Guarda/Filiacao</span>
+        <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>Criminal</span>
+        <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>Saude</span>
+        <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>Interdicao/Curatela</span>
+        <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>Previdencia/INSS</span>
+        <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>Outras: <span style="border-bottom:1px dotted #999;display:inline-block;width:50px;">&nbsp;</span></span>
       </div>
     </div>
   </div>
-
-  <!-- PÁG 2: OFÍCIO -->
-  <div id="pOficio">
-    <div class="ow">
-      <div class="ocab">
-        <img id="lOficio" alt="DPE-PI">
-        <div class="oct">
-          <h3>Defensoria Pública do Estado do Piauí</h3>
-          <div class="oct-unidade" id="o_unidade"></div>
-          <div class="oct-dir">Diretoria Itinerante</div>
-        </div>
-      </div>
-      <div class="onlrow">
-        <span class="onl" id="o_numero"></span>
-        <span class="odt" id="o_data"></span>
-      </div>
-      <div class="odest" id="o_dest"></div>
-      <div class="oass"><u>Assunto:</u> <span id="o_assunto"></span></div>
-      <div class="op" id="o_intro"></div>
-      <div class="op" id="o_sitEcon"></div>
-      <div id="o_certBlocos"></div>
-      <div class="ofund">
-        <strong>FUNDAMENTAÇÃO LEGAL:</strong>
-        <ol>
-          <li><strong>Lei n.º 9.534/1997:</strong> Garante a gratuidade das certidões de nascimento, casamento e óbito para os reconhecidamente pobres.</li>
-          <li><strong>Lei n.º 1.060/1950:</strong> Assegura o acesso à justiça a pessoas em situação de vulnerabilidade econômica.</li>
-          <li><strong>Lei Complementar n.º 80/1994, art. 4.º, VII:</strong> Atribui à Defensoria Pública o poder de requisitar documentos necessários à defesa dos direitos dos assistidos.</li>
-        </ol>
-      </div>
-      <div class="op" id="o_encer"></div>
-      <div id="o_obsWrap" style="display:none;"><div class="oobs" id="o_obs"></div></div>
-      <div class="oassin">
-        <div class="oassindt" id="o_dataAssin"></div>
-        <div class="oasslin"></div>
-        <div class="oasnome" id="o_defNome"></div>
-        <div style="font-size:9.5pt;">Defensor(a) Público(a)</div>
-        <div style="font-size:9.5pt;" id="o_defUnidade"></div>
-      </div>
-      <div class="orod" id="o_rodape"></div>
+  <div style="margin-bottom:8px;background:#F1F8E9;border:1px solid #A5D6A7;border-radius:3px;padding:6px 8px;">
+    <div style="background:#2E7D32;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:4px;">Tipo de Certidao</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+      <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>2a Via Certidao Nascimento</span>
+      <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>2a Via Certidao Casamento</span>
+      <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>2a Via Certidao Obito</span>
+      <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #43A047;display:inline-block;"></span>Certidao Inteiro Teor</span>
     </div>
   </div>
-
-  <!-- PÁG 3: FICHA MANUAL -->
-  <div id="pManual" style="display:none;">
-    <div style="font-family:Arial,sans-serif;font-size:8.5pt;">
-      <div style="display:flex;align-items:center;gap:12px;border-bottom:3px solid #2E7D32;padding-bottom:9px;margin-bottom:10px;">
-        <img id="lManual" alt="DPE-PI" style="width:72px;height:auto;display:block;flex-shrink:0;">
-        <div style="flex:1;text-align:center;">
-          <div style="color:#1B5E20;font-size:12pt;font-weight:700;text-transform:uppercase;letter-spacing:.5px;">Ficha de Atendimento</div>
-          <div style="color:#2E7D32;font-size:8.5pt;font-weight:700;margin-top:2px;">Defensoria Pública do Estado do Piauí</div>
-          <div style="color:#388E3C;font-size:7.5pt;">Diretoria Itinerante</div>
-          <div style="color:#777;font-size:7pt;margin-top:1px;">Uso exclusivo do serviço · Tratamento sigiloso</div>
-        </div>
+  <div style="padding:8px;border:1.5px solid #66BB6A;font-size:7.5pt;line-height:1.35;text-align:justify;background:#fafff8;">
+    <div style="font-weight:700;text-transform:uppercase;text-align:center;margin-bottom:6px;font-size:8.5pt;color:#2E7D32;">Declaracao de Hipossuficiencia</div>
+    <div style="margin-bottom:6px;"><strong>DECLARO</strong>, para fins de obtencao de <strong>ASSISTENCIA JURIDICA</strong> pela <strong>DEFENSORIA PUBLICA DO ESTADO DO PIAUI</strong>, que sou pessoa pobre na forma da lei. O(A) Requerente atua como <span style="border-bottom:1px solid #555;display:inline-block;width:110px;vertical-align:bottom;">&nbsp;</span>, auferindo renda media de R$<span style="border-bottom:1px solid #555;display:inline-block;width:130px;vertical-align:bottom;">&nbsp;</span>.</div>
+    <div style="margin-bottom:6px;">Outrossim, declaro estar ciente que informacoes falsas poderao tipificar o crime de falsidade ideologica (art. 299 CP).</div>
+    <div style="margin-bottom:6px;"><strong>AUTORIZACAO LGPD</strong> - Autorizo a DPE-PI a incluir meus dados pessoais nas pecas processuais para fins exclusivamente legais.</div>
+    <div style="margin-top:28px;text-align:center;"><div style="border-top:1px solid #000;width:58%;margin:0 auto 3px;"></div><div style="font-size:7.5pt;color:#555;">Assinatura do Requerente</div></div>
+    <div style="text-align:right;margin-top:8px;font-size:7.5pt;"><span style="border-bottom:1px dotted #555;display:inline-block;width:110px;">&nbsp;</span>, <span style="border-bottom:1px dotted #555;display:inline-block;width:16px;">&nbsp;</span> de <span style="border-bottom:1px dotted #555;display:inline-block;width:70px;">&nbsp;</span> de <span style="border-bottom:1px dotted #555;display:inline-block;width:34px;">&nbsp;</span>.</div>
+    <div style="margin-top:10px;border-top:1px dashed #66BB6A;padding-top:7px;">
+      <div style="background:#2E7D32;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:6px;display:inline-block;">Dados do Registro Civil - preenchimento posterior</div>
+      <div style="margin-bottom:6px;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Titular:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
+      <div style="display:flex;gap:8px;margin-bottom:6px;">
+        <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">CPF Titular:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
+        <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Data Nasc. Titular:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
+        <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Parentesco:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
       </div>
-      <div style="background:#2E7D32;color:#fff;padding:2px 7px;font-size:7.5pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:6px;">Identificação do(a) Requerente</div>
-      <div style="margin-bottom:7px;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Nome Completo:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
-      <div style="display:flex;gap:10px;margin-bottom:7px;">
-        <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">CPF:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
-        <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Data de Nascimento:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
-        <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Telefone:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
+      <div style="display:flex;gap:8px;margin-bottom:6px;">
+        <div style="flex:2;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Cartorio / Oficio:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
+        <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Cidade / Comarca:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
       </div>
-      <div style="display:flex;gap:10px;margin-bottom:7px;">
-        <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Nome do Pai:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
-        <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Nome da Mãe:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
-      </div>
-      <div style="display:flex;gap:10px;margin-bottom:7px;">
-        <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Estado Civil:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
-        <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Profissão:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
-        <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Renda Média Familiar:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
-      </div>
-      <div style="margin-bottom:8px;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Endereço:</div><div style="border-bottom:1px solid #aaa;min-height:20px;"></div></div>
-      <div style="display:flex;gap:0;margin-bottom:8px;border:1px solid #C8E6C9;border-radius:3px;overflow:hidden;">
-        <div style="flex:1;padding:5px 8px;border-right:2px solid #C8E6C9;">
-          <div style="background:#1B5E20;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:4px;">Cor / Raça (IBGE)</div>
-          <div style="display:flex;flex-wrap:wrap;gap:5px;">
-            <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> Branca</span>
-            <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> Parda</span>
-            <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> Preta</span>
-            <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> Amarela</span>
-            <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> Indígena</span>
-            <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> Não Declarar</span>
-          </div>
-        </div>
-        <div style="flex:2;padding:5px 8px;">
-          <div style="background:#2E7D32;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:4px;">Ação Pretendida</div>
-          <div style="display:flex;flex-wrap:wrap;gap:5px;">
-            <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> Documentos</span>
-            <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> Alimentos</span>
-            <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> Guarda/Filiação</span>
-            <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> Criminal</span>
-            <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> Saúde</span>
-            <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> Interdição/Curatela</span>
-            <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> Previdência/INSS</span>
-            <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> Outras: <span style="border-bottom:1px dotted #999;display:inline-block;width:50px;">&nbsp;</span></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- TIPO DE CERTIDÃO — manual -->
-      <div style="margin-bottom:8px;background:#f1f8e9;border:1px solid #C8E6C9;border-radius:3px;padding:6px 8px;">
-        <div style="background:#2E7D32;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:4px;">Tipo de Certidão Solicitada</div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;">
-          <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> 2ª Via da Certidão de Nascimento</span>
-          <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> 2ª Via da Certidão de Casamento</span>
-          <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> 2ª Via da Certidão de Óbito</span>
-          <span style="display:flex;align-items:center;gap:2px;font-size:7.5pt;"><span style="width:8px;height:8px;border:1.5px solid #1B5E20;display:inline-block;"></span> Certidão de Inteiro Teor</span>
-        </div>
-      </div>
-
-      <!-- HIPO MANUAL -->
-      <div style="padding:8px;border:1.5px solid #2E7D32;font-size:7.5pt;line-height:1.35;text-align:justify;">
-        <div style="font-weight:700;text-transform:uppercase;text-align:center;margin-bottom:6px;font-size:8.5pt;color:#1B5E20;">Declaração de Hipossuficiência</div>
-        <div style="margin-bottom:6px;"><strong>DECLARO</strong>, para fins de obtenção de <strong>ASSISTÊNCIA JURÍDICA</strong> pela <strong>DEFENSORIA PÚBLICA DO ESTADO DO PIAUÍ</strong>, que sou pessoa pobre na forma da lei, não podendo arcar com as custas processuais e honorários advocatícios sem prejuízo do próprio sustento e de minha família, nos termos do art. 5.º, LXXIV, da Constituição Federal c.c. os arts. 1.º a 4.º da Lei n.º 1.060/1950 e art. 1.º da Lei n.º 7.115/1983. O(A) Requerente atua como <span style="border-bottom:1px solid #555;display:inline-block;width:110px;vertical-align:bottom;">&nbsp;</span>, auferindo renda média de R$<span style="border-bottom:1px solid #555;display:inline-block;width:130px;vertical-align:bottom;">&nbsp;</span>.</div>
-        <div style="margin-bottom:6px;">Outrossim, declaro estar ciente de que a prestação de informações falsas perante funcionário público poderá tipificar o crime de falsidade ideológica, previsto no art. 299 do Código Penal Brasileiro, cuja pena é de reclusão de 1 (um) a 5 (cinco) anos e multa.</div>
-        <div style="margin-bottom:6px;"><strong>AUTORIZAÇÃO LGPD</strong> — Conforme a Lei Geral de Proteção de Dados Pessoais (Lei n.º 13.709/2018), <strong>AUTORIZO</strong> a Defensoria Pública do Estado do Piauí a incluir meus dados pessoais nas peças processuais e expedientes relacionados à assistência jurídica prestada, para fins exclusivamente legais e processuais.</div>
-        <div style="margin-top:28px;text-align:center;"><div style="border-top:1px solid #000;width:58%;margin:0 auto 3px;"></div><div style="font-size:7.5pt;color:#555;">Assinatura / Impressão Digital do(a) Requerente</div></div>
-        <div style="text-align:right;margin-top:8px;font-size:7.5pt;"><span style="border-bottom:1px dotted #555;display:inline-block;width:110px;">&nbsp;</span>,&nbsp;<span style="border-bottom:1px dotted #555;display:inline-block;width:16px;">&nbsp;</span>&nbsp;de&nbsp;<span style="border-bottom:1px dotted #555;display:inline-block;width:70px;">&nbsp;</span>&nbsp;de&nbsp;<span style="border-bottom:1px dotted #555;display:inline-block;width:34px;">&nbsp;</span>.</div>
-        <!-- DADOS DO REGISTRO CIVIL -->
-        <div style="margin-top:10px;border-top:1px dashed #2E7D32;padding-top:7px;">
-          <div style="background:#2E7D32;color:#fff;padding:2px 6px;font-size:7pt;font-weight:700;text-transform:uppercase;border-radius:2px;margin-bottom:6px;display:inline-block;">Dados do Registro Civil — preenchimento posterior</div>
-          <div style="margin-bottom:6px;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Titular do Documento:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
-          <div style="display:flex;gap:8px;margin-bottom:6px;">
-            <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">CPF do Titular:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
-            <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Data Nascimento Titular:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
-            <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Parentesco:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
-          </div>
-          <div style="display:flex;gap:8px;margin-bottom:6px;">
-            <div style="flex:2;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Cartório / Ofício:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
-            <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Cidade / Comarca:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
-          </div>
-          <div style="display:flex;gap:8px;">
-            <div style="flex:2;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">N.º Registro / Termo:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
-            <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Livro:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
-            <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:1px;">Folha:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
-          </div>
-        </div>
+      <div style="display:flex;gap:8px;">
+        <div style="flex:2;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">N. Registro / Termo:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
+        <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Livro:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
+        <div style="flex:1;"><div style="font-size:7pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:1px;">Folha:</div><div style="border-bottom:1px solid #aaa;min-height:17px;"></div></div>
       </div>
     </div>
   </div>
+</div>
+</div>
 </div>
 
 <script>
-var SENHA='DITI2027';
-var LOGO='https://raw.githubusercontent.com/dpepigpt-glitch/rr/main/logo-dpe.png';
-var MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-
-var PERFIS=[
-  {id:'robert',nome:'Dr. Robert Rios Júnior',unidade:'2ª Defensoria Pública Itinerante',admin:true},
-  {id:'adriano',nome:'Dr. Adriano Moreti Batista',unidade:'1ª Defensoria Pública Itinerante',admin:false},
-  {id:'alessandro',nome:'Dr. Alessandro Andrade Spíndola',unidade:'Diretor da Defensoria Itinerante',admin:false}
+(function() {
+var PW = 'DITI2027';
+var LURL = 'https://raw.githubusercontent.com/dpepigpt-glitch/rr/main/logo-dpe.png';
+var LB = '';
+var MSS = ['janeiro','fevereiro','marco','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+var PF = [
+  {id:'robert', nm:'Dr. Robert Rios Junior', un:'2a Defensoria Publica Itinerante', adm:true},
+  {id:'adriano', nm:'Dr. Adriano Moreti Batista', un:'1a Defensoria Publica Itinerante', adm:false},
+  {id:'alessandro', nm:'Dr. Alessandro Andrade Spindola', un:'Diretor da Defensoria Itinerante', adm:false}
 ];
-
-var JORNADAS_DEFAULT=[
-  {id:'cantodoburiti',nome:'Jornada de Canto do Buriti'},
-  {id:'saojosedopeixe',nome:'Jornada de São José do Peixe'}
+var JD = [
+  {id:'cantodoburiti', nm:'Jornada de Canto do Buriti', fix:false},
+  {id:'saojosedopeixe', nm:'Jornada de Sao Jose do Peixe', fix:false},
+  {id:'def1', nm:'1a Defensoria Publica Itinerante', fix:true},
+  {id:'def2', nm:'2a Defensoria Publica Itinerante', fix:true}
 ];
+var SS = null, CS = [], CA = null, LBAU = false;
 
-var sessao=null;
-var certidoes=[];
-var atendAtual=null;
+function mcpf(e){var v=e.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);v=v.replace(/(\d{3})(\d)/,'$1.$2');v=v.replace(/(\d{3})(\d)/,'$1.$2');v=v.replace(/(\d{3})(\d{1,2})$/,'$1-$2');e.value=v;}
+function mdat(e){var v=e.value.replace(/\D/g,'');if(v.length>8)v=v.slice(0,8);v=v.replace(/(\d{2})(\d)/,'$1/$2');v=v.replace(/(\d{2})(\d)/,'$1/$2');e.value=v;}
+function mtel(e){var v=e.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);if(v.length<=10){v=v.replace(/(\d{2})(\d)/,'($1) $2');v=v.replace(/(\d{4})(\d)/,'$1-$2');}else{v=v.replace(/(\d{2})(\d)/,'($1) $2');v=v.replace(/(\d{5})(\d)/,'$1-$2');}e.value=v;}
+function irnd(e){if(!e.value)e.value='R$ ';}
+function mrnd(e){var r=e.value.replace(/[^\d]/g,'');if(!r){e.value='R$ ';return;}var n=parseInt(r,10),rs=Math.floor(n/100),cs=n%100;e.value='R$ '+rs.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.')+(','+(cs<10?'0':'')+cs);}
+function ctit(s){return s.replace(/(?:^|[\s\-])\S/g,function(c){return c.toUpperCase();});}
+function rnum(s){if(!s||s==='R$ ')return 0;return parseFloat(s.replace('R$ ','').replace(/\./g,'').replace(',','.'))||0;}
 
-/* ===== UTIL ===== */
-function mCPF(el){var v=el.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);v=v.replace(/(\d{3})(\d)/,'$1.$2');v=v.replace(/(\d{3})(\d)/,'$1.$2');v=v.replace(/(\d{3})(\d{1,2})$/,'$1-$2');el.value=v;}
-function mData(el){var v=el.value.replace(/\D/g,'');if(v.length>8)v=v.slice(0,8);v=v.replace(/(\d{2})(\d)/,'$1/$2');v=v.replace(/(\d{2})(\d)/,'$1/$2');el.value=v;}
-function mTel(el){var v=el.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);if(v.length<=10){v=v.replace(/(\d{2})(\d)/,'($1) $2');v=v.replace(/(\d{4})(\d)/,'$1-$2');}else{v=v.replace(/(\d{2})(\d)/,'($1) $2');v=v.replace(/(\d{5})(\d)/,'$1-$2');}el.value=v;}
-function iRenda(el){if(!el.value)el.value='R$ ';}
-function mRenda(el){var raw=el.value.replace(/[^\d]/g,'');if(!raw){el.value='R$ ';return;}var n=parseInt(raw,10);var r=Math.floor(n/100);var c=n%100;el.value='R$ '+r.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.')+(','+(c<10?'0':'')+c);}
-function capTit(s){return s.replace(/(?:^|[\s\-])\S/g,function(c){return c.toUpperCase();});}
-function rendaNum(s){if(!s||s==='R$ ')return 0;return parseFloat(s.replace('R$ ','').replace(/\./g,'').replace(',','.'))||0;}
-function porExtenso(n){
-  var u=['zero','um','dois','três','quatro','cinco','seis','sete','oito','nove','dez','onze','doze','treze','quatorze','quinze','dezesseis','dezessete','dezoito','dezenove'];
+function ext(n){
+  var u=['zero','um','dois','tres','quatro','cinco','seis','sete','oito','nove','dez','onze','doze','treze','quatorze','quinze','dezesseis','dezessete','dezoito','dezenove'];
   var d=['','','vinte','trinta','quarenta','cinquenta','sessenta','setenta','oitenta','noventa'];
   var c=['','cem','duzentos','trezentos','quatrocentos','quinhentos','seiscentos','setecentos','oitocentos','novecentos'];
-  if(n===0)return'zero';
-  function g(x){if(x<=19)return u[x];if(x<100){var dz=Math.floor(x/10);var un=x%10;return d[dz]+(un?' e '+u[un]:'');}var ct=Math.floor(x/100);var r=x%100;if(r===0)return c[ct];if(ct===1)return'cento e '+g(r);return c[ct]+' e '+g(r);}
-  var reais=Math.floor(n);var cts=Math.round((n-reais)*100);
-  var p=[];
-  if(reais>0){if(reais<1000)p.push(g(reais)+(reais===1?' real':' reais'));else{var m=Math.floor(reais/1000);var r=reais%1000;var ms=m===1?'mil':g(m)+' mil';p.push(r===0?ms:ms+(r<100?' e ':' ')+g(r))+(reais===1?' real':' reais');p[0]+=(reais===1?' real':' reais');}}
-  if(cts>0)p.push(g(cts)+(cts===1?' centavo':' centavos'));
+  function g(x){
+    if(x<=19)return u[x];
+    if(x<100)return d[Math.floor(x/10)]+(x%10?' e '+u[x%10]:'');
+    var ct=Math.floor(x/100),rx=x%100;
+    if(rx===0)return c[ct];
+    if(ct===1)return 'cento e '+g(rx);
+    return c[ct]+' e '+g(rx);
+  }
+  var rs=Math.floor(n),cs=Math.round((n-rs)*100),p=[];
+  if(rs>0){
+    if(rs<1000){p.push(g(rs)+(rs===1?' real':' reais'));}
+    else{var m=Math.floor(rs/1000),rx=rs%1000;var ms=(m===1?'mil':g(m)+' mil');var str=(rx===0?ms:ms+(rx<100?' e ':' ')+g(rx));p.push(str+(rs===1?' real':' reais'));}
+  }
+  if(cs>0)p.push(g(cs)+(cs===1?' centavo':' centavos'));
   return p.join(' e ')||'zero reais';
 }
-function tipoLabel(t){
-  var m={nascimento:'2ª Via da Certidão de Nascimento',casamento:'2ª Via da Certidão de Casamento',obito:'2ª Via da Certidão de Óbito',inteiro_teor:'Certidão de Inteiro Teor'};
-  return m[t]||t;
-}
-function getJornadas(){
-  var j=JSON.parse(localStorage.getItem('dpe_jornadas')||'null');
-  if(!j){j=JORNADAS_DEFAULT;localStorage.setItem('dpe_jornadas',JSON.stringify(j));}
-  return j;
-}
-function chaveAtend(jid){return 'dpe_atend_'+jid;}
-function chaveSeq(jid){return 'dpe_seq_'+jid;}
 
-/* ===== INIT ===== */
+function tlbl(t){var m={nasc:'2a Via da Certidao de Nascimento',cas:'2a Via da Certidao de Casamento',obi:'2a Via da Certidao de Obito',int:'Certidao de Inteiro Teor'};return m[t]||t;}
+function gJ(){var j=JSON.parse(localStorage.getItem('dpe_j')||'null');if(!j){j=JD;localStorage.setItem('dpe_j',JSON.stringify(j));}return j;}
+function kA(id){return 'dpe_a_'+id;}
+function kS(id){return 'dpe_s_'+id;}
+
+function carregarLogo(){
+  var img=new Image();img.crossOrigin='anonymous';
+  img.onload=function(){
+    try{var cv=document.createElement('canvas');cv.width=img.naturalWidth;cv.height=img.naturalHeight;cv.getContext('2d').drawImage(img,0,0);LB=cv.toDataURL('image/png');}
+    catch(e){LB=LURL;}
+    alogos();
+  };
+  img.onerror=function(){LB=LURL;alogos();};
+  img.src=LURL+'?t='+Date.now();
+}
+function alogos(){
+  var src=LB||LURL;
+  ['lgF','lgO','lgM'].forEach(function(id){var el=document.getElementById(id);if(el){el.src=src;el.style.width='80px';el.style.height='auto';el.style.display='block';}});
+}
+
 window.onload=function(){
-  aplicarLogos();
-  /* Reaplica logos logo antes de imprimir, garantindo carregamento */
-  window.addEventListener('beforeprint', function(){ aplicarLogos(); });
-  renderizarPerfis();
-  carregarJornadasSelect();
-  try{
-    var s=JSON.parse(localStorage.getItem('dpe_sessao')||'null');
-    if(s&&s.perfilId){sessao=s;iniciarSistema();}
-  }catch(e){}
-  document.getElementById('a8').addEventListener('change',function(){
-    document.getElementById('aOutras').style.display=this.checked?'block':'none';
+  carregarLogo();
+  window.addEventListener('beforeprint',alogos);
+  rperfis();rjornadas();carregarRlSel();
+  try{var s=JSON.parse(localStorage.getItem('dpe_ss')||'null');if(s&&s.pid){SS=s;init();}}catch(e){}
+  var a8=document.getElementById('a8');
+  if(a8)a8.addEventListener('change',function(){var el=document.getElementById('aOu');if(el)el.style.display=this.checked?'block':'none';});
+};
+
+window.ltab=function(t){
+  document.getElementById('ltab1').style.background=t==='login'?'var(--v)':'#888';
+  document.getElementById('ltab2').style.background=t==='busca'?'var(--v)':'#888';
+  document.getElementById('lPanelLogin').style.display=t==='login'?'block':'none';
+  document.getElementById('lPanelBusca').style.display=t==='busca'?'block':'none';
+  if(t==='busca')carregarRelsLogin();
+};
+
+function rperfis(){
+  var c=document.getElementById('pcards');if(!c)return;c.innerHTML='';
+  PF.forEach(function(p){
+    var d=document.createElement('div');d.className='pcard';d.id='pc_'+p.id;
+    d.innerHTML='<span style="font-size:22px;">👤</span><div><div style="font-weight:700;font-size:13px;color:var(--v3);">'+p.nm+(p.adm?' *':'')+'</div><div style="font-size:11px;color:#666;">'+p.un+'</div></div>';
+    d.onclick=function(){document.querySelectorAll('.pcard').forEach(function(x){x.classList.remove('sel');});d.classList.add('sel');};
+    c.appendChild(d);
+  });
+}
+
+function rjornadas(){
+  var sel=document.getElementById('lgJ');if(!sel)return;
+  var jj=gJ();sel.innerHTML='<option value="">Selecione...</option>';
+  var campo=jj.filter(function(j){return !j.fix;}),fixas=jj.filter(function(j){return j.fix;});
+  if(campo.length){var g1=document.createElement('optgroup');g1.label='Jornadas de Campo';campo.forEach(function(j){var o=document.createElement('option');o.value=j.id;o.textContent=j.nm;g1.appendChild(o);});sel.appendChild(g1);}
+  if(fixas.length){var g2=document.createElement('optgroup');g2.label='Defensorias (atendimento diario)';fixas.forEach(function(j){var o=document.createElement('option');o.value=j.id;o.textContent=j.nm;g2.appendChild(o);});sel.appendChild(g2);}
+}
+
+function carregarRlSel(){
+  var sel=document.getElementById('rlSel');if(!sel)return;
+  var rl=JSON.parse(localStorage.getItem('dpe_rl')||'[]');
+  sel.innerHTML='<option value="">Selecione jornada encerrada...</option>';
+  var seen={};
+  for(var i=rl.length-1;i>=0;i--){
+    var r=rl[i];
+    if(!seen[r.jid]){seen[r.jid]=true;var o=document.createElement('option');o.value=r.jid+'|'+r.id;o.textContent=r.jnm+' (enc. '+r.de+')';sel.appendChild(o);}
+  }
+}
+
+function carregarRelsLogin(){
+  var rl=JSON.parse(localStorage.getItem('dpe_rl')||'[]'),d=document.getElementById('lbRel');
+  if(!d)return;
+  if(!rl.length){d.innerHTML='<p style="color:#888;font-style:italic;font-size:12px;">Nenhum relatorio salvo ainda.</p>';return;}
+  d.innerHTML='';
+  for(var i=rl.length-1;i>=0;i--){
+    (function(r){
+      var it=document.createElement('div');
+      it.style.cssText='background:var(--vc);border:1px solid var(--vm);border-radius:6px;padding:10px 12px;margin-bottom:8px;';
+      it.innerHTML='<div style="font-weight:700;font-size:12px;color:var(--v3);">'+r.jnm+'</div>'
+        +'<div style="font-size:11px;color:#555;">'+r.de+' - '+r.ta+' atend. / '+r.to+' ofic. / '+r.td+' docs</div>'
+        +'<div style="font-size:11px;color:#777;margin-bottom:6px;">'+r.df+'</div>'
+        +'<button class="btn bv bsm" onclick="window.doReimRel('+r.id+')">Reimprimir Relatorio</button>';
+      d.appendChild(it);
+    })(rl[i]);
+  }
+}
+
+window.doLogin=function(){
+  var sel=document.querySelector('.pcard.sel');
+  if(!sel){document.getElementById('lerr').style.display='block';return;}
+  var pid=sel.id.replace('pc_','');
+  var pf=PF.find(function(p){return p.id===pid;});
+  var jid=document.getElementById('lgJ').value;
+  var pw=document.getElementById('lgS').value;
+  if(!jid||pw!==PW){document.getElementById('lerr').style.display='block';return;}
+  document.getElementById('lerr').style.display='none';
+  var jj=gJ();var jorn=jj.find(function(j){return j.id===jid;});
+  var unEf=jorn&&jorn.fix?jorn.nm:pf.un;
+  SS={pid:pid,nm:pf.nm,un:unEf,adm:pf.adm,jid:jid,jnm:jorn?jorn.nm:jid};
+  try{localStorage.setItem('dpe_ss',JSON.stringify(SS));}catch(e){}
+  init();
+};
+
+window.doReabrir=function(){
+  var sel=document.getElementById('rlSel');
+  if(!sel||!sel.value){alert('Selecione uma jornada encerrada.');return;}
+  var pw=document.getElementById('lgS').value;
+  if(pw!==PW){alert('Informe a senha correta antes de reabrir.');return;}
+  var parts=sel.value.split('|');var jid=parts[0];
+  var jj=gJ();var jorn=jj.find(function(j){return j.id===jid;});
+  if(!jorn){alert('Jornada nao encontrada.');return;}
+  var sel2=document.querySelector('.pcard.sel');
+  if(!sel2){alert('Selecione um perfil antes de reabrir.');return;}
+  var pid=sel2.id.replace('pc_','');var pf=PF.find(function(p){return p.id===pid;});
+  var unEf=jorn.fix?jorn.nm:pf.un;
+  SS={pid:pid,nm:pf.nm,un:unEf,adm:pf.adm,jid:jid,jnm:jorn.nm};
+  try{localStorage.setItem('dpe_ss',JSON.stringify(SS));}catch(e){}
+  var rl=JSON.parse(localStorage.getItem('dpe_rl')||'[]');
+  var relJ=rl.filter(function(r){return r.jid===jid;});
+  if(relJ.length){
+    var ult=relJ[relJ.length-1];
+    var ex=JSON.parse(localStorage.getItem(kA(jid))||'[]');
+    if(!ex.length&&ult.ats&&ult.ats.length){
+      localStorage.setItem(kA(jid),JSON.stringify(ult.ats));
+      localStorage.setItem(kS(jid),String(ult.ats[ult.ats.length-1].sq||0));
+    }
+  }
+  init();
+};
+
+window.doAutBusca=function(){
+  var s=(document.getElementById('lbSe').value||'').trim();
+  if(s!==PW){document.getElementById('lbErr').style.display='block';document.getElementById('lbSe').value='';return;}
+  document.getElementById('lbErr').style.display='none';
+  LBAU=true;
+  document.getElementById('lbAuth').style.display='none';
+  document.getElementById('lbPain').style.display='block';
+  carregarRelsLogin();
+};
+
+window.doLbuscar=function(){
+  if(!LBAU)return;
+  var tn=(document.getElementById('lbNm').value||'').trim().toUpperCase();
+  var tc=(document.getElementById('lbCP').value||'').trim();
+  if(!tn&&!tc){document.getElementById('lbInfo').innerText='Informe ao menos um criterio.';document.getElementById('lbRes').innerHTML='';return;}
+  var res=[];
+  gJ().forEach(function(j){
+    var lst=JSON.parse(localStorage.getItem(kA(j.id))||'[]');
+    lst.forEach(function(at){
+      var ok=false;
+      if(tc&&at.rq&&at.rq.cp&&at.rq.cp.replace(/\D/g,'')===tc.replace(/\D/g,''))ok=true;
+      if(tn&&at.rq&&at.rq.nm&&at.rq.nm.indexOf(tn)>=0)ok=true;
+      if(at.cs)at.cs.forEach(function(c){if(tn&&c.no&&c.no.indexOf(tn)>=0)ok=true;if(tc&&c.cp&&c.cp.replace(/\D/g,'')===tc.replace(/\D/g,''))ok=true;});
+      if(ok)res.push({j:j,at:at});
+    });
+  });
+  var rl=JSON.parse(localStorage.getItem('dpe_rl')||'[]');
+  var vR={};
+  rl.forEach(function(r){
+    if(vR[r.jid])return;vR[r.jid]=true;
+    (r.ats||[]).forEach(function(at){
+      var na=res.find(function(x){return x.at.id===at.id;});if(na)return;
+      var ok=false;
+      if(tc&&at.rq&&at.rq.cp&&at.rq.cp.replace(/\D/g,'')===tc.replace(/\D/g,''))ok=true;
+      if(tn&&at.rq&&at.rq.nm&&at.rq.nm.indexOf(tn)>=0)ok=true;
+      if(at.cs)at.cs.forEach(function(c){if(tn&&c.no&&c.no.indexOf(tn)>=0)ok=true;if(tc&&c.cp&&c.cp.replace(/\D/g,'')===tc.replace(/\D/g,''))ok=true;});
+      if(ok)res.push({j:{id:r.jid,nm:r.jnm+' (encerrada)'},at:at});
+    });
+  });
+  var bi=document.getElementById('lbInfo'),bd=document.getElementById('lbRes');
+  if(!res.length){bi.innerText='Nenhum resultado.';bd.innerHTML='';return;}
+  var js={};res.forEach(function(r){js[r.j.id]=true;});
+  bi.innerText=res.length+' resultado(s) em '+Object.keys(js).length+' jornada(s).';
+  bd.innerHTML='';
+  var gr={};res.forEach(function(r){if(!gr[r.j.id])gr[r.j.id]={nm:r.j.nm,its:[]};gr[r.j.id].its.push(r.at);});
+  Object.keys(gr).forEach(function(jid){
+    var g=gr[jid];
+    var t=document.createElement('div');t.style.cssText='background:var(--v3);color:#fff;padding:5px 10px;border-radius:4px;font-size:12px;font-weight:700;margin:10px 0 6px;';
+    t.innerText=g.nm+' ('+g.its.length+' resultado(s))';bd.appendChild(t);
+    g.its.forEach(function(at){
+      var it=document.createElement('div');it.className='hi';
+      var cd=at.cs?at.cs.map(function(c){return tlbl(c.ti)+(c.no?' - '+c.no:'');}).join(' | '):'';
+      it.innerHTML='<div><h3>'+at.no+' - '+(at.rq&&at.rq.nm?at.rq.nm:'')+'</h3>'
+        +'<p>Data: '+at.dt+(at.rq&&at.rq.cp?' | CPF: '+at.rq.cp:'')+'</p>'
+        +'<p>'+(cd||'')+'</p>'
+        +'<p style="font-size:10px;color:var(--v3);">Jornada: '+g.nm+(at.ss&&at.ss.nm?' | Defensor: '+at.ss.nm:'')+'</p></div>';
+      bd.appendChild(it);
+    });
   });
 };
 
-function aplicarLogos(){
-  ['lFicha','lOficio','lManual'].forEach(function(id){
-    var el=document.getElementById(id);
-    if(!el) return;
-    el.src=LOGO;
-    el.style.cssText='width:72px;height:auto;display:block;flex-shrink:0;';
-    el.onerror=function(){this.style.visibility='hidden';};
-  });
-}
+window.doLlimpar=function(){
+  document.getElementById('lbNm').value='';document.getElementById('lbCP').value='';
+  document.getElementById('lbInfo').innerText='';document.getElementById('lbRes').innerHTML='';
+};
 
-function renderizarPerfis(){
-  var c=document.getElementById('perfilCards');
-  c.innerHTML='';
-  PERFIS.forEach(function(p){
-    var div=document.createElement('div');
-    div.className='perfil-card';div.id='pc_'+p.id;
-    div.innerHTML='<span class="pc-ico">👤</span><div><div class="pc-nome">'+p.nome+(p.admin?' ⭐':'')+'</div><div class="pc-uni">'+p.unidade+'</div></div>';
-    div.onclick=function(){
-      document.querySelectorAll('.perfil-card').forEach(function(x){x.classList.remove('sel');});
-      div.classList.add('sel');
-    };
-    c.appendChild(div);
-  });
-}
-
-function carregarJornadasSelect(){
-  var sel=document.getElementById('lgJornada');
-  var jornadas=getJornadas();
-  sel.innerHTML='<option value="">Selecione a jornada</option>';
-  jornadas.forEach(function(j){
-    var op=document.createElement('option');op.value=j.id;op.textContent=j.nome;
-    sel.appendChild(op);
-  });
-}
-
-/* ===== LOGIN ===== */
-function fazerLogin(){
-  var sel=document.querySelector('.perfil-card.sel');
-  if(!sel){document.getElementById('erroLogin').style.display='block';return;}
-  var pid=sel.id.replace('pc_','');
-  var perfil=PERFIS.find(function(p){return p.id===pid;});
-  var jid=document.getElementById('lgJornada').value;
-  var senha=document.getElementById('lgSenha').value;
-  var err=document.getElementById('erroLogin');
-  if(!jid||senha!==SENHA){err.style.display='block';return;}
-  err.style.display='none';
-  var jornadas=getJornadas();
-  var jornada=jornadas.find(function(j){return j.id===jid;});
-  sessao={perfilId:pid,nome:perfil.nome,unidade:perfil.unidade,admin:perfil.admin,jornadaId:jid,jornadaNome:jornada?jornada.nome:jid};
-  try{localStorage.setItem('dpe_sessao',JSON.stringify(sessao));}catch(e){}
-  iniciarSistema();
-}
-
-function iniciarSistema(){
+function init(){
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('dashboard').style.display='block';
-  document.getElementById('infoSess').innerText=sessao.nome+' | '+sessao.jornadaNome;
-  if(sessao.admin)document.getElementById('btnNovaJornada').style.display='inline-block';
-  else document.getElementById('btnNovaJornada').style.display='none';
-  atualizarBadge();
-  renderizarCertLista();
+  document.getElementById('infoS').innerText=SS.nm+' | '+SS.jnm;
+  var bn=document.getElementById('btnNJ');if(bn)bn.style.display=SS.adm?'inline-block':'none';
+  updBdg();rcerts();
 }
 
-function sair(){if(confirm('Sair?')){localStorage.removeItem('dpe_sessao');location.reload();}}
+window.doSair=function(){if(confirm('Sair?')){localStorage.removeItem('dpe_ss');location.reload();}};
 
-function encerrarJornada(){
-  var s=prompt('🔒 Senha para encerrar jornada:');
-  if(!s)return;
-  if(s!==SENHA){alert('❌ Senha incorreta.');return;}
-  if(!confirm('⚠️ Encerrar jornada "'+sessao.jornadaNome+'"?\nUm relatório será gerado e salvo antes de limpar os dados.'))return;
+function updBdg(){var s=parseInt(localStorage.getItem(kS(SS.jid))||'0',10);var n=String(s+1);while(n.length<3)n='0'+n;document.getElementById('bdg').innerText='Proximo: Oficio '+n;}
 
-  var lista=JSON.parse(localStorage.getItem(chaveAtend(sessao.jornadaId))||'[]');
-  var totalAtend=lista.length;
-  var totalOfic=lista.length;
-  var totalDocs=0;
-  lista.forEach(function(a){totalDocs+=(a.certs?a.certs.length:0);});
-
-  /* Salva relatório no histórico global de relatórios */
-  var relatorios=JSON.parse(localStorage.getItem('dpe_relatorios')||'[]');
-  relatorios.push({
-    id:Date.now(),
-    jornadaId:sessao.jornadaId,
-    jornadaNome:sessao.jornadaNome,
-    dataEncerramento:new Date().toLocaleDateString('pt-BR'),
-    horaEncerramento:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),
-    defensor:sessao.nome,
-    unidade:sessao.unidade,
-    totalAtend:totalAtend,
-    totalOfic:totalOfic,
-    totalDocs:totalDocs,
-    atendimentos:lista
-  });
-  try{localStorage.setItem('dpe_relatorios',JSON.stringify(relatorios));}catch(e){}
-
-  /* Gera e imprime o relatório antes de limpar */
-  imprimirRelatorio(relatorios[relatorios.length-1]);
-
-  setTimeout(function(){
-    localStorage.removeItem(chaveAtend(sessao.jornadaId));
-    localStorage.removeItem(chaveSeq(sessao.jornadaId));
-    localStorage.removeItem('dpe_sessao');
-    location.reload();
-  },600);
-}
-
-function imprimirRelatorio(rel){
-  var janela=window.open('','_blank','width=900,height=700');
-  if(!janela)return;
-  var hoje=new Date();
-  var linhas='';
-  rel.atendimentos.forEach(function(a,i){
-    var docs=(a.certs||[]).map(function(c){return tipoLabel(c.tipo)+(c.nome&&c.nome!==a.req.nome?' (titular: '+capTit(c.nome.toLowerCase())+')':'');}).join('; ');
-    linhas+='<tr style="background:'+(i%2===0?'#f1f8e9':'#fff')+'">'
-      +'<td style="padding:5px 8px;border:1px solid #ccc;text-align:center;">'+a.numOficio+'</td>'
-      +'<td style="padding:5px 8px;border:1px solid #ccc;">'+capTit((a.req.nome||'').toLowerCase())+'</td>'
-      +'<td style="padding:5px 8px;border:1px solid #ccc;text-align:center;">'+(a.req.cpf||'—')+'</td>'
-      +'<td style="padding:5px 8px;border:1px solid #ccc;text-align:center;">'+(a.data||'—')+'</td>'
-      +'<td style="padding:5px 8px;border:1px solid #ccc;">'+(docs||'—')+'</td>'
-      +'</tr>';
-  });
-
-  var html='<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Relatório — '+rel.jornadaNome+'</title>'
-    +'<style>*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}'
-    +'body{padding:24px;font-size:10pt;color:#222;}'
-    +'@page{margin:1.5cm 2cm;size:A4 portrait;}'
-    +'@media print{.noprint{display:none;}}'
-    +'</style></head><body>'
-    +'<div style="display:flex;align-items:center;gap:14px;border-bottom:3px solid #2E7D32;padding-bottom:10px;margin-bottom:16px;">'
-    +'<img src="'+LOGO+'" style="width:70px;height:auto;" onerror="this.style.display=\'none\'">'
-    +'<div style="flex:1;text-align:center;">'
-    +'<div style="color:#1B5E20;font-size:13pt;font-weight:700;text-transform:uppercase;letter-spacing:.5px;">Relatório de Encerramento de Jornada</div>'
-    +'<div style="color:#2E7D32;font-size:9pt;font-weight:700;margin-top:3px;">Defensoria Pública do Estado do Piauí — Diretoria Itinerante</div>'
-    +'</div></div>'
-
-    +'<div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;">'
-    +'<div style="flex:1;background:#E8F5E9;border:1px solid #C8E6C9;border-radius:6px;padding:10px 14px;">'
-    +'<div style="font-size:8pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:4px;">Jornada</div>'
-    +'<div style="font-size:10pt;font-weight:700;">'+rel.jornadaNome+'</div>'
-    +'<div style="font-size:8.5pt;color:#555;margin-top:3px;">Encerrada em '+rel.dataEncerramento+' às '+rel.horaEncerramento+'</div>'
-    +'</div>'
-    +'<div style="flex:1;background:#E8F5E9;border:1px solid #C8E6C9;border-radius:6px;padding:10px 14px;">'
-    +'<div style="font-size:8pt;font-weight:700;text-transform:uppercase;color:#1B5E20;margin-bottom:4px;">Responsável</div>'
-    +'<div style="font-size:10pt;font-weight:700;">'+rel.defensor+'</div>'
-    +'<div style="font-size:8.5pt;color:#555;margin-top:3px;">'+rel.unidade+'</div>'
-    +'</div></div>'
-
-    +'<div style="display:flex;gap:12px;margin-bottom:20px;">'
-    +'<div style="flex:1;text-align:center;background:#1B5E20;color:#fff;border-radius:8px;padding:12px;">'
-    +'<div style="font-size:22pt;font-weight:700;">'+rel.totalAtend+'</div>'
-    +'<div style="font-size:8.5pt;margin-top:2px;">Atendimentos Realizados</div>'
-    +'</div>'
-    +'<div style="flex:1;text-align:center;background:#2E7D32;color:#fff;border-radius:8px;padding:12px;">'
-    +'<div style="font-size:22pt;font-weight:700;">'+rel.totalOfic+'</div>'
-    +'<div style="font-size:8.5pt;margin-top:2px;">Ofícios Expedidos</div>'
-    +'</div>'
-    +'<div style="flex:1;text-align:center;background:#388E3C;color:#fff;border-radius:8px;padding:12px;">'
-    +'<div style="font-size:22pt;font-weight:700;">'+rel.totalDocs+'</div>'
-    +'<div style="font-size:8.5pt;margin-top:2px;">Documentos Solicitados</div>'
-    +'</div>'
-    +'</div>'
-
-    +'<div style="font-weight:700;font-size:10pt;color:#1B5E20;margin-bottom:8px;">Relação de Atendimentos</div>'
-    +'<table style="width:100%;border-collapse:collapse;font-size:8.5pt;">'
-    +'<thead><tr style="background:#1B5E20;color:#fff;">'
-    +'<th style="padding:6px 8px;border:1px solid #aaa;text-align:center;">Ofício</th>'
-    +'<th style="padding:6px 8px;border:1px solid #aaa;text-align:left;">Requerente</th>'
-    +'<th style="padding:6px 8px;border:1px solid #aaa;text-align:center;">CPF</th>'
-    +'<th style="padding:6px 8px;border:1px solid #aaa;text-align:center;">Data</th>'
-    +'<th style="padding:6px 8px;border:1px solid #aaa;text-align:left;">Documentos Solicitados</th>'
-    +'</tr></thead>'
-    +'<tbody>'+linhas+'</tbody></table>'
-
-    +'<div style="margin-top:50px;text-align:center;">'
-    +'<div style="border-top:1px solid #000;width:55%;margin:0 auto 4px;"></div>'
-    +'<div style="font-weight:700;font-size:10pt;">'+capTit(rel.defensor.toLowerCase())+'</div>'
-    +'<div style="font-size:9pt;">Defensor(a) Público(a)</div>'
-    +'<div style="font-size:9pt;">'+rel.unidade+'</div>'
-    +'</div>'
-
-    +'<div style="border-top:1px solid #ccc;margin-top:20px;padding-top:6px;font-size:7.5pt;color:#555;text-align:center;">'
-    +'Relatório gerado automaticamente pelo Sistema de Ofícios da Diretoria Itinerante — DPE-PI &nbsp;·&nbsp; '+hoje.toLocaleDateString('pt-BR')+' '+hoje.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})
-    +'</div>'
-    +'<div class="noprint" style="text-align:center;margin-top:20px;">'
-    +'<button onclick="window.print()" style="background:#2E7D32;color:#fff;border:none;padding:10px 28px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;">🖨️ Imprimir Relatório</button>'
-    +'</div>'
-    +'</body></html>';
-
-  janela.document.write(html);
-  janela.document.close();
-  janela.onload=function(){janela.print();};
-}
-
-function atualizarBadge(){
-  var seq=parseInt(localStorage.getItem(chaveSeq(sessao.jornadaId))||'0',10);
-  var s=String(seq+1);while(s.length<3)s='0'+s;
-  document.getElementById('badgeNum').innerText='Próximo: Ofício nº '+s;
-}
-
-/* ===== ABAS ===== */
-function aba(nome){
-  if(nome==='novo'){
-    document.getElementById('abaNovo').style.display='block';
-    document.getElementById('abaHist').style.display='none';
-    document.getElementById('tabNovo').classList.add('on');document.getElementById('tabHist').classList.remove('on');
+window.aba=function(nm){
+  ['abaN','abaH'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
+  ['tN','tH'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove('on');});
+  var ma={n:'abaN',h:'abaH'},mt={n:'tN',h:'tH'};
+  var ae=document.getElementById(ma[nm]),te=document.getElementById(mt[nm]);
+  if(ae)ae.style.display='block';if(te)te.classList.add('on');
+  if(nm==='n'){
     document.getElementById('titPag').innerText='Novo Atendimento';
-    /* Se vem do histórico, zera tudo para novo cadastro */
-    if(atendAtual){
-      document.querySelectorAll('#abaNovo input[type="text"],#abaNovo textarea').forEach(function(i){i.value='';});
-      document.querySelectorAll('#abaNovo input[type="checkbox"],#abaNovo input[type="radio"]').forEach(function(i){i.checked=false;});
-      document.querySelectorAll('#abaNovo select').forEach(function(s){s.value='';});
-      document.getElementById('aOutras').style.display='none';
-      certidoes=[];atendAtual=null;
-      renderizarCertLista();
+    if(CA){
+      document.querySelectorAll('#abaN input[type="text"],#abaN textarea').forEach(function(i){i.value='';});
+      document.querySelectorAll('#abaN input[type="checkbox"],#abaN input[type="radio"]').forEach(function(i){i.checked=false;});
+      document.querySelectorAll('#abaN select').forEach(function(s){s.value='';});
+      var ao=document.getElementById('aOu');if(ao)ao.style.display='none';
+      CS=[];CA=null;rcerts();
     }
-  }else{
-    document.getElementById('abaNovo').style.display='none';
-    document.getElementById('abaHist').style.display='block';
-    document.getElementById('tabNovo').classList.remove('on');document.getElementById('tabHist').classList.add('on');
-    document.getElementById('titPag').innerText='Histórico — '+sessao.jornadaNome;
-    renderizarHist();
-  }
+  } else if(nm==='h'){document.getElementById('titPag').innerText='Historico';rhist();}
+};
+
+window.abrirModal=function(){rlJA();document.getElementById('mJor').style.display='flex';};
+window.fecharModal=function(){document.getElementById('mJor').style.display='none';};
+
+window.doCriarJ=function(){
+  var nm=(document.getElementById('nJN').value||'').trim();if(!nm){alert('Informe o nome.');return;}
+  var jj=gJ();var id=nm.toLowerCase().replace(/[^a-z0-9]/g,'');
+  if(jj.find(function(j){return j.id===id;})){alert('Ja existe.');return;}
+  jj.push({id:id,nm:nm,fix:false});localStorage.setItem('dpe_j',JSON.stringify(jj));
+  document.getElementById('nJN').value='';rjornadas();rlJA();
+};
+
+window.doApagJ=function(id){
+  if(!confirm('Apagar jornada?'))return;
+  var jj=gJ().filter(function(j){return j.id!==id;});localStorage.setItem('dpe_j',JSON.stringify(jj));
+  localStorage.removeItem(kA(id));localStorage.removeItem(kS(id));rjornadas();rlJA();
+};
+
+function rlJA(){
+  var d=document.getElementById('lJA');if(!d)return;d.innerHTML='';
+  gJ().forEach(function(j){var it=document.createElement('div');it.style.cssText='display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #eee;font-size:12px;';it.innerHTML='<span>'+j.nm+'</span>'+(j.fix?'':'<button class="btn br bsm" onclick="window.doApagJ(\''+j.id+'\')">Apagar</button>');d.appendChild(it);});
 }
 
-/* ===== JORNADAS ADMIN ===== */
-function abrirModalJornada(){
-  renderizarListaAdmin();
-  document.getElementById('modalJornada').style.display='flex';
+function rcerts(){
+  var d=document.getElementById('cLista');if(!d)return;d.innerHTML='';
+  CS.forEach(function(c,i){var it=document.createElement('div');it.className='ci';it.innerHTML='<span class="cnum">'+(i+1)+'</span><strong>'+tlbl(c.ti)+'</strong>'+(c.no?' - '+c.no:'')+(c.cp?' | CPF:'+c.cp:'')+(c.dn?' | Nasc:'+c.dn:'')+(c.ca?' | '+c.ca:'')+(c.ci?' - '+c.ci:'')+(c.nr?' | Reg:'+c.nr:'')+(c.li?' | Livro:'+c.li:'')+(c.fo?' | Folha:'+c.fo:'')+'<button class="crm" onclick="window.doRmC('+i+')">X</button>';d.appendChild(it);});
+  var ft=document.getElementById('cFT');if(ft)ft.innerText='Certidao #'+(CS.length+1);
+  var cf=document.getElementById('cForm'),cc=document.getElementById('cConc'),cm=document.getElementById('cConcMsg');
+  if(CS.length>0){if(cc)cc.style.display='block';if(cm)cm.innerText=CS.length+' certidao(oes) cadastrada(s).';if(cf)cf.style.display='none';}
+  else{if(cc)cc.style.display='none';if(cf)cf.style.display='block';}
 }
-function fecharModalJornada(){document.getElementById('modalJornada').style.display='none';}
-function criarJornada(){
-  var nome=(document.getElementById('novaJornadaNome').value||'').trim();
-  if(!nome){alert('Informe o nome da jornada.');return;}
-  var jornadas=getJornadas();
-  var id=nome.toLowerCase().replace(/[^a-z0-9]/g,'');
-  if(jornadas.find(function(j){return j.id===id;})){alert('Já existe uma jornada com esse nome.');return;}
-  jornadas.push({id:id,nome:nome});
-  localStorage.setItem('dpe_jornadas',JSON.stringify(jornadas));
-  document.getElementById('novaJornadaNome').value='';
-  carregarJornadasSelect();
-  renderizarListaAdmin();
+
+window.doRmC=function(i){CS.splice(i,1);rcerts();};
+window.reabrirC=function(){var cf=document.getElementById('cForm'),cc=document.getElementById('cConc');if(cf)cf.style.display='block';if(cc)cc.style.display='none';};
+
+function limpC(){['cTi','cPa','cNo','cCP','cDN','cCa','cCi','cNR','cLi','cFo','cMa'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});}
+function gcert(){return{ti:(document.getElementById('cTi').value||'').trim(),pa:(document.getElementById('cPa').value||'').trim(),no:(document.getElementById('cNo').value||'').trim(),cp:(document.getElementById('cCP').value||'').trim(),dn:(document.getElementById('cDN').value||'').trim(),ca:(document.getElementById('cCa').value||'').trim(),ci:(document.getElementById('cCi').value||'').trim(),nr:(document.getElementById('cNR').value||'').trim(),li:(document.getElementById('cLi').value||'').trim(),fo:(document.getElementById('cFo').value||'').trim(),ma:(document.getElementById('cMa').value||'').trim()};}
+
+window.scert=function(conc){
+  var c=gcert();if(!c.ti){alert('Selecione o tipo de documento.');return;}
+  CS.push(c);limpC();rcerts();
+  var cf=document.getElementById('cForm'),cc=document.getElementById('cConc');
+  if(conc){if(cf)cf.style.display='none';if(cc)cc.style.display='block';}
+  else{if(cf)cf.style.display='block';if(cc)cc.style.display='block';}
+};
+
+function greq(){
+  var ac=[];document.querySelectorAll('input[name="ac"]:checked').forEach(function(c){ac.push(c.value);});
+  var cr=document.querySelector('input[name="cor"]:checked');
+  return{nm:(document.getElementById('rN').value||'').trim(),cp:(document.getElementById('rC').value||'').trim(),dn:(document.getElementById('rD').value||'').trim(),tel:(document.getElementById('rT').value||'').trim(),ec:(document.getElementById('rEC').value||'').trim(),pa:(document.getElementById('rP').value||'').trim(),ma:(document.getElementById('rM').value||'').trim(),pr:(document.getElementById('rPr').value||'').trim(),rd:(document.getElementById('rR').value||'').trim(),en:(document.getElementById('rE').value||'').trim(),cr:cr?cr.value:'',ac:ac,ou:(document.getElementById('aOu').value||'').trim(),ob:(document.getElementById('fOb').value||'').trim()};
 }
-function apagarJornada(id){
-  if(!confirm('Apagar jornada? Todo o histórico dela será perdido.'))return;
-  var jornadas=getJornadas().filter(function(j){return j.id!==id;});
-  localStorage.setItem('dpe_jornadas',JSON.stringify(jornadas));
-  localStorage.removeItem(chaveAtend(id));localStorage.removeItem(chaveSeq(id));
-  carregarJornadasSelect();renderizarListaAdmin();
+
+window.doGerar=function(){
+  var req=greq();if(!req.nm){alert('Informe o nome do requerente.');return;}
+  if(CS.length===0){alert('Adicione ao menos uma certidao.');return;}
+  var lst=JSON.parse(localStorage.getItem(kA(SS.jid))||'[]');
+  var sq=CA&&CA.sq?CA.sq:(parseInt(localStorage.getItem(kS(SS.jid))||'0',10)+1);
+  if(!CA||!CA.sq)localStorage.setItem(kS(SS.jid),String(sq));
+  var ns=String(sq);while(ns.length<3)ns='0'+ns;
+  var no=ns+'/'+new Date().getFullYear()+'-DITI';
+  var at={id:CA?CA.id:Date.now(),sq:sq,no:no,dt:new Date().toLocaleDateString('pt-BR'),ss:SS,rq:req,cs:JSON.parse(JSON.stringify(CS))};
+  if(CA){var ix=lst.findIndex(function(a){return a.id===CA.id;});if(ix>=0)lst[ix]=at;else lst.push(at);}
+  else lst.push(at);
+  try{localStorage.setItem(kA(SS.jid),JSON.stringify(lst));}catch(e){}
+  CA=at;pficha(at);poficio(at);alogos();updBdg();
+  var arq='OF'+ns+(SS.jnm||'').replace(/[^a-zA-Z0-9]/g,'')+'.pdf';
+  var to=document.title;document.title=arq;
+  setTimeout(function(){window.print();setTimeout(function(){document.title=to;},2000);},400);
+};
+
+function pficha(at){
+  var r=at.rq;
+  document.getElementById('pRN').innerText=r.nm||'';document.getElementById('pRC').innerText=r.cp||'';
+  document.getElementById('pRD').innerText=r.dn||'';document.getElementById('pRT').innerText=r.tel||'';
+  document.getElementById('pREC').innerText=r.ec||'';document.getElementById('pRP').innerText=r.pa||'';
+  document.getElementById('pRM').innerText=r.ma||'';document.getElementById('pRPr').innerText=r.pr||'';
+  document.getElementById('pRR').innerText=r.rd||'';document.getElementById('pRE').innerText=r.en||'';
+  var cores=['Branca','Parda','Preta','Amarela','Indigena','Nao Declarar'];
+  var cd=document.getElementById('pCor');cd.innerHTML='';
+  cores.forEach(function(c){var sp=document.createElement('span');sp.className='fo';sp.innerHTML='<span class="fck">'+(r.cr===c?'v':'')+'</span> '+c;cd.appendChild(sp);});
+  var acs=['Documentos','Alimentos','Guarda/Filiacao','Criminal','Saude','Interdicao/Curatela','Previdencia/INSS','Outras'];
+  var ad=document.getElementById('pAc');ad.innerHTML='';
+  acs.forEach(function(a){var sp=document.createElement('span');sp.className='fo';var ok=r.ac&&r.ac.indexOf(a)>=0;sp.innerHTML='<span class="fck">'+(ok?'v':'')+'</span> '+a;ad.appendChild(sp);});
+  document.getElementById('pOu').innerText=(r.ou&&r.ac&&r.ac.indexOf('Outras')>=0)?'Outras: '+r.ou:'';
+  var nr=rnum(r.rd),rs=nr>0?r.rd:'R$ ____________',ex2=nr>0?ext(nr):'____________';
+  var decl='DECLARO, para fins de obtencao de ASSISTENCIA JURIDICA pela DEFENSORIA PUBLICA DO ESTADO DO PIAUI, que sou pessoa pobre na forma da lei.';
+  if(r.pr||nr>0){decl+=' O(A) Requerente';if(r.pr)decl+=' atua como '+r.pr+',';decl+=' auferindo renda media de '+rs+' ('+ex2+').';}
+  document.getElementById('pDecl').innerText=decl;
+  document.getElementById('pNAs').innerText=ctit((r.nm||'').toLowerCase());
+  var hj=new Date(),cb=at.cs&&at.cs[0]&&at.cs[0].ci?at.cs[0].ci.split('/')[0].trim():'';
+  document.getElementById('pDtF').innerText=(cb?cb+', ':'')+hj.getDate()+' de '+MSS[hj.getMonth()]+' de '+hj.getFullYear()+'.';
 }
-function renderizarListaAdmin(){
-  var div=document.getElementById('listaJornadasAdmin');div.innerHTML='';
-  getJornadas().forEach(function(j){
-    var item=document.createElement('div');
-    item.style.cssText='display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #eee;font-size:12px;';
-    item.innerHTML='<span>'+j.nome+'</span><button class="btn bd2 bsm" onclick="apagarJornada(\''+j.id+'\')">🗑️</button>';
-    div.appendChild(item);
+
+function poficio(at){
+  var r=at.rq,s=at.ss||{},cs=at.cs||[];
+  document.getElementById('oUni').innerText=s.un||'';document.getElementById('oUni2').innerText=s.un||'';
+  document.getElementById('oNum').innerText='OFICIO N. '+at.no;
+  var hj=new Date(),cb=cs[0]&&cs[0].ci?cs[0].ci.split('/')[0].trim():'';
+  var dd=String(hj.getDate()).padStart(2,'0'),mm=String(hj.getMonth()+1).padStart(2,'0');
+  document.getElementById('oDt').innerText=(cb?cb+', ':'')+dd+'-'+mm+'-'+hj.getFullYear()+'.';
+  document.getElementById('oDtAs').innerText=(cb?cb+', ':'')+hj.getDate()+' de '+MSS[hj.getMonth()]+' de '+hj.getFullYear()+'.';
+  var dest='Ao(A) Senhor(a) Oficial(a) do '+(cs[0]&&cs[0].ca?cs[0].ca:'Cartorio de Registro Civil');
+  if(cs[0]&&cs[0].ci)dest+=' da Comarca de '+cs[0].ci;
+  document.getElementById('oDest').innerText=dest;
+  document.getElementById('oAss').innerText=cs.length===1?tlbl(cs[0].ti):'Requisicao de certidao(oes) gratuita(s) - '+cs.length+' documentos';
+  var nR=r.nm.toUpperCase();
+  document.getElementById('oInt').innerHTML='A Defensoria Publica do Estado do Piaui, no exercicio de suas atribuicoes constitucionais e legais, vem, respeitosamente, <strong>REQUISITAR</strong> a emissao gratuita '+(cs.length===1?'do documento abaixo especificado':'dos documentos abaixo especificados')+', em favor de <strong>'+nR+'</strong>, em razao da hipossuficiencia economica do(a) requerente, conforme declaracao de hipossuficiencia anexa, <strong>ISENTA(S) DE CUSTAS E EMOLUMENTOS</strong>.';
+  var nr=rnum(r.rd),p2=document.getElementById('oSit');
+  if(r.pr||nr>0){var t2='O(A) requerente, <strong>'+nR+'</strong>';if(r.pr)t2+=', atua como <strong>'+r.pr+'</strong>';if(nr>0)t2+=', auferindo renda media de <strong>'+r.rd+' ('+ext(nr)+')</strong>';t2+='.';p2.innerHTML=t2;p2.style.display='block';}
+  else p2.style.display='none';
+  var bl=document.getElementById('oCerts');bl.innerHTML='';
+  cs.forEach(function(c,i){
+    var ep=!c.no||(c.pa==='Proprio(a)'),nT=ep?r.nm.toUpperCase():(c.no?c.no.toUpperCase():r.nm.toUpperCase()),nsc=ep?r.dn:c.dn;
+    var dv=document.createElement('div');dv.className='cb';
+    var tx='<div class="cbt">'+(i+1)+'. <strong>'+tlbl(c.ti)+'</strong></div><div style="font-size:9.5pt;">';
+    tx+='Titular: <strong>'+nT+'</strong>';if(nsc)tx+=', nascido(a) em <strong>'+nsc+'</strong>';if(c.cp)tx+=', CPF <strong>'+c.cp+'</strong>';
+    var rg=[];if(c.nr)rg.push('Registro <strong>'+c.nr+'</strong>');if(c.li)rg.push('Livro <strong>'+c.li+'</strong>');if(c.fo)rg.push('Folha <strong>'+c.fo+'</strong>');
+    if(rg.length)tx+='. '+rg.join(', ');if(c.ca)tx+=', no '+c.ca;if(c.ci)tx+=' da Comarca de '+c.ci;if(c.ma)tx+='. Matricula: <strong>'+c.ma+'</strong>';
+    if(!ep&&c.pa)tx+='. Requerente: <strong>'+nR+'</strong> ('+c.pa.toLowerCase()+')';tx+='.</div>';
+    dv.innerHTML=tx;bl.appendChild(dv);
   });
+  var enc='Diante do exposto, <strong>REQUISITA-SE</strong> a emissao gratuita '+(cs.length===1?'da certidao':'das certidoes')+' acima especificada'+(cs.length===1?'':'s')+', com entrega ao(a) requerente <strong>'+nR+'</strong>.';
+  document.getElementById('oEnc').innerHTML=enc;
+  if(r.ob){document.getElementById('oObs').innerHTML='* '+r.ob;document.getElementById('oObsW').style.display='block';}
+  else document.getElementById('oObsW').style.display='none';
+  document.getElementById('oDef').innerText=ctit((s.nm||'').toLowerCase());
+  document.getElementById('oRod').innerHTML='<strong>'+(s.un||'')+'</strong> - Diretoria Itinerante - '+(s.jnm||'')+'<br>Gerado em: '+hj.toLocaleDateString('pt-BR')+' - Oficio '+at.no;
 }
 
-/* ===== CERTIDÕES ===== */
-function renderizarCertLista(){
-  var div=document.getElementById('certListaView');div.innerHTML='';
-  certidoes.forEach(function(c,i){
-    var item=document.createElement('div');item.className='cert-item';
-    item.innerHTML='<span class="cert-num">'+(i+1)+'</span><strong>'+tipoLabel(c.tipo)+'</strong>'
-      +(c.nome?' — '+c.nome:'')
-      +(c.cpf?' | CPF: '+c.cpf:'')
-      +(c.nasc?' | Nasc: '+c.nasc:'')
-      +(c.cartorio?' | '+c.cartorio:'')
-      +(c.cidade?' — '+c.cidade:'')
-      +(c.num?' | Reg.: '+c.num:'')
-      +(c.livro?' | Livro: '+c.livro:'')
-      +(c.folha?' | Folha: '+c.folha:'')
-      +'<button class="cert-remove" onclick="removerCert('+i+')">✕</button>';
-    div.appendChild(item);
-  });
-  document.getElementById('certFormTit').innerText='📋 Certidão #'+(certidoes.length+1);
-  if(certidoes.length>0){
-    document.getElementById('certConcluido').style.display='block';
-    document.getElementById('certConcluidoMsg').innerText=certidoes.length+' certidão(ões) cadastrada(s). Você pode adicionar mais ou gerar o PDF.';
-    document.getElementById('certForm').style.display='none';
-  }else{
-    document.getElementById('certConcluido').style.display='none';
-    document.getElementById('certForm').style.display='block';
-  }
-}
-function removerCert(i){certidoes.splice(i,1);renderizarCertLista();}
-function reabrirCerts(){document.getElementById('certForm').style.display='block';document.getElementById('certConcluido').style.display='none';}
-function limparCertForm(){
-  ['cTipo','cPar','cNome','cCPF','cNasc','cCartorio','cCidade','cNum','cLivro','cFolha','cMatricula'].forEach(function(id){
-    var el=document.getElementById(id);if(el)el.value='';
-  });
-}
-function coletarCert(){
-  return{
-    tipo:(document.getElementById('cTipo').value||'').trim(),
-    par:(document.getElementById('cPar').value||'').trim(),
-    nome:(document.getElementById('cNome').value||'').trim(),
-    cpf:(document.getElementById('cCPF').value||'').trim(),
-    nasc:(document.getElementById('cNasc').value||'').trim(),
-    cartorio:(document.getElementById('cCartorio').value||'').trim(),
-    cidade:(document.getElementById('cCidade').value||'').trim(),
-    num:(document.getElementById('cNum').value||'').trim(),
-    livro:(document.getElementById('cLivro').value||'').trim(),
-    folha:(document.getElementById('cFolha').value||'').trim(),
-    matricula:(document.getElementById('cMatricula').value||'').trim()
-  };
-}
-function salvarCert(concluir){
-  var c=coletarCert();
-  if(!c.tipo){alert('Selecione o tipo de documento.');return;}
-  certidoes.push(c);
-  limparCertForm();
-  if(concluir){
-    renderizarCertLista();
-    document.getElementById('certForm').style.display='none';
-  }else{
-    renderizarCertLista();
-    document.getElementById('certForm').style.display='block';
-    document.getElementById('certConcluido').style.display='block';
-  }
-}
-
-/* ===== COLETAR REQUERENTE ===== */
-function coletarReq(){
-  var acoes=[];
-  document.querySelectorAll('input[name="acao"]:checked').forEach(function(c){acoes.push(c.value);});
-  var corEl=document.querySelector('input[name="cor"]:checked');
-  return{
-    nome:(document.getElementById('rNome').value||'').trim(),
-    cpf:(document.getElementById('rCPF').value||'').trim(),
-    nasc:(document.getElementById('rNasc').value||'').trim(),
-    tel:(document.getElementById('rTel').value||'').trim(),
-    civil:(document.getElementById('rCivil').value||'').trim(),
-    pai:(document.getElementById('rPai').value||'').trim(),
-    mae:(document.getElementById('rMae').value||'').trim(),
-    prof:(document.getElementById('rProf').value||'').trim(),
-    renda:(document.getElementById('rRenda').value||'').trim(),
-    end:(document.getElementById('rEnd').value||'').trim(),
-    cor:corEl?corEl.value:'',
-    acoes:acoes,
-    outras:(document.getElementById('aOutras').value||'').trim(),
-    obs:(document.getElementById('fObs').value||'').trim()
-  };
-}
-
-/* ===== SALVAR E GERAR ===== */
-function salvarEGerar(){
-  var req=coletarReq();
-  if(!req.nome){alert('Informe o nome do(a) requerente.');return;}
-  if(certidoes.length===0){alert('Adicione ao menos uma certidão.');return;}
-  var lista=JSON.parse(localStorage.getItem(chaveAtend(sessao.jornadaId))||'[]');
-  var seq;
-  if(atendAtual&&atendAtual.seq){seq=atendAtual.seq;}
-  else{seq=parseInt(localStorage.getItem(chaveSeq(sessao.jornadaId))||'0',10)+1;localStorage.setItem(chaveSeq(sessao.jornadaId),String(seq));}
-  var numStr=String(seq);while(numStr.length<3)numStr='0'+numStr;
-  var numOficio=numStr+'/'+new Date().getFullYear()+'-DITI';
-  var atend={id:atendAtual?atendAtual.id:Date.now(),seq:seq,numOficio:numOficio,data:new Date().toLocaleDateString('pt-BR'),sess:sessao,req:req,certs:JSON.parse(JSON.stringify(certidoes))};
-  if(atendAtual){var idx=lista.findIndex(function(a){return a.id===atendAtual.id;});if(idx>=0)lista[idx]=atend;else lista.push(atend);}
-  else lista.push(atend);
-  try{localStorage.setItem(chaveAtend(sessao.jornadaId),JSON.stringify(lista));}catch(e){}
-  atendAtual=atend;
-  preencherFicha(atend);preencherOficio(atend);
-  aplicarLogos();atualizarBadge();
-  var nomeArq='OF'+numStr+(sessao.jornadaNome||'').replace(/[^a-zA-Z0-9]/g,'')+'.pdf';
-  var tOrig=document.title;document.title=nomeArq;
-  setTimeout(function(){window.print();setTimeout(function(){document.title=tOrig;},2000);},400);
-}
-
-/* ===== PREENCHER FICHA ===== */
-function preencherFicha(atend){
-  var r=atend.req;
-  document.getElementById('o_rNome').innerText=r.nome||'';
-  document.getElementById('o_rCPF').innerText=r.cpf||'';
-  document.getElementById('o_rNasc').innerText=r.nasc||'';
-  document.getElementById('o_rTel').innerText=r.tel||'';
-  document.getElementById('o_rCivil').innerText=r.civil||'';
-  document.getElementById('o_rPai').innerText=r.pai||'';
-  document.getElementById('o_rMae').innerText=r.mae||'';
-  document.getElementById('o_rProf').innerText=r.prof||'';
-  document.getElementById('o_rRenda').innerText=r.renda||'';
-  document.getElementById('o_rEnd').innerText=r.end||'';
-  var coresAll=['Branca','Parda','Preta','Amarela','Indígena','Não Declarar'];
-  var corDiv=document.getElementById('o_cor');corDiv.innerHTML='';
-  coresAll.forEach(function(c){var sp=document.createElement('span');sp.className='fopt';sp.innerHTML='<span class="fchk">'+(r.cor===c?'✓':'')+'</span> '+c;corDiv.appendChild(sp);});
-  var acoesAll=['Documentos','Alimentos','Guarda/Filiação','Criminal','Saúde','Interdição/Curatela','Previdência/INSS','Outras'];
-  var aDiv=document.getElementById('o_acoes');aDiv.innerHTML='';
-  acoesAll.forEach(function(a){var sp=document.createElement('span');sp.className='fopt';var ok=r.acoes&&r.acoes.indexOf(a)>=0;sp.innerHTML='<span class="fchk">'+(ok?'✓':'')+'</span> '+a;aDiv.appendChild(sp);});
-  document.getElementById('o_outras').innerText=(r.outras&&r.acoes&&r.acoes.indexOf('Outras')>=0)?'Especif.: '+r.outras:'';
-  var numRenda=rendaNum(r.renda);
-  var rendaStr=r.renda&&r.renda!=='R$ '?r.renda:'R$\u00a0____________';
-  var ext=numRenda>0?porExtenso(numRenda):'____________';
-  var decl='<strong>DECLARO</strong>, para fins de obtenção de <strong>ASSISTÊNCIA JURÍDICA</strong> pela <strong>DEFENSORIA PÚBLICA DO ESTADO DO PIAUÍ</strong>, que sou pessoa pobre na forma da lei, não podendo arcar com as custas processuais e honorários advocatícios sem prejuízo do próprio sustento e de minha família, nos termos do art. 5.º, LXXIV, da Constituição Federal c.c. os arts. 1.º a 4.º da Lei n.º 1.060/1950 e art. 1.º da Lei n.º 7.115/1983.';
-  if(r.prof||numRenda>0){decl+=' O(A) Requerente';if(r.prof)decl+=' atua como <strong>'+r.prof+'</strong>,';decl+=' auferindo renda média de <strong>'+rendaStr+' ('+ext+')</strong>.';}
-  document.getElementById('o_declTexto').innerHTML=decl;
-  document.getElementById('o_rNomeAssin').innerText=capTit((r.nome||'').toLowerCase());
-  var hoje=new Date();
-  var cb=atend.certs&&atend.certs[0]&&atend.certs[0].cidade?atend.certs[0].cidade.split('/')[0].trim():'';
-  document.getElementById('o_dataFicha').innerText=(cb?cb+', ':'')+hoje.getDate()+' de '+MESES[hoje.getMonth()]+' de '+hoje.getFullYear()+'.';
-}
-
-/* ===== PREENCHER OFÍCIO ===== */
-function preencherOficio(atend){
-  var r=atend.req;var s=atend.sess||{};var certs=atend.certs||[];
-  document.getElementById('o_unidade').innerText=s.unidade||'';
-  document.getElementById('o_numero').innerText='OFÍCIO N. '+atend.numOficio;
-  var hoje=new Date();
-  var dd=String(hoje.getDate()).padStart(2,'0');
-  var mm=String(hoje.getMonth()+1).padStart(2,'0');
-  var cb=certs[0]&&certs[0].cidade?certs[0].cidade.split('/')[0].trim():'';
-  document.getElementById('o_data').innerText=(cb?cb+', ':'')+dd+'-'+mm+'-'+hoje.getFullYear()+'.';
-  var dataAssin=(cb?cb+', ':'')+hoje.getDate()+' de '+MESES[hoje.getMonth()]+' de '+hoje.getFullYear()+'.';
-  document.getElementById('o_dataAssin').innerText=dataAssin;
-
-  /* Destinatário — usa o cartório/cidade da primeira certidão */
-  var dest='Ao(À) Senhor(a) Oficial(a) do '+(certs[0]&&certs[0].cartorio?certs[0].cartorio:'Cartório de Registro Civil');
-  if(certs[0]&&certs[0].cidade)dest+=' da Comarca de '+certs[0].cidade;
-  document.getElementById('o_dest').innerText=dest;
-
-  /* Assunto */
-  var assunto=certs.length===1?tipoLabel(certs[0].tipo):('Requisição de certidão(ões) gratuita(s) — '+certs.length+' documentos');
-  document.getElementById('o_assunto').innerText=assunto;
-
-  /* Intro */
-  var nomeR=r.nome.toUpperCase();
-  var intro='A Defensoria Pública do Estado do Piauí, no exercício de suas atribuições constitucionais e legais, vem, respeitosamente, <strong>REQUISITAR</strong> a emissão gratuita '+(certs.length===1?'do documento abaixo especificado':'dos documentos abaixo especificados')+', em favor de <strong>'+nomeR+'</strong>, em razão da hipossuficiência econômica do(a) requerente, conforme declaração de hipossuficiência anexa, <strong>ISENTA(S) DE CUSTAS E EMOLUMENTOS</strong>.';
-  document.getElementById('o_intro').innerHTML=intro;
-
-  /* Situação econômica */
-  var numRenda=rendaNum(r.renda);
-  var p2w=document.getElementById('o_sitEcon');
-  if(r.prof||numRenda>0){
-    var c2='O(A) requerente, <strong>'+nomeR+'</strong>';
-    if(r.prof)c2+=', atua como <strong>'+r.prof+'</strong>';
-    if(numRenda>0)c2+=', auferindo renda média de <strong>'+r.renda+' ('+porExtenso(numRenda)+')</strong>';
-    c2+='.';
-    p2w.innerHTML=c2;p2w.style.display='block';
-  }else{p2w.style.display='none';}
-
-  /* Blocos de cada certidão */
-  var blocos=document.getElementById('o_certBlocos');blocos.innerHTML='';
-  certs.forEach(function(c,i){
-    var ehProprio=!c.nome||(c.par==='Próprio(a)');
-    var nomeT=ehProprio?r.nome.toUpperCase():(c.nome?c.nome.toUpperCase():r.nome.toUpperCase());
-    var nascT=ehProprio?r.nasc:c.nasc;
-    var div=document.createElement('div');div.className='cert-bloco';
-    var txt='<div class="cert-bloco-tit">'+(i+1)+'. <strong>'+tipoLabel(c.tipo)+'</strong></div>';
-    txt+='<div style="font-size:9.5pt;text-align:justify;">';
-    txt+='Titular: <strong>'+nomeT+'</strong>';
-    if(nascT)txt+=', nascido(a) em <strong>'+nascT+'</strong>';
-    if(c.cpf)txt+=', CPF <strong>'+c.cpf+'</strong>';
-    var reg=[];
-    if(c.num)reg.push('Registro n.º <strong>'+c.num+'</strong>');
-    if(c.livro)reg.push('Livro <strong>'+c.livro+'</strong>');
-    if(c.folha)reg.push('Folha <strong>'+c.folha+'</strong>');
-    if(reg.length)txt+='. '+reg.join(', ');
-    if(c.cartorio)txt+=', no '+c.cartorio;
-    if(c.cidade)txt+=' da Comarca de '+c.cidade;
-    if(c.matricula)txt+='. Matrícula: <strong>'+c.matricula+'</strong>';
-    if(!ehProprio&&c.par)txt+='. Requerente: <strong>'+nomeR+'</strong> ('+c.par.toLowerCase()+')';
-    txt+='.';
-    txt+='</div>';
-    div.innerHTML=txt;blocos.appendChild(div);
-  });
-
-  /* Encerramento */
-  var enc='Diante do exposto, <strong>REQUISITA-SE</strong> a emissão gratuita '+(certs.length===1?'da certidão':'das certidões')+' acima especificada'+(certs.length===1?'':'s')+', com entrega ao(à) requerente <strong>'+nomeR+'</strong>, para fins de regularização dos interesses do(a) assistido(a).';
-  document.getElementById('o_encer').innerHTML=enc;
-
-  /* Obs */
-  if(r.obs){document.getElementById('o_obs').innerHTML='* '+r.obs;document.getElementById('o_obsWrap').style.display='block';}
-  else document.getElementById('o_obsWrap').style.display='none';
-
-  document.getElementById('o_defNome').innerText=capTit((s.nome||'').toLowerCase());
-  document.getElementById('o_defUnidade').innerText=s.unidade||'';
-  document.getElementById('o_rodape').innerHTML='<strong>'+(s.unidade||'')+'</strong> &nbsp;·&nbsp; Diretoria Itinerante &nbsp;·&nbsp; '+s.jornadaNome+'<br>Gerado em: '+hoje.toLocaleDateString('pt-BR')+' &nbsp;·&nbsp; Ofício n.º '+atend.numOficio;
-}
-
-/* ===== HISTÓRICO ===== */
-function renderizarHist(){
-  var lista=JSON.parse(localStorage.getItem(chaveAtend(sessao.jornadaId))||'[]');
-  var div=document.getElementById('listaHist');
-  if(!lista.length){div.innerHTML='<p style="color:#888;font-style:italic;">Nenhum atendimento nesta jornada.</p>';return;}
-  div.innerHTML='';
-  for(var i=lista.length-1;i>=0;i--){
-    (function(att){
-      var item=document.createElement('div');item.className='hist-item';
-      var cDesc=att.certs?att.certs.map(function(c){return tipoLabel(c.tipo);}).join(', '):'';
-      item.innerHTML='<div><h3>'+att.numOficio+' — '+(att.req.nome||'')+'</h3><p>'+att.data+' | '+cDesc+'</p></div>'
+function rhist(){
+  var lst=JSON.parse(localStorage.getItem(kA(SS.jid))||'[]'),d=document.getElementById('lHist');
+  if(!lst.length){d.innerHTML='<p style="color:#888;font-style:italic;">Nenhum atendimento nesta jornada.</p>';return;}
+  d.innerHTML='';
+  for(var i=lst.length-1;i>=0;i--){
+    (function(at){
+      var it=document.createElement('div');it.className='hi';
+      var cd=at.cs?at.cs.map(function(c){return tlbl(c.ti);}).join(', '):'';
+      it.innerHTML='<div><h3>'+at.no+' - '+(at.rq.nm||'')+'</h3><p>'+at.dt+' | '+cd+'</p></div>'
         +'<div style="display:flex;gap:7px;">'
-        +'<button class="btn bv bsm" onclick="abrirAtend('+att.id+')">✏️ Editar</button>'
-        +'<button class="btn bv bsm" onclick="reimprimirAtend('+att.id+')">🖨️ Imprimir</button>'
-        +'<button class="btn bd2 bsm" onclick="excluirAtend('+att.id+')">🗑️</button>'
+        +'<button class="btn bv bsm" onclick="window.doAbrAt('+at.id+')">Editar</button>'
+        +'<button class="btn bv bsm" onclick="window.doReimAt('+at.id+')">Imprimir</button>'
+        +'<button class="btn br bsm" onclick="window.doExclAt('+at.id+')">Excluir</button>'
         +'</div>';
-      div.appendChild(item);
-    })(lista[i]);
+      d.appendChild(it);
+    })(lst[i]);
   }
 }
 
-function abrirAtend(id){
-  var lista=JSON.parse(localStorage.getItem(chaveAtend(sessao.jornadaId))||'[]');
-  var att=lista.find(function(a){return a.id===id;});
-  if(!att)return;
-  atendAtual=att;var r=att.req;
-  document.getElementById('rNome').value=r.nome||'';
-  document.getElementById('rCPF').value=r.cpf||'';
-  document.getElementById('rNasc').value=r.nasc||'';
-  document.getElementById('rTel').value=r.tel||'';
-  document.getElementById('rCivil').value=r.civil||'';
-  document.getElementById('rPai').value=r.pai||'';
-  document.getElementById('rMae').value=r.mae||'';
-  document.getElementById('rProf').value=r.prof||'';
-  document.getElementById('rRenda').value=r.renda||'';
-  document.getElementById('rEnd').value=r.end||'';
-  document.querySelectorAll('input[name="cor"]').forEach(function(x){x.checked=(x.value===r.cor);});
-  document.querySelectorAll('input[name="acao"]').forEach(function(x){x.checked=(r.acoes&&r.acoes.indexOf(x.value)>=0);});
-  document.getElementById('aOutras').value=r.outras||'';
-  document.getElementById('aOutras').style.display=(r.acoes&&r.acoes.indexOf('Outras')>=0)?'block':'none';
-  document.getElementById('fObs').value=r.obs||'';
-  certidoes=JSON.parse(JSON.stringify(att.certs||[]));
-  renderizarCertLista();
-  aba('novo');
-  document.getElementById('titPag').innerText='Editando: '+att.numOficio;
-}
+window.doAbrAt=function(id){
+  var lst=JSON.parse(localStorage.getItem(kA(SS.jid))||'[]'),at=lst.find(function(a){return a.id===id;});if(!at)return;
+  CA=at;var r=at.rq;
+  document.getElementById('rN').value=r.nm||'';document.getElementById('rC').value=r.cp||'';document.getElementById('rD').value=r.dn||'';document.getElementById('rT').value=r.tel||'';document.getElementById('rEC').value=r.ec||'';document.getElementById('rP').value=r.pa||'';document.getElementById('rM').value=r.ma||'';document.getElementById('rPr').value=r.pr||'';document.getElementById('rR').value=r.rd||'';document.getElementById('rE').value=r.en||'';
+  document.querySelectorAll('input[name="cor"]').forEach(function(x){x.checked=(x.value===r.cr);});
+  document.querySelectorAll('input[name="ac"]').forEach(function(x){x.checked=(r.ac&&r.ac.indexOf(x.value)>=0);});
+  document.getElementById('aOu').value=r.ou||'';document.getElementById('aOu').style.display=(r.ac&&r.ac.indexOf('Outras')>=0)?'block':'none';document.getElementById('fOb').value=r.ob||'';
+  CS=JSON.parse(JSON.stringify(at.cs||[]));rcerts();aba('n');document.getElementById('titPag').innerText='Editando: '+at.no;
+};
 
-function reimprimirAtend(id){
-  var lista=JSON.parse(localStorage.getItem(chaveAtend(sessao.jornadaId))||'[]');
-  var att=lista.find(function(a){return a.id===id;});
-  if(!att)return;
-  preencherFicha(att);preencherOficio(att);aplicarLogos();
-  setTimeout(function(){window.print();},300);
-}
+window.doReimAt=function(id){
+  var lst=JSON.parse(localStorage.getItem(kA(SS.jid))||'[]'),at=lst.find(function(a){return a.id===id;});if(!at)return;
+  pficha(at);poficio(at);alogos();setTimeout(function(){window.print();},300);
+};
 
-function excluirAtend(id){
-  if(!confirm('Excluir permanentemente?'))return;
-  var lista=JSON.parse(localStorage.getItem(chaveAtend(sessao.jornadaId))||'[]');
-  lista=lista.filter(function(a){return a.id!==id;});
-  localStorage.setItem(chaveAtend(sessao.jornadaId),JSON.stringify(lista));
-  renderizarHist();atualizarBadge();
-}
+window.doExclAt=function(id){
+  if(!confirm('Excluir?'))return;
+  var lst=JSON.parse(localStorage.getItem(kA(SS.jid))||'[]').filter(function(a){return a.id!==id;});
+  localStorage.setItem(kA(SS.jid),JSON.stringify(lst));rhist();updBdg();
+};
 
-function limparForm(){
-  if(!confirm('Limpar formulário?'))return;
-  document.querySelectorAll('#abaNovo input[type="text"],#abaNovo textarea').forEach(function(i){i.value='';});
-  document.querySelectorAll('#abaNovo input[type="checkbox"],#abaNovo input[type="radio"]').forEach(function(i){i.checked=false;});
-  document.querySelectorAll('#abaNovo select').forEach(function(s){s.value='';});
-  document.getElementById('aOutras').style.display='none';
-  certidoes=[];atendAtual=null;
-  renderizarCertLista();
-  document.getElementById('titPag').innerText='Novo Atendimento';
-  atualizarBadge();
-}
+window.doLimpar=function(){
+  if(!confirm('Limpar formulario?'))return;
+  document.querySelectorAll('#abaN input[type="text"],#abaN textarea').forEach(function(i){i.value='';});
+  document.querySelectorAll('#abaN input[type="checkbox"],#abaN input[type="radio"]').forEach(function(i){i.checked=false;});
+  document.querySelectorAll('#abaN select').forEach(function(s){s.value='';});
+  var ao=document.getElementById('aOu');if(ao)ao.style.display='none';
+  CS=[];CA=null;rcerts();document.getElementById('titPag').innerText='Novo Atendimento';updBdg();
+};
 
-/* ===== BUSCA GLOBAL ===== */
-var buscaAutenticada=false;
+window.doEncerrar=function(){
+  var s=prompt('Senha para encerrar jornada:');if(!s)return;if(s!==PW){alert('Senha incorreta.');return;}
+  if(!confirm('Encerrar jornada "'+SS.jnm+'"?\nUm relatorio sera gerado antes de limpar os dados.'))return;
+  var lst=JSON.parse(localStorage.getItem(kA(SS.jid))||'[]'),td=0;
+  lst.forEach(function(a){td+=(a.cs?a.cs.length:0);});
+  var rl=JSON.parse(localStorage.getItem('dpe_rl')||'[]');
+  var nr={id:Date.now(),jid:SS.jid,jnm:SS.jnm,de:new Date().toLocaleDateString('pt-BR'),ho:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),df:SS.nm,dfu:SS.un,ta:lst.length,to:lst.length,td:td,ats:lst};
+  rl.push(nr);try{localStorage.setItem('dpe_rl',JSON.stringify(rl));}catch(e){}
+  prel(nr);
+  setTimeout(function(){localStorage.removeItem(kA(SS.jid));localStorage.removeItem(kS(SS.jid));localStorage.removeItem('dpe_ss');location.reload();},800);
+};
 
-function autenticarBusca(){
-  var s=(document.getElementById('buscaSenha').value||'').trim();
-  var err=document.getElementById('buscaErro');
-  if(s!==SENHA){err.style.display='block';document.getElementById('buscaSenha').value='';return;}
-  err.style.display='none';
-  buscaAutenticada=true;
-  document.getElementById('buscaAuth').style.display='none';
-  document.getElementById('buscaPainel').style.display='block';
-}
+window.doReimRel=function(id){
+  var rl=JSON.parse(localStorage.getItem('dpe_rl')||'[]'),r=rl.find(function(x){return x.id===id;});if(r)prel(r);
+};
 
-function executarBusca(){
-  if(!buscaAutenticada)return;
-  var termNome=(document.getElementById('buscaNome').value||'').trim().toUpperCase();
-  var termCPF=(document.getElementById('buscaCPF').value||'').trim();
-  if(!termNome&&!termCPF){
-    document.getElementById('buscaInfo').innerText='Informe ao menos um critério de busca.';
-    document.getElementById('buscaResultados').innerHTML='';
-    return;
-  }
-  var jornadas=getJornadas();
-  var resultados=[];
-  jornadas.forEach(function(j){
-    var lista=JSON.parse(localStorage.getItem(chaveAtend(j.id))||'[]');
-    lista.forEach(function(att){
-      var match=false;
-      /* Busca por CPF do requerente */
-      if(termCPF&&att.req&&att.req.cpf&&att.req.cpf.replace(/\D/g,'')===termCPF.replace(/\D/g,''))match=true;
-      /* Busca por nome do requerente */
-      if(termNome&&att.req&&att.req.nome&&att.req.nome.toUpperCase().indexOf(termNome)>=0)match=true;
-      /* Busca por nome do titular em qualquer certidão */
-      if(termNome&&att.certs){
-        att.certs.forEach(function(c){
-          if(c.nome&&c.nome.toUpperCase().indexOf(termNome)>=0)match=true;
-          if(termCPF&&c.cpf&&c.cpf.replace(/\D/g,'')===termCPF.replace(/\D/g,''))match=true;
-        });
-      }
-      if(match)resultados.push({jornada:j,att:att});
-    });
+function prel(r){
+  var ls=LB||LURL,lns='';
+  r.ats.forEach(function(a,i){
+    var ds=(a.cs||[]).map(function(c){return tlbl(c.ti)+(c.no&&c.no!==a.rq.nm?' ('+ctit(c.no.toLowerCase())+')':'');}).join('; ');
+    lns+='<tr style="background:'+(i%2===0?'#F1F8E9':'#fff')+'"><td style="padding:5px 8px;border:1px solid #ccc;text-align:center;">'+a.no+'</td><td style="padding:5px 8px;border:1px solid #ccc;">'+ctit((a.rq.nm||'').toLowerCase())+'</td><td style="padding:5px 8px;border:1px solid #ccc;text-align:center;">'+(a.rq.cp||'-')+'</td><td style="padding:5px 8px;border:1px solid #ccc;text-align:center;">'+(a.dt||'-')+'</td><td style="padding:5px 8px;border:1px solid #ccc;">'+(ds||'-')+'</td></tr>';
   });
-
-  var info=document.getElementById('buscaInfo');
-  var div=document.getElementById('buscaResultados');
-  if(!resultados.length){
-    info.innerText='Nenhum resultado encontrado.';div.innerHTML='';return;
-  }
-  info.innerText=resultados.length+' resultado(s) encontrado(s) em '+(new Set(resultados.map(function(r){return r.jornada.id;}))).size+' jornada(s):';
-  div.innerHTML='';
-
-  /* Agrupa por jornada */
-  var grupos={};
-  resultados.forEach(function(r){
-    if(!grupos[r.jornada.id])grupos[r.jornada.id]={nome:r.jornada.nome,itens:[]};
-    grupos[r.jornada.id].itens.push(r.att);
-  });
-
-  Object.keys(grupos).forEach(function(jid){
-    var g=grupos[jid];
-    var secTit=document.createElement('div');
-    secTit.style.cssText='background:var(--v3);color:#fff;padding:5px 10px;border-radius:4px;font-size:12px;font-weight:700;margin-bottom:8px;margin-top:12px;';
-    secTit.innerText='📍 '+g.nome+' ('+g.itens.length+' atendimento(s))';
-    div.appendChild(secTit);
-
-    g.itens.forEach(function(att){
-      var item=document.createElement('div');
-      item.className='hist-item';
-      var certDesc=att.certs?att.certs.map(function(c){
-        var t=tipoLabel(c.tipo);
-        var tn=c.nome?(' — '+c.nome):'';
-        return t+tn;
-      }).join(' | '):'';
-      item.innerHTML='<div>'
-        +'<h3>'+att.numOficio+' — '+(att.req&&att.req.nome?att.req.nome:'')+'</h3>'
-        +'<p>Data: '+att.data
-        +(att.req&&att.req.cpf?' | CPF: '+att.req.cpf:'')
-        +(certDesc?' | '+certDesc:'')
-        +'</p>'
-        +'</div>'
-        +'<div style="display:flex;gap:7px;">'
-        +'<button class="btn bv bsm" onclick="reimprimirBusca(\''+jid+'\','+att.id+')">🖨️ Reimprimir</button>'
-        +'</div>';
-      div.appendChild(item);
-    });
-  });
+  var jn=window.open('','_blank','width=900,height=700');if(!jn){alert('Permita popups.');return;}
+  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Relatorio</title>'
+    +'<style>*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}body{padding:24px;font-size:10pt;}@page{margin:1.5cm 2cm;size:A4 portrait;}@media print{.np{display:none;}}</style>'
+    +'</head><body>'
+    +'<div style="display:flex;align-items:center;gap:14px;border-bottom:3px solid #4CAF50;padding-bottom:10px;margin-bottom:16px;"><img src="'+ls+'" style="width:80px;height:auto;" onerror="this.style.display=\'none\'"><div style="flex:1;text-align:center;"><div style="color:#2E7D32;font-size:13pt;font-weight:700;text-transform:uppercase;">Relatorio de Encerramento de Jornada</div><div style="color:#43A047;font-size:9pt;font-weight:700;margin-top:3px;">Defensoria Publica do Estado do Piaui - Diretoria Itinerante</div></div></div>'
+    +'<div style="display:flex;gap:12px;margin-bottom:16px;"><div style="flex:1;background:#F1F8E9;border:1px solid #C8E6C9;border-radius:6px;padding:10px 14px;"><div style="font-size:8pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:4px;">Jornada</div><div style="font-size:10pt;font-weight:700;">'+r.jnm+'</div><div style="font-size:8.5pt;color:#555;margin-top:3px;">Encerrada em '+r.de+' as '+r.ho+'</div></div><div style="flex:1;background:#F1F8E9;border:1px solid #C8E6C9;border-radius:6px;padding:10px 14px;"><div style="font-size:8pt;font-weight:700;text-transform:uppercase;color:#2E7D32;margin-bottom:4px;">Responsavel</div><div style="font-size:10pt;font-weight:700;">'+r.df+'</div><div style="font-size:8.5pt;color:#555;margin-top:3px;">'+(r.dfu||'')+'</div></div></div>'
+    +'<div style="display:flex;gap:12px;margin-bottom:20px;"><div style="flex:1;text-align:center;background:#2E7D32;color:#fff;border-radius:8px;padding:12px;"><div style="font-size:22pt;font-weight:700;">'+r.ta+'</div><div style="font-size:8.5pt;margin-top:2px;">Atendimentos</div></div><div style="flex:1;text-align:center;background:#43A047;color:#fff;border-radius:8px;padding:12px;"><div style="font-size:22pt;font-weight:700;">'+r.to+'</div><div style="font-size:8.5pt;margin-top:2px;">Oficios</div></div><div style="flex:1;text-align:center;background:#66BB6A;color:#fff;border-radius:8px;padding:12px;"><div style="font-size:22pt;font-weight:700;">'+r.td+'</div><div style="font-size:8.5pt;margin-top:2px;">Documentos</div></div></div>'
+    +'<div style="font-weight:700;font-size:10pt;color:#2E7D32;margin-bottom:8px;">Relacao de Atendimentos</div>'
+    +'<table style="width:100%;border-collapse:collapse;font-size:8.5pt;"><thead><tr style="background:#2E7D32;color:#fff;"><th style="padding:6px 8px;border:1px solid #aaa;">Oficio</th><th style="padding:6px 8px;border:1px solid #aaa;text-align:left;">Requerente</th><th style="padding:6px 8px;border:1px solid #aaa;">CPF</th><th style="padding:6px 8px;border:1px solid #aaa;">Data</th><th style="padding:6px 8px;border:1px solid #aaa;text-align:left;">Documentos</th></tr></thead><tbody>'+lns+'</tbody></table>'
+    +'<div style="margin-top:50px;text-align:center;"><div style="border-top:1px solid #000;width:55%;margin:0 auto 4px;"></div><div style="font-weight:700;font-size:10pt;">'+ctit(r.df.toLowerCase())+'</div><div style="font-size:9pt;">Defensor(a) Publico(a)</div><div style="font-size:9pt;">'+(r.dfu||'')+'</div></div>'
+    +'<div class="np" style="text-align:center;margin-top:20px;"><button onclick="window.print()" style="background:#2E7D32;color:#fff;border:none;padding:10px 28px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;">Imprimir</button></div>'
+    +'</body></html>';
+  jn.document.write(html);jn.document.close();jn.onload=function(){jn.print();};
 }
 
-function reimprimirBusca(jid,id){
-  var lista=JSON.parse(localStorage.getItem(chaveAtend(jid))||'[]');
-  var att=lista.find(function(a){return a.id===id;});
-  if(!att)return;
-  preencherFicha(att);preencherOficio(att);aplicarLogos();
-  setTimeout(function(){window.print();},300);
-}
-
-function limparBusca(){
-  document.getElementById('buscaNome').value='';
-  document.getElementById('buscaCPF').value='';
-  document.getElementById('buscaInfo').innerText='';
-  document.getElementById('buscaResultados').innerHTML='';
-}
-function imprimirManual(){
-  var pf=document.getElementById('pFicha');
-  var po=document.getElementById('pOficio');
-  var pm=document.getElementById('pManual');
-  pf.style.display='none';po.style.display='none';pm.style.display='block';
-  aplicarLogos();
-  var tOrig=document.title;document.title='Fichamodelo.pdf';
+window.doFichaManual=function(){
+  var pf=document.getElementById('pF'),po=document.getElementById('pO'),pm=document.getElementById('pM');
+  if(pf)pf.style.display='none';if(po)po.style.display='none';if(pm)pm.style.display='block';
+  alogos();var to=document.title;document.title='Fichamodelo.pdf';
   window.print();
-  setTimeout(function(){pf.style.display='';po.style.display='';pm.style.display='none';document.title=tOrig;},1200);
-}
+  setTimeout(function(){if(pf)pf.style.display='';if(po)po.style.display='';if(pm)pm.style.display='none';document.title=to;},1200);
+};
+
+window.mcpf=mcpf;
+window.mdat=mdat;
+window.mtel=mtel;
+window.irnd=irnd;
+window.mrnd=mrnd;
+window.ctit=ctit;
+window.scert=window.scert;
+window.aba=window.aba;
+window.reabrirC=window.reabrirC;
+
+})();
 </script>
 </body>
 </html>
