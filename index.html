@@ -1034,7 +1034,7 @@ function preencherFicha(r){
   });
   document.getElementById('pOu').innerText=(r.ou&&r.ac&&(r.ac.indexOf('Outras')>=0))?'Outras: '+r.ou:'';
   var nr=rnum(r.rd),rs=nr>0?r.rd:'R$____________',ex2=nr>0?ext(nr):'____________';
-  var decl='DECLARO, para fins de obtencao de ASSISTENCIA JURIDICA pela DEFENSORIA PÚBLICA DO ESTADO DO PIAUÍ, que sou pessoa pobre na forma da lei, não podendo arcar com as custas processuais e honorários advocatícios sem prejuízo do próprio sustento e de minha família, nos termos do art. 5º, LXXIV, da Constituição Federal c.c. os arts. 1º a 4º da Lei nº 1.060/1950 e art. 1º da Lei nº 7.115/1983.';
+  var decl='DECLARO, para fins de obtencao de ASSISTÊNCIA JURIDÍCA pela DEFENSORIA PÚBLICA DO ESTADO DO PIAUÍ, que sou pessoa pobre na forma da lei, não podendo arcar com as custas processuais e honorários advocatícios sem prejuízo do próprio sustento e de minha família, nos termos do art. 5º, LXXIV, da Constituição Federal c.c. os arts. 1º a 4º da Lei nº 1.060/1950 e art. 1º da Lei nº 7.115/1983.';
   if(r.pr||nr>0){decl+=' O(A) Requerente';if(r.pr)decl+=' atua como '+r.pr+',';decl+=' auferindo renda média de '+rs+' ('+ex2+').';}
   document.getElementById('pDecl').innerText=decl;
   document.getElementById('pNAs').innerText=ctit((r.nm||'').toLowerCase());
