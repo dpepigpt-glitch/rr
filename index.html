@@ -106,6 +106,18 @@ h3{color:var(--v3);font-size:14px;margin-bottom:10px;}
 .ord{border-top:1px solid #ddd;margin-top:16px;padding-top:5px;font-size:7.5pt;color:#666;}
 .cb{border:1px solid #A5D6A7;border-radius:4px;padding:7px 10px;margin-bottom:8px;background:#F9FBE7;}
 .cbt{font-weight:700;font-size:9pt;color:#2E7D32;margin-bottom:4px;}
+/* Modal edição ofício */
+#mEditOf{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:10000;align-items:flex-start;justify-content:center;overflow-y:auto;padding:20px 10px;}
+#mEditOf.open{display:flex;}
+.meof{background:#fff;border-radius:10px;padding:22px;max-width:680px;width:100%;margin:auto;}
+.meof h2{color:var(--v);border-bottom:2px solid var(--vm);padding-bottom:6px;margin-bottom:14px;font-size:15px;}
+.meof-tit-bloco{border:1px solid var(--bd);border-radius:6px;padding:12px;margin-bottom:10px;background:#f9fbf9;}
+.meof-tit-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.meof-doc-item{background:#F1F8E9;border:1px solid var(--vm);border-radius:5px;padding:7px 10px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;font-size:12px;}
+.meof-sec{background:#E8F5E9;border-radius:6px;padding:12px;margin-bottom:12px;}
+.meof-sec-tit{font-weight:700;font-size:13px;color:var(--v3);margin-bottom:8px;}
+.meof{background:#fff;border-radius:10px;padding:22px;max-width:680px;width:100%;margin:auto;}
+.meof h2{color:var(--v);border-bottom:2px solid var(--vm);padding-bottom:6px;margin-bottom:14px;font-size:15px;}
 </style>
 </head>
 <body>
@@ -487,6 +499,37 @@ h3{color:var(--v3);font-size:14px;margin-bottom:10px;}
 
 </div><!-- /printArea -->
 
+<!-- MODAL EDIÇÃO DE OFÍCIO -->
+<div id="mEditOf" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:10000;align-items:flex-start;justify-content:center;overflow-y:auto;padding:20px 10px;">
+<div class="meof">
+  <h2 id="meof-titulo">Editar Oficio</h2>
+
+  <div class="meof-sec">
+    <div class="meof-sec-tit">Destino do Oficio</div>
+    <div class="row" style="margin-bottom:0;">
+      <div class="fg" style="flex:2;"><label>Cartorio / Oficio:</label><input id="meof-cartorio" type="text" oninput="this.value=ctit(this.value)"></div>
+      <div class="fg"><label>Cidade / Comarca:</label><input id="meof-cidade" type="text" oninput="this.value=ctit(this.value)"></div>
+    </div>
+  </div>
+
+  <div class="meof-sec">
+    <div class="meof-sec-tit">Titulares e Documentos</div>
+    <div id="meof-titulares-lista"></div>
+    <button class="btn by bsm" onclick="meofNovoTitular()" style="margin-top:6px;">+ Adicionar titular</button>
+  </div>
+
+  <div class="fg" style="margin-bottom:14px;">
+    <label>Observacao (opcional):</label>
+    <textarea id="meof-obs" rows="2" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;"></textarea>
+  </div>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <button class="btn bv" onclick="meofSalvar()">Salvar Alteracoes</button>
+    <button class="btn bo" onclick="meofFechar()">Cancelar</button>
+  </div>
+</div>
+</div>
+
 <script>
 (function(){
 var PW = 'DITI2027';
@@ -693,6 +736,7 @@ function renderOfListaView(){
       +'<div><div style="font-weight:700;color:var(--v3);font-size:13px;">Ofício '+(i+1)+noLabel+' — '+of.cartorio+', '+of.cidade+'</div>'
       +'<div style="font-size:11px;color:#555;margin-top:3px;">'+titResume+'</div></div>'
       +'<div style="display:flex;gap:6px;flex-shrink:0;margin-left:10px;">'
+      +'<button class="btn by bsm" onclick="abrirEditarOficio('+i+')">Editar</button>'
       +'<button class="btn bv bsm" onclick="gerarOficioPDF('+i+')">Imprimir Ofício</button>'
       +'<button class="btn br bsm" onclick="removerOficio('+i+')">X</button>'
       +'</div></div>';
@@ -1060,14 +1104,22 @@ function rhist(){
       var of=at.oficios||[];
       var ofDesc=of.map(function(o){return 'Ofício '+(o.no||'?')+' '+o.cartorio+', '+o.cidade;}).join(' | ');
       var it=document.createElement('div');it.className='hi';
+      /* Botões por ofício */
+      var btsOf = '';
+      of.forEach(function(o, oi) {
+        btsOf += '<button class="btn by bsm" onclick="abrirEditarOficioHist(' + at.id + ',' + oi + ')" style="margin-bottom:3px;">✏️ Ofício '+(oi+1)+(o.no?' ('+o.no+')':'')+'</button> ';
+      });
       it.innerHTML='<div style="flex:1;">'
         +'<h3>'+at.dt+' — '+(at.rq.nm||'')+'</h3>'
         +'<p>'+of.length+' ofício(s): '+ofDesc+'</p>'
         +'</div>'
-        +'<div style="display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0;">'
-        +'<button class="btn bv bsm" onclick="abrirAtend('+at.id+')">Editar</button>'
+        +'<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;flex-shrink:0;">'
+        +'<div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;">'
+        +'<button class="btn bv bsm" onclick="abrirAtend('+at.id+')">Editar Atend.</button>'
         +'<button class="btn bv bsm" onclick="gerarFichaHist('+at.id+')">Ficha</button>'
         +'<button class="btn br bsm" onclick="exclAtend('+at.id+')">X</button>'
+        +'</div>'
+        +'<div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;margin-top:2px;">'+btsOf+'</div>'
         +'</div>';
       d.appendChild(it);
     })(lst[i]);
@@ -1242,6 +1294,337 @@ window.doFichaManual=function(){
 };
 
 window.mcpf=mcpf;window.mdat=mdat;window.mtel=mtel;window.irnd=irnd;window.mrnd=mrnd;window.ctit=ctit;
+
+/* =========================================================
+   MODAL EDIÇÃO DE OFÍCIO
+   Variáveis de estado do modal
+   ========================================================= */
+var MEOF = {
+  ofIdx: -1,        /* índice em oficiosSalvos (atendimento atual) */
+  atId: null,       /* id do atendimento no histórico (null = atual) */
+  ofData: null,     /* cópia de trabalho do ofício sendo editado */
+};
+
+/* Abre o modal para editar o ofício idx do atendimento atual */
+window.abrirEditarOficio = function(idx) {
+  MEOF.ofIdx = idx;
+  MEOF.atId = null;
+  MEOF.ofData = JSON.parse(JSON.stringify(oficiosSalvos[idx]));
+  meofAbrir('Editar Oficio ' + (idx+1) + (MEOF.ofData.no ? ' — ' + MEOF.ofData.no : ''));
+};
+
+/* Abre o modal para editar o ofício ofIdx dentro do atendimento atId do histórico */
+window.abrirEditarOficioHist = function(atId, ofIdx) {
+  var lst = JSON.parse(localStorage.getItem(kA(SS.jid)) || '[]');
+  var at = lst.find(function(a){ return a.id === atId; });
+  if (!at) { alert('Atendimento nao encontrado.'); return; }
+  MEOF.ofIdx = ofIdx;
+  MEOF.atId = atId;
+  MEOF.ofData = JSON.parse(JSON.stringify(at.oficios[ofIdx]));
+  meofAbrir('Editar Oficio ' + (ofIdx+1) + (MEOF.ofData.no ? ' — ' + MEOF.ofData.no : ''));
+};
+
+function meofAbrir(titulo) {
+  document.getElementById('meof-titulo').innerText = titulo;
+  document.getElementById('meof-cartorio').value = MEOF.ofData.cartorio || '';
+  document.getElementById('meof-cidade').value = MEOF.ofData.cidade || '';
+  document.getElementById('meof-obs').value = MEOF.ofData.obs || '';
+  meofRenderTitulares();
+  var m = document.getElementById('mEditOf');
+  m.style.display = 'flex';
+  m.scrollTop = 0;
+}
+
+window.meofFechar = function() {
+  document.getElementById('mEditOf').style.display = 'none';
+  MEOF.ofData = null;
+};
+
+/* Renderiza a lista de titulares com campos editáveis */
+function meofRenderTitulares() {
+  var d = document.getElementById('meof-titulares-lista');
+  d.innerHTML = '';
+  var tits = MEOF.ofData.titulares;
+  tits.forEach(function(t, ti) {
+    var bloco = document.createElement('div');
+    bloco.className = 'meof-tit-bloco';
+    bloco.id = 'meof-tit-' + ti;
+
+    /* Cabeçalho do titular */
+    var hdr = document.createElement('div');
+    hdr.className = 'meof-tit-hdr';
+    hdr.innerHTML = '<span style="font-weight:700;font-size:13px;color:var(--v3);">Titular ' + (ti+1) + '</span>'
+      + '<button class="btn br bsm" onclick="meofRemoverTitular(' + ti + ')">Remover titular</button>';
+    bloco.appendChild(hdr);
+
+    /* Campos do titular */
+    var campos = document.createElement('div');
+    campos.innerHTML = '<div class="row">'
+      + '<div class="fg" style="flex:3;"><label>Nome (vazio = proprio requerente):</label>'
+      + '<input type="text" value="' + esc(t.nome) + '" oninput="MEOF.ofData.titulares[' + ti + '].nome=this.value.toUpperCase();this.value=this.value.toUpperCase()"></div>'
+      + '<div class="fg"><label>CPF:</label>'
+      + '<input type="text" maxlength="14" value="' + esc(t.cpf) + '" oninput="mcpf(this);MEOF.ofData.titulares[' + ti + '].cpf=this.value"></div>'
+      + '</div>'
+      + '<div class="row">'
+      + '<div class="fg"><label>Data de Nascimento:</label>'
+      + '<input type="text" maxlength="10" value="' + esc(t.nasc) + '" oninput="mdat(this);MEOF.ofData.titulares[' + ti + '].nasc=this.value"></div>'
+      + '<div class="fg"><label>Parentesco:</label>'
+      + '<select onchange="MEOF.ofData.titulares[' + ti + '].par=this.value">'
+      + meofParOpts(t.par)
+      + '</select></div>'
+      + '</div>';
+    bloco.appendChild(campos);
+
+    /* Documentos do titular */
+    var docSec = document.createElement('div');
+    docSec.style.cssText = 'margin-top:8px;padding:10px;background:#fff;border:1px dashed var(--bd);border-radius:5px;';
+    docSec.innerHTML = '<div style="font-weight:700;font-size:12px;color:var(--v3);margin-bottom:7px;">Documentos deste titular</div>';
+    var docLista = document.createElement('div');
+    docLista.id = 'meof-docs-' + ti;
+    meofRenderDocs(docLista, ti, t.docs);
+    docSec.appendChild(docLista);
+
+    /* Botão novo documento */
+    var btnND = document.createElement('button');
+    btnND.className = 'btn bv bsm';
+    btnND.style.marginTop = '6px';
+    btnND.innerText = '+ Novo documento';
+    btnND.onclick = (function(tIdx){ return function(){ meofAbrirNovoDoc(tIdx); }; })(ti);
+    docSec.appendChild(btnND);
+
+    /* Formulário inline de novo documento (oculto) */
+    var ndForm = document.createElement('div');
+    ndForm.id = 'meof-nd-form-' + ti;
+    ndForm.style.cssText = 'display:none;margin-top:8px;padding:10px;background:#F1F8E9;border:1px solid var(--vm);border-radius:5px;';
+    ndForm.innerHTML = '<div class="row">'
+      + '<div class="fg" style="flex:2;"><label>Tipo:</label>'
+      + '<select id="meof-nd-tipo-' + ti + '">'
+      + '<option value="">Selecione...</option>'
+      + '<option value="nasc">2a Via da Certidao de Nascimento</option>'
+      + '<option value="cas">2a Via da Certidao de Casamento</option>'
+      + '<option value="obi">2a Via da Certidao de Obito</option>'
+      + '<option value="int">Certidao de Inteiro Teor</option>'
+      + '</select></div></div>'
+      + '<div class="row">'
+      + '<div class="fg"><label>N.o Registro:</label><input type="text" id="meof-nd-nr-' + ti + '"></div>'
+      + '<div class="fg"><label>Livro:</label><input type="text" id="meof-nd-livro-' + ti + '" oninput="this.value=this.value.toUpperCase()"></div>'
+      + '<div class="fg"><label>Folha:</label><input type="text" id="meof-nd-folha-' + ti + '"></div>'
+      + '<div class="fg" style="flex:2;"><label>Matricula:</label><input type="text" id="meof-nd-mat-' + ti + '"></div>'
+      + '</div>'
+      + '<div style="display:flex;gap:8px;margin-top:4px;">'
+      + '<button class="btn bv bsm" onclick="meofConfirmarNovoDoc(' + ti + ')">Adicionar</button>'
+      + '<button class="btn bo bsm" onclick="meofCancelarNovoDoc(' + ti + ')">Cancelar</button>'
+      + '</div>';
+    docSec.appendChild(ndForm);
+    bloco.appendChild(docSec);
+    d.appendChild(bloco);
+  });
+}
+
+function meofRenderDocs(container, ti, docs) {
+  container.innerHTML = '';
+  if (!docs || !docs.length) {
+    container.innerHTML = '<div style="font-size:12px;color:#888;font-style:italic;">Nenhum documento.</div>';
+    return;
+  }
+  docs.forEach(function(doc, di) {
+    var item = document.createElement('div');
+    item.className = 'meof-doc-item';
+    /* Modo visualização com botões editar e remover */
+    item.innerHTML = meofDocVisuHTML(ti, di, doc);
+    item.id = 'meof-doc-item-' + ti + '-' + di;
+    container.appendChild(item);
+  });
+}
+
+function meofDocVisuHTML(ti, di, doc) {
+  var label = tlbl(doc.tipo);
+  var det = [];
+  if (doc.nr) det.push('Reg.: ' + doc.nr);
+  if (doc.livro) det.push('Livro ' + doc.livro);
+  if (doc.folha) det.push('Folha ' + doc.folha);
+  if (doc.mat) det.push('Mat.: ' + doc.mat);
+  return '<span style="flex:1;font-size:12px;">' + label + (det.length?' — '+det.join(', '):'') + '</span>'
+    + '<div style="display:flex;gap:5px;flex-shrink:0;">'
+    + '<button class="btn by bsm" onclick="meofEditarDoc(' + ti + ',' + di + ')">Editar</button>'
+    + '<button class="btn br bsm" onclick="meofRemoverDoc(' + ti + ',' + di + ')">X</button>'
+    + '</div>';
+}
+
+function meofDocEditHTML(ti, di, doc) {
+  return '<div style="width:100%;">'
+    + '<div class="row">'
+    + '<div class="fg" style="flex:2;"><label>Tipo:</label>'
+    + '<select id="meof-edit-tipo-' + ti + '-' + di + '">'
+    + '<option value="nasc"' + (doc.tipo==='nasc'?' selected':'') + '>2a Via da Certidao de Nascimento</option>'
+    + '<option value="cas"' + (doc.tipo==='cas'?' selected':'') + '>2a Via da Certidao de Casamento</option>'
+    + '<option value="obi"' + (doc.tipo==='obi'?' selected':'') + '>2a Via da Certidao de Obito</option>'
+    + '<option value="int"' + (doc.tipo==='int'?' selected':'') + '>Certidao de Inteiro Teor</option>'
+    + '</select></div></div>'
+    + '<div class="row">'
+    + '<div class="fg"><label>N.o Registro:</label><input id="meof-edit-nr-' + ti + '-' + di + '" type="text" value="' + esc(doc.nr) + '"></div>'
+    + '<div class="fg"><label>Livro:</label><input id="meof-edit-livro-' + ti + '-' + di + '" type="text" value="' + esc(doc.livro) + '" oninput="this.value=this.value.toUpperCase()"></div>'
+    + '<div class="fg"><label>Folha:</label><input id="meof-edit-folha-' + ti + '-' + di + '" type="text" value="' + esc(doc.folha) + '"></div>'
+    + '<div class="fg" style="flex:2;"><label>Matricula:</label><input id="meof-edit-mat-' + ti + '-' + di + '" type="text" value="' + esc(doc.mat) + '"></div>'
+    + '</div>'
+    + '<div style="display:flex;gap:8px;margin-top:4px;">'
+    + '<button class="btn bv bsm" onclick="meofConfirmarEditDoc(' + ti + ',' + di + ')">OK</button>'
+    + '<button class="btn bo bsm" onclick="meofCancelarEditDoc(' + ti + ',' + di + ')">Cancelar</button>'
+    + '</div></div>';
+}
+
+function esc(s){ return (s||'').replace(/"/g,'&quot;'); }
+
+/* Selects de parentesco */
+function meofParOpts(sel) {
+  var opts = ['','Proprio(a)','Genitor(a)','Avo/Avo','Esposo(a)','Tio(a)','Tutor(a)/Curador(a)','Filho(a)','Convivente','Outro(a)'];
+  var disp = ['-','Próprio(a)','Genitor(a)','Avô/Avó','Esposo(a)','Tio(a)','Tutor(a)/Curador(a)','Filho(a)','Convivente','Outro(a)'];
+  var h = '';
+  opts.forEach(function(o, i) {
+    var isSel = (sel === o || sel === disp[i]);
+    h += '<option value="' + disp[i] + '"' + (isSel?' selected':'') + '>' + disp[i] + '</option>';
+  });
+  return h;
+}
+
+/* ---- Ações em titulares ---- */
+window.meofRemoverTitular = function(ti) {
+  if (MEOF.ofData.titulares.length <= 1) { alert('O oficio precisa de ao menos um titular.'); return; }
+  if (!confirm('Remover este titular e todos os seus documentos?')) return;
+  MEOF.ofData.titulares.splice(ti, 1);
+  meofRenderTitulares();
+};
+
+window.meofNovoTitular = function() {
+  MEOF.ofData.titulares.push({ nome:'', cpf:'', nasc:'', par:'', docs:[] });
+  meofRenderTitulares();
+  /* Scroll para o novo titular */
+  var tits = document.querySelectorAll('.meof-tit-bloco');
+  if (tits.length) tits[tits.length-1].scrollIntoView({ behavior:'smooth' });
+};
+
+/* ---- Ações em documentos ---- */
+window.meofRemoverDoc = function(ti, di) {
+  if (!confirm('Remover este documento?')) return;
+  MEOF.ofData.titulares[ti].docs.splice(di, 1);
+  var c = document.getElementById('meof-docs-' + ti);
+  if (c) meofRenderDocs(c, ti, MEOF.ofData.titulares[ti].docs);
+};
+
+window.meofEditarDoc = function(ti, di) {
+  var item = document.getElementById('meof-doc-item-' + ti + '-' + di);
+  if (!item) return;
+  var doc = MEOF.ofData.titulares[ti].docs[di];
+  item.innerHTML = meofDocEditHTML(ti, di, doc);
+};
+
+window.meofConfirmarEditDoc = function(ti, di) {
+  var tipo = document.getElementById('meof-edit-tipo-' + ti + '-' + di);
+  var nr   = document.getElementById('meof-edit-nr-'   + ti + '-' + di);
+  var livro= document.getElementById('meof-edit-livro-'+ ti + '-' + di);
+  var folha= document.getElementById('meof-edit-folha-'+ ti + '-' + di);
+  var mat  = document.getElementById('meof-edit-mat-'  + ti + '-' + di);
+  if (!tipo || !tipo.value) { alert('Selecione o tipo.'); return; }
+  MEOF.ofData.titulares[ti].docs[di] = {
+    tipo: tipo.value,
+    nr:   (nr   ? nr.value   : '').trim(),
+    livro:(livro ? livro.value: '').trim(),
+    folha:(folha ? folha.value: '').trim(),
+    mat:  (mat   ? mat.value  : '').trim()
+  };
+  var item = document.getElementById('meof-doc-item-' + ti + '-' + di);
+  if (item) item.innerHTML = meofDocVisuHTML(ti, di, MEOF.ofData.titulares[ti].docs[di]);
+};
+
+window.meofCancelarEditDoc = function(ti, di) {
+  var item = document.getElementById('meof-doc-item-' + ti + '-' + di);
+  if (item) item.innerHTML = meofDocVisuHTML(ti, di, MEOF.ofData.titulares[ti].docs[di]);
+};
+
+window.meofAbrirNovoDoc = function(ti) {
+  document.getElementById('meof-nd-form-' + ti).style.display = 'block';
+};
+window.meofCancelarNovoDoc = function(ti) {
+  document.getElementById('meof-nd-form-' + ti).style.display = 'none';
+};
+window.meofConfirmarNovoDoc = function(ti) {
+  var tipo  = document.getElementById('meof-nd-tipo-'  + ti);
+  var nr    = document.getElementById('meof-nd-nr-'    + ti);
+  var livro = document.getElementById('meof-nd-livro-' + ti);
+  var folha = document.getElementById('meof-nd-folha-' + ti);
+  var mat   = document.getElementById('meof-nd-mat-'   + ti);
+  if (!tipo || !tipo.value) { alert('Selecione o tipo de documento.'); return; }
+  var doc = {
+    tipo: tipo.value,
+    nr:   (nr    ? nr.value   : '').trim(),
+    livro:(livro  ? livro.value: '').trim(),
+    folha:(folha  ? folha.value: '').trim(),
+    mat:  (mat    ? mat.value  : '').trim()
+  };
+  MEOF.ofData.titulares[ti].docs.push(doc);
+  var c = document.getElementById('meof-docs-' + ti);
+  if (c) meofRenderDocs(c, ti, MEOF.ofData.titulares[ti].docs);
+  /* Limpa e fecha o formulário */
+  if (tipo)  tipo.value  = '';
+  if (nr)    nr.value    = '';
+  if (livro) livro.value = '';
+  if (folha) folha.value = '';
+  if (mat)   mat.value   = '';
+  document.getElementById('meof-nd-form-' + ti).style.display = 'none';
+};
+
+/* ---- Salvar edição ---- */
+window.meofSalvar = function() {
+  var cartorio = (document.getElementById('meof-cartorio').value || '').trim();
+  var cidade   = (document.getElementById('meof-cidade').value   || '').trim();
+  if (!cartorio || !cidade) { alert('Informe o cartorio e a cidade.'); return; }
+
+  /* Validações básicas */
+  var tits = MEOF.ofData.titulares;
+  for (var ti = 0; ti < tits.length; ti++) {
+    if (!tits[ti].docs || tits[ti].docs.length === 0) {
+      alert('O titular ' + (ti+1) + ' precisa de ao menos um documento.'); return;
+    }
+  }
+  if (!tits.length) { alert('O oficio precisa de ao menos um titular.'); return; }
+
+  MEOF.ofData.cartorio = cartorio;
+  MEOF.ofData.cidade   = cidade;
+  MEOF.ofData.obs      = (document.getElementById('meof-obs').value || '').trim();
+
+  if (MEOF.atId === null) {
+    /* Edição no atendimento atual em aberto */
+    oficiosSalvos[MEOF.ofIdx] = JSON.parse(JSON.stringify(MEOF.ofData));
+    renderOfListaView();
+    /* Se o atendimento já foi salvo no histórico, persiste a alteração */
+    if (CA) {
+      CA.oficios = JSON.parse(JSON.stringify(oficiosSalvos));
+      var lst = JSON.parse(localStorage.getItem(kA(SS.jid)) || '[]');
+      var ix = lst.findIndex(function(a){ return a.id === CA.id; });
+      if (ix >= 0) { lst[ix] = CA; try { localStorage.setItem(kA(SS.jid), JSON.stringify(lst)); } catch(e){} }
+    }
+    renderBotoesGerar();
+  } else {
+    /* Edição direto no histórico */
+    var lst = JSON.parse(localStorage.getItem(kA(SS.jid)) || '[]');
+    var at = lst.find(function(a){ return a.id === MEOF.atId; });
+    if (!at) { alert('Atendimento nao encontrado no historico.'); return; }
+    at.oficios[MEOF.ofIdx] = JSON.parse(JSON.stringify(MEOF.ofData));
+    /* Se for o atendimento em edição ativa, sincroniza */
+    if (CA && CA.id === MEOF.atId) {
+      CA.oficios = JSON.parse(JSON.stringify(at.oficios));
+      oficiosSalvos = JSON.parse(JSON.stringify(at.oficios));
+      renderOfListaView();
+      renderBotoesGerar();
+    }
+    try { localStorage.setItem(kA(SS.jid), JSON.stringify(lst)); } catch(e){}
+    /* Recarrega histórico se estiver visível */
+    if (document.getElementById('abaH').style.display !== 'none') rhist();
+  }
+
+  meofFechar();
+  alert('Oficio atualizado com sucesso!');
+};
 })();
 </script>
 </body>
