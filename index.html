@@ -946,9 +946,9 @@ function buildOficioPDF(of,req,s){
     var nomeT=t.nome?t.nome.toUpperCase():nR;
     blocos+='<div class="cb">';
     blocos+='<div class="cbt">Titular '+(i+1)+': <strong>'+nomeT+'</strong>';
+    if(t.cpf)blocos+=', CPF,  '+t.cpf;
     if(t.nasc)blocos+=', nascido(a) em '+t.nasc;
-    if(t.cpf)blocos+=', CPF '+t.cpf;
-    if(t.par&&t.par!=='Próprio(a)'&&t.par!=='Próprio(a)')blocos+=' ('+t.par.toLowerCase()+' do(a) requerente)';
+    if(t.par&&t.par!=='Próprio(a)'&&t.par!=='Próprio(a)')blocos+=' '+t.par.toLowerCase()+' do(a) requerente:';
     blocos+='</div>';
     t.docs.forEach(function(d,j){
       blocos+='<div style="font-size:9pt;margin-bottom:4px;padding-left:10px;">';
