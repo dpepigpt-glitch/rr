@@ -141,33 +141,34 @@ h3{color:var(--v3);font-size:14px;margin-bottom:10px;}
       <div style="font-size:12px;font-weight:700;color:var(--v3);margin-bottom:8px;">Reabrir Jornada Encerrada:</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;">
         <div class="fg"><select id="rlSel"><option value="">Selecione...</option></select></div>
+        <div class="fg" style="max-width:160px;"><label style="font-size:11px;font-weight:700;color:var(--v3);">Senha:</label><input type="password" id="rlPw" placeholder="..." onkeydown="if(event.key==='Enter')doReabrir()"></div>
         <button class="btn bo bsm" onclick="doReabrir()" style="height:38px;">Reabrir</button>
       </div>
+      <div class="errmsg" id="rlErr" style="font-size:11px;">Senha incorreta ou perfil não selecionado.</div>
       <div style="font-size:11px;color:#888;margin-top:5px;">A numeração retoma de onde parou.</div>
     </div>
   </div>
   <div id="lPanelBusca" style="display:none;background:#fff;padding:22px;border-radius:0 0 8px 8px;box-shadow:0 4px 12px rgba(0,0,0,.12);">
-    <div id="lbAuth">
-      <div style="background:#fff8e1;border-left:4px solid #f9a825;padding:10px;margin-bottom:12px;font-size:12px;color:#5d4037;border-radius:0 4px 4px 0;">Acesso restrito. Informe a senha para buscar em todas as jornadas.</div>
-      <div style="display:flex;gap:8px;align-items:flex-end;">
-        <div class="fg"><label>Senha:</label><input type="password" id="lbSe" onkeydown="if(event.key==='Enter')doAutBusca()"></div>
-        <button class="btn bv" style="height:38px;" onclick="doAutBusca()">Acessar</button>
-      </div>
-      <div class="errmsg" id="lbErr">Senha incorreta.</div>
+    <div style="background:var(--vc);border-left:4px solid var(--v);padding:9px 12px;margin-bottom:14px;font-size:12px;color:var(--v3);border-radius:0 4px 4px 0;">
+      Busca em todos os atendimentos salvos — jornadas ativas e encerradas.
     </div>
-    <div id="lbPain" style="display:none;">
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:flex-end;">
-        <div class="fg"><label>Nome:</label><input type="text" id="lbNm" placeholder="Requerente ou titular..." oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')doLbuscar()"></div>
-        <div class="fg" style="max-width:190px;"><label>CPF:</label><input type="text" id="lbCP" placeholder="000.000.000-00" maxlength="14" oninput="mcpf(this)" onkeydown="if(event.key==='Enter')doLbuscar()"></div>
-        <button class="btn bv" style="height:38px;padding:0 18px;" onclick="doLbuscar()">Buscar</button>
-        <button class="btn bo" style="height:38px;padding:0 12px;" onclick="doLlimpar()">Limpar</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:flex-end;">
+      <div class="fg" style="flex:2;">
+        <label style="font-size:12px;font-weight:700;color:var(--v3);">Nome do requerente (ou parte do nome):</label>
+        <input type="text" id="lbNm" placeholder="Ex: Maria, João Silva..." oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')doLbuscar()" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;">
       </div>
-      <div id="lbInfo" style="font-size:12px;color:#666;margin-bottom:8px;"></div>
-      <div id="lbRes" style="max-height:350px;overflow-y:auto;"></div>
-      <div style="margin-top:18px;">
-        <div style="font-weight:700;font-size:13px;color:var(--v3);border-bottom:2px solid var(--vm);padding-bottom:5px;margin-bottom:10px;">Relatórios Salvos</div>
-        <div id="lbRel" style="max-height:280px;overflow-y:auto;"></div>
+      <div class="fg" style="max-width:200px;">
+        <label style="font-size:12px;font-weight:700;color:var(--v3);">CPF:</label>
+        <input type="text" id="lbCP" placeholder="000.000.000-00" maxlength="14" oninput="mcpf(this)" onkeydown="if(event.key==='Enter')doLbuscar()" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;">
       </div>
+      <button class="btn bv" style="height:38px;padding:0 20px;" onclick="doLbuscar()">🔍 Buscar</button>
+      <button class="btn bo" style="height:38px;padding:0 14px;" onclick="doLlimpar()">Limpar</button>
+    </div>
+    <div id="lbInfo" style="font-size:12px;color:#666;margin-bottom:8px;"></div>
+    <div id="lbRes" style="max-height:400px;overflow-y:auto;"></div>
+    <div style="margin-top:18px;">
+      <div style="font-weight:700;font-size:13px;color:var(--v3);border-bottom:2px solid var(--vm);padding-bottom:5px;margin-bottom:10px;">Relatórios de Jornadas Encerradas</div>
+      <div id="lbRel" style="max-height:280px;overflow-y:auto;"></div>
     </div>
   </div>
 </div>
@@ -699,23 +700,33 @@ window.doLogin=function(){
 function mostrarErro(m){var el=document.getElementById('lerr');el.innerText=m;el.style.display='block';}
 function limparErro(){document.getElementById('lerr').style.display='none';}
 window.doReabrir=function(){
-  var sel=document.getElementById('rlSel');if(!sel||!sel.value){alert('Selecione uma jornada encerrada.');return;}
-  var pw=document.getElementById('lgS').value;
+  var sel=document.getElementById('rlSel');
+  if(!sel||!sel.value){alert('Selecione uma jornada encerrada.');return;}
+  var pw=(document.getElementById('rlPw').value||'').trim();
+  if(!pw){document.getElementById('rlErr').style.display='block';document.getElementById('rlPw').focus();return;}
   var parts=sel.value.split('|');var jid=parts[0];
-  var jj=gJ();var jorn=jj.find(function(j){return j.id===jid;});if(!jorn){alert('Jornada não encontrada.');return;}
-  if(pw!==(jorn.pw||PW)){alert('Senha incorreta.');return;}
-  var sel2=document.querySelector('.pcard.sel');if(!sel2){alert('Selecione um perfil.');return;}
-  var pid=sel2.id.replace('pc_','');var pf=PF.find(function(p){return p.id===pid;});
+  var jj=gJ();var jorn=jj.find(function(j){return j.id===jid;});
+  if(!jorn){alert('Jornada não encontrada nos registros.');return;}
+  if(pw!==(jorn.pw||PW)){document.getElementById('rlErr').style.display='block';document.getElementById('rlPw').value='';document.getElementById('rlPw').focus();return;}
+  document.getElementById('rlErr').style.display='none';
+  var sel2=document.querySelector('.pcard.sel');
+  if(!sel2){alert('Selecione um perfil acima.');return;}
+  var pid=sel2.id.replace('pc_','');
+  var pf=PF.find(function(p){return p.id===pid;});
   if(jorn.fix&&jorn.perfil&&pid!==jorn.perfil){alert('Este perfil não tem acesso a esta defensoria.');return;}
   var dn=PFN.find(function(x){return x.id===pid;});
   SS={pid:pid,nm:dn?dn.nm:pf.nm,un:jorn.fix?jorn.nm:(dn?dn.un:pf.un),adm:pf.adm,jid:jid,jnm:jorn.nm};
   try{localStorage.setItem('dpe_ss',JSON.stringify(SS));}catch(e){}
+  /* Restaura atendimentos e sequência do último relatório desta jornada */
   var rl=JSON.parse(localStorage.getItem('dpe_rl')||'[]');
   var relJ=rl.filter(function(r){return r.jid===jid;});
   if(relJ.length){
     var ult=relJ[relJ.length-1];
-    var ex=JSON.parse(localStorage.getItem(kA(jid))||'[]');
-    if(!ex.length&&ult.ats&&ult.ats.length){localStorage.setItem(kA(jid),JSON.stringify(ult.ats));localStorage.setItem(kS(jid),String(ult.seqFinal||0));}
+    /* Sempre restaura — mesmo que já tenha algo, pois está reabrindo */
+    if(ult.ats&&ult.ats.length){
+      localStorage.setItem(kA(jid),JSON.stringify(ult.ats));
+      localStorage.setItem(kS(jid),String(ult.seqFinal||0));
+    }
   }
   init();
 };
@@ -1400,70 +1411,93 @@ function carregarRelsLogin(){
     })(rl[i]);
   }
 }
-window.doAutBusca=function(){
-  var s=(document.getElementById('lbSe').value||'').trim();
-  if(s!==PW){document.getElementById('lbErr').style.display='block';document.getElementById('lbSe').value='';return;}
-  document.getElementById('lbErr').style.display='none';LBAU=true;
-  document.getElementById('lbAuth').style.display='none';document.getElementById('lbPain').style.display='block';carregarRelsLogin();
-};
+window.doAutBusca=function(){};  /* mantido para compatibilidade, não faz mais nada */
 window.doLbuscar=function(){
-  if(!LBAU)return;
   var tn=(document.getElementById('lbNm').value||'').trim().toUpperCase();
-  var tc=(document.getElementById('lbCP').value||'').trim();
+  var tc=(document.getElementById('lbCP').value||'').replace(/\D/g,'');
   if(!tn&&!tc){
-    document.getElementById('lbInfo').innerText='Informe ao menos um critério.';
+    document.getElementById('lbInfo').innerText='Informe nome ou CPF para buscar.';
     document.getElementById('lbRes').innerHTML='';
     return;
   }
   var res=[];
+  var visto={};
+
+  function testar(at,jnm){
+    if(!at||!at.rq)return;
+    var chave=(at.id||'')+jnm;
+    if(visto[chave])return;
+    var ok=false;
+    /* CPF: busca por dígitos contidos */
+    if(tc&&at.rq.cp&&at.rq.cp.replace(/\D/g,'').indexOf(tc)>=0)ok=true;
+    /* Nome: cada palavra do campo deve estar no nome */
+    if(!ok&&tn&&at.rq.nm){
+      var palavras=tn.split(/\s+/).filter(function(p){return p.length>0;});
+      var nm=(at.rq.nm||'').toUpperCase();
+      if(palavras.every(function(p){return nm.indexOf(p)>=0;}))ok=true;
+    }
+    if(ok){visto[chave]=true;res.push({jnm:jnm,at:at});}
+  }
+
+  /* 1. Jornadas ativas */
   gJ().forEach(function(j){
     JSON.parse(localStorage.getItem(kA(j.id))||'[]').forEach(function(at){
-      var ok=false;
-      if(tc&&at.rq&&at.rq.cp&&at.rq.cp.replace(/\D/g,'')===tc.replace(/\D/g,''))ok=true;
-      if(tn&&at.rq&&at.rq.nm&&at.rq.nm.indexOf(tn)>=0)ok=true;
-      if(ok)res.push({j:j,at:at});
+      testar(at,j.nm);
     });
   });
+  /* 2. Jornadas encerradas (relatórios salvos) */
+  JSON.parse(localStorage.getItem('dpe_rl')||'[]').forEach(function(r){
+    (r.ats||[]).forEach(function(at){
+      testar(at,r.jnm);
+    });
+  });
+
   var bi=document.getElementById('lbInfo');
   var bd=document.getElementById('lbRes');
-  if(!res.length){bi.innerText='Nenhum resultado encontrado.';bd.innerHTML='';return;}
-  bi.innerText=res.length+' resultado(s) encontrado(s).';
+  if(!res.length){
+    bi.innerText='Nenhum atendimento encontrado.';
+    bd.innerHTML='<div style="font-size:12px;color:#888;font-style:italic;padding:8px 0;">Verifique o nome ou CPF informado.</div>';
+    return;
+  }
+  bi.innerText=res.length+' atendimento(s) encontrado(s).';
   bd.innerHTML='';
   res.forEach(function(r,ri){
     var at=r.at;
     var ofs=at.oficios||[];
-    var ofList=ofs.map(function(o,i){
-      return '<div style="font-size:11px;color:#555;padding:2px 0 2px 8px;border-left:2px solid var(--vm);">'
-        +'<strong>'+(o.no||'Nº não gerado')+'</strong> — '+o.cartorio+', '+o.cidade
-        +'</div>';
-    }).join('');
-    var det=document.createElement('div');
-    det.id='lb-det-'+ri;
-    det.style.cssText='display:none;margin-top:8px;padding:8px;background:#fff;border-radius:4px;border:1px solid var(--vm);';
-    det.innerHTML='<div style="font-size:12px;font-weight:700;color:var(--v3);margin-bottom:4px;">Ofícios deste atendimento:</div>'+ofList
-      +(at.rq.cp?'<div style="font-size:11px;color:#666;margin-top:4px;">CPF: '+at.rq.cp+'</div>':'')
-      +(at.rq.rd?'<div style="font-size:11px;color:#666;">Renda declarada: '+at.rq.rd+'</div>':'')
-      +'<div style="font-size:11px;color:#888;margin-top:2px;">Jornada: '+r.j.nm+'</div>';
+    var ofHtml=ofs.length
+      ? ofs.map(function(o){
+          return '<div style="font-size:11px;padding:2px 0 2px 8px;border-left:2px solid var(--vm);color:#444;margin-bottom:2px;">'
+            +'<strong>'+(o.no||'Nº não gerado')+'</strong> — '+o.cartorio+', '+o.cidade+'</div>';
+        }).join('')
+      : '<div style="font-size:11px;color:#aaa;font-style:italic;">Sem ofícios registrados.</div>';
     var card=document.createElement('div');
     card.style.cssText='background:var(--vc);border:1px solid var(--vm);border-radius:6px;padding:10px 12px;margin-bottom:8px;';
-    card.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">'
+    card.innerHTML=
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">'
       +'<div>'
       +'<div style="font-weight:700;font-size:13px;color:var(--v3);">'+(at.rq.nm||'—')+'</div>'
-      +'<div style="font-size:11px;color:#555;">'+at.dt+' &nbsp;·&nbsp; '+ofs.length+' ofício(s)  &nbsp;·&nbsp; '+r.j.nm+'</div>'
+      +'<div style="font-size:11px;color:#555;margin-top:2px;">'
+        +at.dt+' &nbsp;·&nbsp; '+ofs.length+' ofício(s) &nbsp;·&nbsp; '+r.jnm
       +'</div>'
-      +'<button class="btn bo bsm" id="lb-btn-'+ri+'" onclick="lbToggleDet('+ri+')">+ Detalhes</button>'
+      +(at.rq.cp?'<div style="font-size:11px;color:#777;">CPF: '+at.rq.cp+'</div>':'')
+      +'</div>'
+      +'<button class="btn bo bsm" id="lbb-'+ri+'" onclick="lbToggle('+ri+')" style="flex-shrink:0;">+ Detalhes</button>'
+      +'</div>'
+      +'<div id="lbd-'+ri+'" style="display:none;margin-top:8px;padding:8px;background:#fff;border-radius:4px;border:1px solid var(--vm);">'
+      +'<div style="font-size:11px;font-weight:700;color:var(--v3);margin-bottom:4px;">Ofícios:</div>'
+      +ofHtml
+      +(at.rq.rd?'<div style="font-size:11px;color:#666;margin-top:4px;">Renda: '+at.rq.rd+'</div>':'')
       +'</div>';
-    card.appendChild(det);
     bd.appendChild(card);
   });
 };
-window.lbToggleDet=function(ri){
-  var det=document.getElementById('lb-det-'+ri);
-  var btn=document.getElementById('lb-btn-'+ri);
+window.lbToggle=function(ri){
+  var det=document.getElementById('lbd-'+ri);
+  var btn=document.getElementById('lbb-'+ri);
   if(!det)return;
-  var open=det.style.display!=='none';
-  det.style.display=open?'none':'block';
-  btn.innerText=open?'+ Detalhes':'− Fechar';
+  var aberto=det.style.display!=='none';
+  det.style.display=aberto?'none':'block';
+  if(btn)btn.innerText=aberto?'+ Detalhes':'− Fechar';
 };
 window.doLlimpar=function(){
   document.getElementById('lbNm').value='';
