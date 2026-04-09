@@ -274,23 +274,40 @@ h3{color:var(--v3);font-size:14px;margin-bottom:10px;}
             <div id="titSalvosList"></div>
             <div id="titForm" style="border:1px solid var(--bd);border-radius:6px;padding:12px;background:#fff;margin-bottom:10px;">
               <div style="font-weight:700;font-size:13px;color:var(--v3);margin-bottom:8px;" id="titFormTit">Titular #1</div>
+              <!-- Passo 1: vínculo -->
               <div class="row">
-                <div class="fg" style="flex:3;"><label>Nome do Titular:</label><input id="tNome" type="text" placeholder="Em branco se for o próprio requerente" oninput="this.value=this.value.toUpperCase()"></div>
-                <div class="fg"><label>CPF do Titular:</label><input id="tCPF" type="text" maxlength="14" placeholder="000.000.000-00" oninput="mcpf(this)"></div>
-              </div>
-              <div class="row">
-                <div class="fg"><label>Data de Nascimento:</label><input id="tNasc" type="text" maxlength="10" placeholder="DD/MM/AAAA" oninput="mdat(this)"></div>
-                <div class="fg"><label>Parentesco do Req. com Titular:</label>
-                  <select id="tPar">
-                    <option value="">-</option>
-                    <option>Próprio(a)</option><option>Genitor(a)</option><option>Avô/Avó</option>
-                    <option>Esposo(a)</option><option>Tio(a)</option><option>Tutor(a)/Curador(a)</option>
-                    <option>Filho(a)</option><option>Convivente</option><option>Outro(a)</option>
+                <div class="fg">
+                  <label>O titular é — em relação ao requerente:</label>
+                  <select id="tPar" onchange="onParChange(this)">
+                    <option value="">— selecione —</option>
+                    <option value="proprio">O próprio requerente</option>
+                    <option value="filho">Filho(a) do requerente</option>
+                    <option value="genitor">Pai / Mãe do requerente</option>
+                    <option value="conjuge">Cônjuge / Companheiro(a) do requerente</option>
+                    <option value="irmao">Irmão / Irmã do requerente</option>
+                    <option value="avo">Avô / Avó do requerente</option>
+                    <option value="neto">Neto(a) do requerente</option>
+                    <option value="tio">Tio(a) do requerente</option>
+                    <option value="sobrinho">Sobrinho(a) do requerente</option>
+                    <option value="tutor">Tutelado(a) / Curatelado(a) do requerente</option>
+                    <option value="outro">Outro vínculo (especificar na observação)</option>
                   </select>
                 </div>
               </div>
-              <div style="text-align:right;margin-top:6px;">
-                <button class="btn bv bsm" onclick="salvarTitular()">Salvar dados do titular →</button>
+              <!-- Aviso quando é o próprio requerente -->
+              <div id="tAvisoProprio" style="display:none;background:#E8F5E9;border-left:4px solid var(--v);padding:8px 12px;margin-bottom:8px;font-size:12px;color:var(--v3);border-radius:0 4px 4px 0;">
+                ✅ Dados de nome, CPF e nascimento serão preenchidos automaticamente com os do requerente.
+              </div>
+              <!-- Campos só visíveis quando NÃO é o próprio -->
+              <div id="tCamposNome" class="row" style="display:none;">
+                <div class="fg" style="flex:3;"><label>Nome do Titular:</label><input id="tNome" type="text" placeholder="Nome completo do titular" oninput="this.value=this.value.toUpperCase()"></div>
+              </div>
+              <div id="tCamposCPFNasc" class="row" style="display:none;">
+                <div class="fg"><label>CPF do Titular:</label><input id="tCPF" type="text" maxlength="14" placeholder="000.000.000-00" oninput="mcpf(this)"></div>
+                <div class="fg"><label>Data de Nascimento:</label><input id="tNasc" type="text" maxlength="10" placeholder="DD/MM/AAAA" oninput="mdat(this)"></div>
+              </div>
+              <div style="text-align:right;margin-top:8px;">
+                <button class="btn bv bsm" onclick="salvarTitular()">Salvar titular e adicionar documentos →</button>
               </div>
             </div>
             <div id="docForm" style="display:none;border:1px solid var(--vm);border-radius:6px;padding:12px;background:#F1F8E9;margin-bottom:10px;">
@@ -329,8 +346,9 @@ h3{color:var(--v3);font-size:14px;margin-bottom:10px;}
             <textarea id="ofObs" rows="2" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;" placeholder="Ex: Pedido também encaminhado pelo CRC JUD..."></textarea>
           </div>
           <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <button class="btn bv" onclick="salvarOficio(false)">💾 Salvar Solicitação e criar nova</button>
-            <button class="btn bo" onclick="salvarOficio(true)">✅ Salvar e concluir todas as solicitações</button>
+            <button class="btn bv" onclick="salvarOficio(false)">💾 Salvar e criar próximo ofício</button>
+            <button class="btn bo" onclick="salvarOficio(true)">✅ Salvar e concluir</button>
+            <button class="btn by" id="btnDescartarOf" style="display:none;" onclick="descartarRascunhoOficio()">↩ Descartar este rascunho e concluir</button>
           </div>
         </div>
       </div>
@@ -502,29 +520,25 @@ h3{color:var(--v3);font-size:14px;margin-bottom:10px;}
 <!-- MODAL EDIÇÃO DE OFÍCIO -->
 <div id="mEditOf" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:10000;align-items:flex-start;justify-content:center;overflow-y:auto;padding:20px 10px;">
 <div class="meof">
-  <h2 id="meof-titulo">Editar Oficio</h2>
-
+  <h2 id="meof-titulo">Editar Ofício</h2>
   <div class="meof-sec">
-    <div class="meof-sec-tit">Destino do Oficio</div>
+    <div class="meof-sec-tit">Destino do Ofício</div>
     <div class="row" style="margin-bottom:0;">
-      <div class="fg" style="flex:2;"><label>Cartorio / Oficio:</label><input id="meof-cartorio" type="text" oninput="this.value=ctit(this.value)"></div>
+      <div class="fg" style="flex:2;"><label>Cartório / Ofício:</label><input id="meof-cartorio" type="text" oninput="this.value=ctit(this.value)"></div>
       <div class="fg"><label>Cidade / Comarca:</label><input id="meof-cidade" type="text" oninput="this.value=ctit(this.value)"></div>
     </div>
   </div>
-
   <div class="meof-sec">
     <div class="meof-sec-tit">Titulares e Documentos</div>
     <div id="meof-titulares-lista"></div>
     <button class="btn by bsm" onclick="meofNovoTitular()" style="margin-top:6px;">+ Adicionar titular</button>
   </div>
-
   <div class="fg" style="margin-bottom:14px;">
-    <label>Observacao (opcional):</label>
+    <label>Observação (opcional):</label>
     <textarea id="meof-obs" rows="2" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;"></textarea>
   </div>
-
   <div style="display:flex;gap:10px;flex-wrap:wrap;">
-    <button class="btn bv" onclick="meofSalvar()">Salvar Alteracoes</button>
+    <button class="btn bv" onclick="meofSalvar()">💾 Salvar Alterações</button>
     <button class="btn bo" onclick="meofFechar()">Cancelar</button>
   </div>
 </div>
@@ -537,9 +551,9 @@ var LURL = 'https://raw.githubusercontent.com/dpepigpt-glitch/rr/main/logo-dpe.p
 var LB = '';
 var MSA = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 var PF = [
-  {id:'robert',nm:'Dr. Robert Rios Junior',un:'2a Defensoria Publica Itinerante',adm:true},
-  {id:'adriano',nm:'Dr. Adriano Moreti Batista',un:'1a Defensoria Publica Itinerante',adm:false},
-  {id:'alessandro',nm:'Dr. Alessandro Andrade Spindola',un:'Diretor da Defensoria Itinerante',adm:false}
+  {id:'robert',nm:'Dr. Robert Rios Júnior',un:'2ª Defensoria Pública Itinerante',adm:true},
+  {id:'adriano',nm:'Dr. Adriano Moreti Batista',un:'1ª Defensoria Pública Itinerante',adm:false},
+  {id:'alessandro',nm:'Dr. Alessandro Andrade Spíndola',un:'Diretor da Defensoria Itinerante',adm:false}
 ];
 var PFN = [
   {id:'robert',nm:'Dr. Robert Rios Júnior',un:'2ª Defensoria Pública Itinerante'},
@@ -755,17 +769,87 @@ function concluirTitularComDocs(){
   return true;
 }
 
+/* Tabela de parentesco: chave interna → texto no PDF */
+var PAR_LABEL = {
+  'proprio':  null,  /* próprio requerente — sem texto de parentesco */
+  'filho':    'filho(a)',
+  'genitor':  'pai/mãe',
+  'conjuge':  'cônjuge/companheiro(a)',
+  'irmao':    'irmão/irmã',
+  'avo':      'avô/avó',
+  'neto':     'neto(a)',
+  'tio':      'tio(a)',
+  'sobrinho': 'sobrinho(a)',
+  'tutor':    'tutelado(a)/curatelado(a)',
+  'outro':    null   /* ver observação */
+};
+/* Texto descritivo do vínculo para o PDF:
+   "o requerente X é [parTextReq] de [titular]"
+   ex: filho → "o requerente é pai/mãe de [titular]" NÃO, é o inverso:
+   o TITULAR é filho(a) do requerente → correto conforme seleção */
+function parTextoTitular(parKey){
+  /* Retorna "é [label] do(a) requerente" ou null */
+  if(!parKey||parKey==='proprio'||parKey==='outro')return null;
+  var l=PAR_LABEL[parKey];
+  return l?('é '+l+' do(a) requerente'):null;
+}
+function parTextoRequerente(parKey){
+  /* Qual é a relação inversa: o REQUERENTE é ___ do titular */
+  var inv={
+    'filho':   'pai/mãe',
+    'genitor': 'filho(a)',
+    'conjuge': 'cônjuge/companheiro(a)',
+    'irmao':   'irmão/irmã',
+    'avo':     'neto(a)',
+    'neto':    'avô/avó',
+    'tio':     'sobrinho(a)',
+    'sobrinho':'tio(a)',
+    'tutor':   'tutor(a)/curador(a)'
+  };
+  return inv[parKey]||null;
+}
+
+window.onParChange = function(sel) {
+  var v = sel.value;
+  var proprio = (v === 'proprio');
+  var avisoProprio = document.getElementById('tAvisoProprio');
+  var camposNome   = document.getElementById('tCamposNome');
+  var camposCPF    = document.getElementById('tCamposCPFNasc');
+  /* Quando não selecionou nada ainda, mantém tudo oculto */
+  if (!v) {
+    if (avisoProprio) avisoProprio.style.display = 'none';
+    if (camposNome)   camposNome.style.display   = 'none';
+    if (camposCPF)    camposCPF.style.display    = 'none';
+    return;
+  }
+  if (avisoProprio) avisoProprio.style.display = proprio ? 'block' : 'none';
+  if (camposNome)   camposNome.style.display   = proprio ? 'none'  : '';
+  if (camposCPF)    camposCPF.style.display    = proprio ? 'none'  : '';
+  /* Se marcou próprio, limpa campos desnecessários */
+  if (proprio) {
+    var n=document.getElementById('tNome');
+    var c=document.getElementById('tCPF');
+    var d=document.getElementById('tNasc');
+    if(n)n.value='';if(c)c.value='';if(d)d.value='';
+  }
+  /* Mostra botão descartar apenas se já há pelo menos 1 ofício salvo */
+  var btn=document.getElementById('btnDescartarOf');
+  if(btn)btn.style.display=oficiosSalvos.length>0?'inline-block':'none';
+};
+
 window.salvarTitular=function(){
+  var par=(document.getElementById('tPar').value||'').trim();
+  if(!par){alert('Selecione o vínculo do titular com o requerente.');return;}
+  var proprio=(par==='proprio');
   var nome=(document.getElementById('tNome').value||'').trim();
   var cpf=(document.getElementById('tCPF').value||'').trim();
   var nasc=(document.getElementById('tNasc').value||'').trim();
-  var par=(document.getElementById('tPar').value||'').trim();
-  titAtual={nome:nome,cpf:cpf,nasc:nasc,par:par,docs:[]};
+  titAtual={nome:nome,cpf:cpf,nasc:nasc,par:par,proprio:proprio,docs:[]};
   docsTIT=[];
   document.getElementById('titForm').style.display='none';
   document.getElementById('docForm').style.display='block';
   document.getElementById('btnNovoTitular').style.display='none';
-  var nomeExib=nome||'(Próprio Requerente)';
+  var nomeExib=proprio?'(Próprio Requerente)':(nome||'(sem nome informado)');
   document.getElementById('docFormTit').innerText='Documentos para: '+nomeExib;
   document.getElementById('docSalvosList').innerHTML='';
   limpDocForm();
@@ -807,14 +891,34 @@ function renderTitSalvos(){
   titularesDOF.forEach(function(t,i){
     var div=document.createElement('div');div.className='titular-bloco';
     var docsStr=t.docs.map(function(d){return tlbl(d.tipo);}).join(', ');
-    div.innerHTML='<div class="titular-header"><span class="titular-title">Titular '+(i+1)+': '+(t.nome||'(Próprio Requerente)')+'</span>'
-      +'<button class="btn br bsm" onclick="removerTitular('+i+')">X</button></div>'
+    var vinculo=t.proprio?'Próprio requerente':(parTextoTitular(t.par)||t.par||'');
+    div.innerHTML='<div class="titular-header"><span class="titular-title">Titular '+(i+1)+': '+(t.proprio?'(Próprio Requerente)':(t.nome||'(sem nome)'))+(vinculo?' — '+vinculo:'')+'</span>'
+      +'<button class="btn br bsm" onclick="removerTitular('+i+')">Remover</button></div>'
       +'<div style="font-size:12px;color:#555;">Documentos: '+docsStr+'</div>';
     d.appendChild(div);
   });
 }
 
 window.removerTitular=function(i){titularesDOF.splice(i,1);renderTitSalvos();};
+
+/* Descarta o rascunho do 3º ofício (ou qualquer em andamento) e conclui com os já salvos */
+window.descartarRascunhoOficio=function(){
+  if(oficiosSalvos.length===0){alert('Nenhuma solicitação salva ainda.');return;}
+  if(!confirm('Descartar os dados não salvos deste ofício e concluir apenas com os '+oficiosSalvos.length+' ofício(s) já salvo(s)?'))return;
+  /* Limpa estado do rascunho */
+  titularesDOF=[];titAtual=null;docsTIT=[];
+  document.getElementById('ofCartorio').value='';
+  document.getElementById('ofCidade').value='';
+  document.getElementById('ofObs').value='';
+  document.getElementById('titSalvosList').innerHTML='';
+  document.getElementById('docSalvosList').innerHTML='';
+  limpTitForm();limpDocForm();
+  /* Conclui */
+  document.getElementById('ofForm').style.display='none';
+  document.getElementById('ofConcluido').style.display='block';
+  document.getElementById('ofConcluidoMsg').innerText=oficiosSalvos.length+' solicitação(ões) prontas para gerar ofício(s).';
+  renderBotoesGerar();
+};
 
 window.iniciarNovoTitular=function(){
   var nTit=titularesDOF.length+1;
@@ -826,7 +930,21 @@ window.iniciarNovoTitular=function(){
 };
 
 function limpDocForm(){document.getElementById('dTipo').value='';document.getElementById('dNR').value='';document.getElementById('dLivro').value='';document.getElementById('dFolha').value='';document.getElementById('dMat').value='';}
-function limpTitForm(){document.getElementById('tNome').value='';document.getElementById('tCPF').value='';document.getElementById('tNasc').value='';document.getElementById('tPar').value='';}
+function limpTitForm(){
+  var n=document.getElementById('tNome');var c=document.getElementById('tCPF');
+  var d=document.getElementById('tNasc');var p=document.getElementById('tPar');
+  if(n)n.value='';if(c)c.value='';if(d)d.value='';if(p)p.value='';
+  /* Oculta tudo — campos só aparecem após selecionar o vínculo */
+  var av=document.getElementById('tAvisoProprio');
+  var cn=document.getElementById('tCamposNome');
+  var cc=document.getElementById('tCamposCPFNasc');
+  if(av)av.style.display='none';
+  if(cn)cn.style.display='none';
+  if(cc)cc.style.display='none';
+  /* Botão descartar */
+  var bd=document.getElementById('btnDescartarOf');
+  if(bd)bd.style.display=oficiosSalvos.length>0?'inline-block':'none';
+}
 
 window.salvarOficio=function(concluir){
   if(titAtual){if(!concluirTitularComDocs())return;}
@@ -989,36 +1107,70 @@ function buildOficioPDF(of,req,s){
   var logoSrc=LB||LURL;
   var unNm=s.un||'Defensoria Pública do Estado do Piauí';
   var defNm=s.nm||'Defensor(a) Público(a)';
+
+  /* Situação econômica do requerente */
+  var sitEcon='';
+  if(req.pr||nr>0){
+    sitEcon='<div class="op">O(A) requerente <strong>'+nR+'</strong>';
+    if(req.pr)sitEcon+=', '+req.pr+',';
+    if(nr>0)sitEcon+=' possui renda familiar média de <strong>'+req.rd+' ('+ext(nr)+')</strong>,';
+    sitEcon+=' enquadrando-se como pessoa hipossuficiente nos termos da legislação vigente, conforme declaração anexa.</div>';
+  }
+
+  /* Blocos de titulares */
   var blocos='';
   of.titulares.forEach(function(t,i){
-    var nomeT=t.nome?t.nome.toUpperCase():nR;
+    var proprio=t.proprio||(t.par==='proprio')||(!t.nome);
+    /* Dados do titular */
+    var nomeT=proprio?nR:(t.nome?t.nome.toUpperCase():nR);
+    var cpfT=proprio?req.cp:t.cpf;
+    var nascT=proprio?req.dn:t.nasc;
+    var parKey=t.par||'';
+
     blocos+='<div class="cb">';
-    blocos+='<div class="cbt">Titular '+(i+1)+': <strong>'+nomeT+'</strong>';
-    if(t.cpf)blocos+=', CPF '+t.cpf;
-    if(t.nasc)blocos+=', nascido(a) em '+t.nasc;
-    if(t.par&&t.par!=='Próprio(a)')blocos+=' — '+t.par.toLowerCase()+' do(a) requerente:';
+
+    /* Linha de identificação do titular */
+    blocos+='<div class="cbt">Titular '+(i+1)+(of.titulares.length>1?' de '+of.titulares.length:'')+': <strong>'+nomeT+'</strong>';
+    if(cpfT)blocos+=', CPF nº '+cpfT;
+    if(nascT)blocos+=', nascido(a) em '+nascT;
     blocos+='</div>';
+
+    /* Vínculo com o requerente */
+    if(proprio){
+      blocos+='<div style="font-size:9pt;color:#444;margin-bottom:4px;padding-left:6px;">O titular <strong>é o próprio requerente</strong>.</div>';
+    } else {
+      var tTexto=parTextoTitular(parKey);
+      var rTexto=parTextoRequerente(parKey);
+      if(tTexto){
+        blocos+='<div style="font-size:9pt;color:#444;margin-bottom:4px;padding-left:6px;">';
+        blocos+='O titular <strong>'+tTexto+'</strong>';
+        if(rTexto) blocos+=', sendo o(a) requerente <strong>'+rTexto+'</strong> do(a) titular';
+        blocos+='.</div>';
+      } else if(parKey==='outro'){
+        blocos+='<div style="font-size:9pt;color:#444;margin-bottom:4px;padding-left:6px;">Vínculo com o requerente: ver observação.</div>';
+      }
+    }
+
+    /* Documentos */
     t.docs.forEach(function(d,j){
       blocos+='<div style="font-size:9pt;margin-bottom:4px;padding-left:10px;">';
-      blocos+=(j+1)+'. <strong>'+tlbl(d.tipo)+'</strong>';
-      var rg=[];if(d.nr)rg.push('Registro nº '+d.nr);if(d.livro)rg.push('Livro '+d.livro);if(d.folha)rg.push('Folha '+d.folha);
+      blocos+=(j+1)+'. <strong>'+tlbl(d.tipo)+'</strong> em nome de <strong>'+nomeT+'</strong>';
+      var rg=[];
+      if(d.nr)rg.push('Registro nº '+d.nr);
+      if(d.livro)rg.push('Livro '+d.livro);
+      if(d.folha)rg.push('Folha '+d.folha);
       if(rg.length)blocos+=' — '+rg.join(', ');
-      if(d.mat)blocos+=', Matrícula: '+d.mat;
-      blocos+='.';
+      if(d.mat)blocos+=', Matrícula nº '+d.mat;
+      blocos+='. Cartório: <em>'+of.cartorio+'</em>, Comarca de <em>'+of.cidade+'</em>.';
       blocos+='</div>';
     });
     blocos+='</div>';
   });
+
   var totalDocs=of.titulares.reduce(function(sm,t){return sm+t.docs.length;},0);
   var assunto=of.titulares.length===1&&totalDocs===1?tlbl(of.titulares[0].docs[0].tipo):'Requisição de certidão(ões) gratuita(s) — '+totalDocs+' documento(s)';
-  var sitEcon='';
-  if(req.pr||nr>0){
-    sitEcon='<div class="op">O(A) requerente, <strong>'+nR+'</strong>';
-    if(req.pr)sitEcon+=', atua como <strong>'+req.pr+'</strong>';
-    if(nr>0)sitEcon+=', auferindo renda média de <strong>'+req.rd+' ('+ext(nr)+')</strong>';
-    sitEcon+='.</div>';
-  }
-  var obsHtml=of.obs?'<div class="oob">* '+of.obs+'</div>':'';
+  var obsHtml=of.obs?'<div class="oob"><strong>Observação:</strong> '+of.obs+'</div>':'';
+
   return '<div class="ow">'
     +'<div class="otp">'
     +'<img class="lgOf" src="'+logoSrc+'" alt="DPE-PI" style="width:80px;height:auto;display:block;flex-shrink:0;">'
@@ -1031,18 +1183,19 @@ function buildOficioPDF(of,req,s){
     +'<span class="onl">OFÍCIO Nº '+no+'</span>'
     +'<span class="odt">'+dataNum+'</span>'
     +'</div>'
-    +'<div class="ode">Ao(À) Senhor(a) Oficial(a) do <strong>'+of.cartorio+'</strong> da Comarca de <strong>'+of.cidade+'</strong></div>'
+    +'<div class="ode">Ao(À) Senhor(a) Oficial(a) do <strong>'+of.cartorio+'</strong><br>Comarca de <strong>'+of.cidade+'</strong></div>'
     +'<div class="oas">Assunto: '+assunto+'</div>'
-    +'<div class="op">A Defensoria Pública do Estado do Piauí, no exercício de suas atribuições constitucionais e legais, vem, respeitosamente, <strong>REQUISITAR</strong> a emissão gratuita do(s) documento(s) abaixo especificado(s), em favor de <strong>'+nR+'</strong>, em razão da hipossuficiência econômica do(a) requerente, conforme declaração de hipossuficiência anexa, <strong>ISENTA(S) DE CUSTAS E EMOLUMENTOS</strong>.</div>'
+    +'<div class="op">A <strong>Defensoria Pública do Estado do Piauí</strong>, por meio do(a) subscritor(a), no exercício de suas atribuições constitucionais e legais, vem, respeitosamente, <strong>REQUISITAR</strong> a emissão gratuita do(s) documento(s) abaixo especificado(s), em favor do(a) assistido(a) <strong>'+nR+'</strong>, declarado(a) hipossuficiente nos termos da legislação vigente, <strong>ISENTO(S) DE CUSTAS E EMOLUMENTOS</strong>.</div>'
     +sitEcon
+    +'<div style="font-weight:700;font-size:9.5pt;color:var(--v3,#1B5E20);margin:10px 0 6px;">Documentos Requisitados:</div>'
     +blocos
-    +'<div class="ofu"><strong>FUNDAMENTAÇÃO LEGAL:</strong><ol>'
-    +'<li><strong>Lei nº 9.534/1997:</strong> Garante a gratuidade das certidões para os reconhecidamente pobres.</li>'
-    +'<li><strong>Lei nº 1.060/1950:</strong> Assegura o acesso à justiça a pessoas em situação de vulnerabilidade econômica.</li>'
-    +'<li><strong>LC nº 80/1994, art. 4º, VII:</strong> Atribui à Defensoria Pública o poder de requisitar documentos necessários à defesa dos assistidos.</li>'
-    +'</ol></div>'
-    +'<div class="op">Diante do exposto, <strong>REQUISITA-SE</strong> a emissão gratuita do(s) documento(s) acima especificado(s), com entrega ao(à) requerente <strong>'+nR+'</strong>, para fins de regularização dos interesses do(a) assistido(a).</div>'
     +obsHtml
+    +'<div class="ofu"><strong>FUNDAMENTAÇÃO LEGAL:</strong><ol>'
+    +'<li><strong>Lei nº 9.534/1997:</strong> garante gratuidade das certidões às pessoas reconhecidamente pobres.</li>'
+    +'<li><strong>Lei nº 1.060/1950:</strong> assegura assistência jurídica integral às pessoas em situação de vulnerabilidade econômica.</li>'
+    +'<li><strong>LC nº 80/1994, art. 4º, VII:</strong> confere à Defensoria Pública o poder de requisitar documentos necessários à defesa dos assistidos.</li>'
+    +'</ol></div>'
+    +'<div class="op">Diante do exposto, <strong>REQUISITA-SE</strong> a emissão gratuita dos documentos acima, com entrega diretamente ao(à) requerente <strong>'+nR+'</strong>, a fim de viabilizar os interesses do(a) assistido(a).</div>'
     +'<div class="osn">'
     +'<div style="font-size:9.5pt;margin-bottom:26px;">'+dataExt+'</div>'
     +'<div class="osl"></div>'
@@ -1167,7 +1320,15 @@ window.doLimpar=function(){
   document.getElementById('titForm').style.display='block';
   document.getElementById('docForm').style.display='none';
   document.getElementById('btnNovoTitular').style.display='none';
+  document.getElementById('btnDescartarOf').style.display='none';
   document.getElementById('titSalvosList').innerHTML='';
+  /* Oculta campos de titular — precisam de seleção de vínculo */
+  var av=document.getElementById('tAvisoProprio');
+  var cn=document.getElementById('tCamposNome');
+  var cc=document.getElementById('tCamposCPFNasc');
+  if(av)av.style.display='none';
+  if(cn)cn.style.display='none';
+  if(cc)cc.style.display='none';
   renderOfListaView();updBdg();
   document.getElementById('titPag').innerText='Atendimento';
 };
@@ -1310,18 +1471,18 @@ window.abrirEditarOficio = function(idx) {
   MEOF.ofIdx = idx;
   MEOF.atId = null;
   MEOF.ofData = JSON.parse(JSON.stringify(oficiosSalvos[idx]));
-  meofAbrir('Editar Oficio ' + (idx+1) + (MEOF.ofData.no ? ' — ' + MEOF.ofData.no : ''));
+  meofAbrir('Editar Ofício ' + (idx+1) + (MEOF.ofData.no ? ' — ' + MEOF.ofData.no : ''));
 };
 
 /* Abre o modal para editar o ofício ofIdx dentro do atendimento atId do histórico */
 window.abrirEditarOficioHist = function(atId, ofIdx) {
   var lst = JSON.parse(localStorage.getItem(kA(SS.jid)) || '[]');
   var at = lst.find(function(a){ return a.id === atId; });
-  if (!at) { alert('Atendimento nao encontrado.'); return; }
+  if (!at) { alert('Atendimento não encontrado.'); return; }
   MEOF.ofIdx = ofIdx;
   MEOF.atId = atId;
   MEOF.ofData = JSON.parse(JSON.stringify(at.oficios[ofIdx]));
-  meofAbrir('Editar Oficio ' + (ofIdx+1) + (MEOF.ofData.no ? ' — ' + MEOF.ofData.no : ''));
+  meofAbrir('Editar Ofício ' + (ofIdx+1) + (MEOF.ofData.no ? ' — ' + MEOF.ofData.no : ''));
 };
 
 function meofAbrir(titulo) {
@@ -1359,20 +1520,24 @@ function meofRenderTitulares() {
 
     /* Campos do titular */
     var campos = document.createElement('div');
-    campos.innerHTML = '<div class="row">'
-      + '<div class="fg" style="flex:3;"><label>Nome (vazio = proprio requerente):</label>'
-      + '<input type="text" value="' + esc(t.nome) + '" oninput="MEOF.ofData.titulares[' + ti + '].nome=this.value.toUpperCase();this.value=this.value.toUpperCase()"></div>'
-      + '<div class="fg"><label>CPF:</label>'
-      + '<input type="text" maxlength="14" value="' + esc(t.cpf) + '" oninput="mcpf(this);MEOF.ofData.titulares[' + ti + '].cpf=this.value"></div>'
-      + '</div>'
-      + '<div class="row">'
-      + '<div class="fg"><label>Data de Nascimento:</label>'
-      + '<input type="text" maxlength="10" value="' + esc(t.nasc) + '" oninput="mdat(this);MEOF.ofData.titulares[' + ti + '].nasc=this.value"></div>'
-      + '<div class="fg"><label>Parentesco:</label>'
-      + '<select onchange="MEOF.ofData.titulares[' + ti + '].par=this.value">'
-      + meofParOpts(t.par)
-      + '</select></div>'
-      + '</div>';
+    var propTit = (t.par === 'proprio' || t.proprio);
+    campos.innerHTML = (propTit
+      ? '<div style="background:#E8F5E9;border-left:4px solid var(--v);padding:7px 12px;margin-bottom:8px;font-size:12px;color:var(--v3);border-radius:0 4px 4px 0;">✅ Titular = próprio requerente. Nome, CPF e nascimento serão os do requerente.</div>'
+      : '<div class="row">'
+        + '<div class="fg" style="flex:3;"><label>Nome:</label>'
+        + '<input type="text" id="meof-tnom-'+ti+'" value="' + esc(t.nome) + '" oninput="MEOF.ofData.titulares[' + ti + '].nome=this.value.toUpperCase();this.value=this.value.toUpperCase()"></div>'
+        + '<div class="fg"><label>CPF:</label>'
+        + '<input type="text" id="meof-tcpf-'+ti+'" maxlength="14" value="' + esc(t.cpf) + '" oninput="mcpf(this);MEOF.ofData.titulares[' + ti + '].cpf=this.value"></div>'
+        + '</div>'
+        + '<div class="row">'
+        + '<div class="fg"><label>Data de Nascimento:</label>'
+        + '<input type="text" id="meof-tnsc-'+ti+'" maxlength="10" value="' + esc(t.nasc) + '" oninput="mdat(this);MEOF.ofData.titulares[' + ti + '].nasc=this.value"></div>'
+        + '</div>'
+      )
+    + '<div class="row"><div class="fg"><label>O titular é — em relação ao requerente:</label>'
+    + '<select id="meof-tpar-'+ti+'" onchange="meofOnParChange(this,'+ti+')">'
+    + meofParOpts(t.par||'')
+    + '</select></div></div>';
     bloco.appendChild(campos);
 
     /* Documentos do titular */
@@ -1400,10 +1565,10 @@ function meofRenderTitulares() {
       + '<div class="fg" style="flex:2;"><label>Tipo:</label>'
       + '<select id="meof-nd-tipo-' + ti + '">'
       + '<option value="">Selecione...</option>'
-      + '<option value="nasc">2a Via da Certidao de Nascimento</option>'
-      + '<option value="cas">2a Via da Certidao de Casamento</option>'
-      + '<option value="obi">2a Via da Certidao de Obito</option>'
-      + '<option value="int">Certidao de Inteiro Teor</option>'
+      + '<option value="nasc">2ª Via da Certidão de Nascimento</option>'
+      + '<option value="cas">2ª Via da Certidão de Casamento</option>'
+      + '<option value="obi">2ª Via da Certidão de Óbito</option>'
+      + '<option value="int">Certidão de Inteiro Teor</option>'
       + '</select></div></div>'
       + '<div class="row">'
       + '<div class="fg"><label>N.o Registro:</label><input type="text" id="meof-nd-nr-' + ti + '"></div>'
@@ -1456,9 +1621,10 @@ function meofDocEditHTML(ti, di, doc) {
     + '<div class="row">'
     + '<div class="fg" style="flex:2;"><label>Tipo:</label>'
     + '<select id="meof-edit-tipo-' + ti + '-' + di + '">'
-    + '<option value="nasc"' + (doc.tipo==='nasc'?' selected':'') + '>2a Via da Certidao de Nascimento</option>'
-    + '<option value="cas"' + (doc.tipo==='cas'?' selected':'') + '>2a Via da Certidao de Casamento</option>'
-    + '<option value="obi"' + (doc.tipo==='obi'?' selected':'') + '>2a Via da Certidao de Obito</option>'
+    + '<option value="nasc"' + (doc.tipo==='nasc'?' selected':'') + '>2ª Via da Certidão de Nascimento</option>'
+    + '<option value="cas"' + (doc.tipo==='cas'?' selected':'') + '>2ª Via da Certidão de Casamento</option>'
+    + '<option value="obi"' + (doc.tipo==='obi'?' selected':'') + '>2ª Via da Certidão de Óbito</option>'
+    + '<option value="int"' + (doc.tipo==='int'?' selected':'') + '>Certidão de Inteiro Teor</option>'
     + '<option value="int"' + (doc.tipo==='int'?' selected':'') + '>Certidao de Inteiro Teor</option>'
     + '</select></div></div>'
     + '<div class="row">'
@@ -1475,21 +1641,29 @@ function meofDocEditHTML(ti, di, doc) {
 
 function esc(s){ return (s||'').replace(/"/g,'&quot;'); }
 
-/* Selects de parentesco */
+/* Selects de parentesco — novo sistema */
 function meofParOpts(sel) {
-  var opts = ['','Proprio(a)','Genitor(a)','Avo/Avo','Esposo(a)','Tio(a)','Tutor(a)/Curador(a)','Filho(a)','Convivente','Outro(a)'];
-  var disp = ['-','Próprio(a)','Genitor(a)','Avô/Avó','Esposo(a)','Tio(a)','Tutor(a)/Curador(a)','Filho(a)','Convivente','Outro(a)'];
+  var vals  = ['','proprio','filho','genitor','conjuge','irmao','avo','neto','tio','sobrinho','tutor','outro'];
+  var disps = ['— selecione —','O próprio requerente','Filho(a) do requerente','Pai / Mãe do requerente','Cônjuge / Companheiro(a) do requerente','Irmão / Irmã do requerente','Avô / Avó do requerente','Neto(a) do requerente','Tio(a) do requerente','Sobrinho(a) do requerente','Tutelado(a) / Curatelado(a) do requerente','Outro vínculo'];
   var h = '';
-  opts.forEach(function(o, i) {
-    var isSel = (sel === o || sel === disp[i]);
-    h += '<option value="' + disp[i] + '"' + (isSel?' selected':'') + '>' + disp[i] + '</option>';
+  vals.forEach(function(v, i) {
+    var isSel = (sel === v);
+    h += '<option value="' + v + '"' + (isSel?' selected':'') + '>' + disps[i] + '</option>';
   });
   return h;
 }
 
+window.meofOnParChange = function(sel, ti) {
+  /* Persiste o valor no objeto de trabalho */
+  MEOF.ofData.titulares[ti].par = sel.value;
+  MEOF.ofData.titulares[ti].proprio = (sel.value === 'proprio');
+  /* Re-renderiza só este bloco para mostrar/ocultar campos */
+  meofRenderTitulares();
+};
+
 /* ---- Ações em titulares ---- */
 window.meofRemoverTitular = function(ti) {
-  if (MEOF.ofData.titulares.length <= 1) { alert('O oficio precisa de ao menos um titular.'); return; }
+  if (MEOF.ofData.titulares.length <= 1) { alert('O ofício precisa de ao menos um titular.'); return; }
   if (!confirm('Remover este titular e todos os seus documentos?')) return;
   MEOF.ofData.titulares.splice(ti, 1);
   meofRenderTitulares();
@@ -1577,7 +1751,7 @@ window.meofConfirmarNovoDoc = function(ti) {
 window.meofSalvar = function() {
   var cartorio = (document.getElementById('meof-cartorio').value || '').trim();
   var cidade   = (document.getElementById('meof-cidade').value   || '').trim();
-  if (!cartorio || !cidade) { alert('Informe o cartorio e a cidade.'); return; }
+  if (!cartorio || !cidade) { alert('Informe o Cartório e a Cidade.'); return; }
 
   /* Validações básicas */
   var tits = MEOF.ofData.titulares;
@@ -1586,11 +1760,30 @@ window.meofSalvar = function() {
       alert('O titular ' + (ti+1) + ' precisa de ao menos um documento.'); return;
     }
   }
-  if (!tits.length) { alert('O oficio precisa de ao menos um titular.'); return; }
+  if (!tits.length) { alert('O ofício precisa de ao menos um titular.'); return; }
 
   MEOF.ofData.cartorio = cartorio;
   MEOF.ofData.cidade   = cidade;
   MEOF.ofData.obs      = (document.getElementById('meof-obs').value || '').trim();
+
+  /* Garante que campos de texto (nome, CPF, nasc) do DOM estejam sincronizados
+     (cobertura para casos em que oninput não disparou antes do salvar) */
+  MEOF.ofData.titulares.forEach(function(t, ti) {
+    if (t.par !== 'proprio' && !t.proprio) {
+      var fn = document.getElementById('meof-tnom-' + ti);
+      var fc = document.getElementById('meof-tcpf-' + ti);
+      var fd = document.getElementById('meof-tnsc-' + ti);
+      if (fn) t.nome  = fn.value.trim().toUpperCase();
+      if (fc) t.cpf   = fc.value.trim();
+      if (fd) t.nasc  = fd.value.trim();
+    }
+    /* Lê o select de parentesco */
+    var ps = document.getElementById('meof-tpar-' + ti);
+    if (ps) {
+      t.par    = ps.value;
+      t.proprio = (ps.value === 'proprio');
+    }
+  });
 
   if (MEOF.atId === null) {
     /* Edição no atendimento atual em aberto */
@@ -1608,7 +1801,7 @@ window.meofSalvar = function() {
     /* Edição direto no histórico */
     var lst = JSON.parse(localStorage.getItem(kA(SS.jid)) || '[]');
     var at = lst.find(function(a){ return a.id === MEOF.atId; });
-    if (!at) { alert('Atendimento nao encontrado no historico.'); return; }
+    if (!at) { alert('Atendimento não encontrado no histórico.'); return; }
     at.oficios[MEOF.ofIdx] = JSON.parse(JSON.stringify(MEOF.ofData));
     /* Se for o atendimento em edição ativa, sincroniza */
     if (CA && CA.id === MEOF.atId) {
@@ -1623,7 +1816,7 @@ window.meofSalvar = function() {
   }
 
   meofFechar();
-  alert('Oficio atualizado com sucesso!');
+  alert('Ofício atualizado com sucesso!');
 };
 })();
 </script>
