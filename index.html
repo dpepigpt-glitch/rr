@@ -246,7 +246,7 @@ h3{color:var(--v3);font-size:14px;margin-bottom:10px;}
         <input type="text" id="aOu" placeholder="Especifique Outras..." style="display:none;margin-top:8px;width:100%;padding:7px 10px;border:1px solid var(--bd);border-radius:4px;font-size:12px;">
       </div>
       <div style="margin-top:14px;text-align:right;">
-        <button class="btn bv" onclick="doGerarFicha()">📋 Gerar / Reimprimir Ficha + Hipo</button>
+        <button class="btn bv" onclick="doGerarFicha()">📋 Declaração de Hipossuficiência</button>
       </div>
     </div>
 
@@ -1137,17 +1137,15 @@ function buildOficioPDF(of,req,s){
 
     /* Vínculo com o requerente */
     if(proprio){
-      blocos+='<div style="font-size:9pt;color:#444;margin-bottom:4px;padding-left:6px;">O titular <strong>é o próprio requerente</strong>.</div>';
+      blocos+='<div style="font-size:9pt;color:#444;margin-bottom:4px;padding-left:6px;">O titular deste documento <strong>é o próprio requerente</strong>.</div>';
     } else {
       var tTexto=parTextoTitular(parKey);
-      var rTexto=parTextoRequerente(parKey);
       if(tTexto){
         blocos+='<div style="font-size:9pt;color:#444;margin-bottom:4px;padding-left:6px;">';
-        blocos+='O titular <strong>'+tTexto+'</strong>';
-        if(rTexto) blocos+=', sendo o(a) requerente <strong>'+rTexto+'</strong> do(a) titular';
-        blocos+='.</div>';
+        blocos+='O titular deste documento solicitado <strong>'+tTexto+'</strong>.';
+        blocos+='</div>';
       } else if(parKey==='outro'){
-        blocos+='<div style="font-size:9pt;color:#444;margin-bottom:4px;padding-left:6px;">Vínculo com o requerente: ver observação.</div>';
+        blocos+='<div style="font-size:9pt;color:#444;margin-bottom:4px;padding-left:6px;">Vínculo do titular com o requerente: ver observação do ofício.</div>';
       }
     }
 
@@ -1412,20 +1410,67 @@ window.doLbuscar=function(){
   if(!LBAU)return;
   var tn=(document.getElementById('lbNm').value||'').trim().toUpperCase();
   var tc=(document.getElementById('lbCP').value||'').trim();
-  if(!tn&&!tc){document.getElementById('lbInfo').innerText='Informe ao menos um critério.';document.getElementById('lbRes').innerHTML='';return;}
+  if(!tn&&!tc){
+    document.getElementById('lbInfo').innerText='Informe ao menos um critério.';
+    document.getElementById('lbRes').innerHTML='';
+    return;
+  }
   var res=[];
-  gJ().forEach(function(j){JSON.parse(localStorage.getItem(kA(j.id))||'[]').forEach(function(at){var ok=false;if(tc&&at.rq&&at.rq.cp&&at.rq.cp.replace(/\D/g,'')===tc.replace(/\D/g,''))ok=true;if(tn&&at.rq&&at.rq.nm&&at.rq.nm.indexOf(tn)>=0)ok=true;if(ok)res.push({j:j,at:at});});});
-  var bi=document.getElementById('lbInfo'),bd=document.getElementById('lbRes');
-  if(!res.length){bi.innerText='Nenhum resultado.';bd.innerHTML='';return;}
-  bi.innerText=res.length+' resultado(s).';bd.innerHTML='';
-  res.forEach(function(r){
-    var at=r.at;var it=document.createElement('div');it.className='hi';
-    var ofDesc=(at.oficios||[]).map(function(o){return(o.no||'?')+' '+o.cartorio;}).join(' | ');
-    it.innerHTML='<div><h3>'+at.dt+' — '+(at.rq&&at.rq.nm?at.rq.nm:'')+'</h3><p>'+ofDesc+'</p></div>';
-    bd.appendChild(it);
+  gJ().forEach(function(j){
+    JSON.parse(localStorage.getItem(kA(j.id))||'[]').forEach(function(at){
+      var ok=false;
+      if(tc&&at.rq&&at.rq.cp&&at.rq.cp.replace(/\D/g,'')===tc.replace(/\D/g,''))ok=true;
+      if(tn&&at.rq&&at.rq.nm&&at.rq.nm.indexOf(tn)>=0)ok=true;
+      if(ok)res.push({j:j,at:at});
+    });
+  });
+  var bi=document.getElementById('lbInfo');
+  var bd=document.getElementById('lbRes');
+  if(!res.length){bi.innerText='Nenhum resultado encontrado.';bd.innerHTML='';return;}
+  bi.innerText=res.length+' resultado(s) encontrado(s).';
+  bd.innerHTML='';
+  res.forEach(function(r,ri){
+    var at=r.at;
+    var ofs=at.oficios||[];
+    var ofList=ofs.map(function(o,i){
+      return '<div style="font-size:11px;color:#555;padding:2px 0 2px 8px;border-left:2px solid var(--vm);">'
+        +'<strong>'+(o.no||'Nº não gerado')+'</strong> — '+o.cartorio+', '+o.cidade
+        +'</div>';
+    }).join('');
+    var det=document.createElement('div');
+    det.id='lb-det-'+ri;
+    det.style.cssText='display:none;margin-top:8px;padding:8px;background:#fff;border-radius:4px;border:1px solid var(--vm);';
+    det.innerHTML='<div style="font-size:12px;font-weight:700;color:var(--v3);margin-bottom:4px;">Ofícios deste atendimento:</div>'+ofList
+      +(at.rq.cp?'<div style="font-size:11px;color:#666;margin-top:4px;">CPF: '+at.rq.cp+'</div>':'')
+      +(at.rq.rd?'<div style="font-size:11px;color:#666;">Renda declarada: '+at.rq.rd+'</div>':'')
+      +'<div style="font-size:11px;color:#888;margin-top:2px;">Jornada: '+r.j.nm+'</div>';
+    var card=document.createElement('div');
+    card.style.cssText='background:var(--vc);border:1px solid var(--vm);border-radius:6px;padding:10px 12px;margin-bottom:8px;';
+    card.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">'
+      +'<div>'
+      +'<div style="font-weight:700;font-size:13px;color:var(--v3);">'+(at.rq.nm||'—')+'</div>'
+      +'<div style="font-size:11px;color:#555;">'+at.dt+' &nbsp;·&nbsp; '+ofs.length+' ofício(s)  &nbsp;·&nbsp; '+r.j.nm+'</div>'
+      +'</div>'
+      +'<button class="btn bo bsm" id="lb-btn-'+ri+'" onclick="lbToggleDet('+ri+')">+ Detalhes</button>'
+      +'</div>';
+    card.appendChild(det);
+    bd.appendChild(card);
   });
 };
-window.doLlimpar=function(){document.getElementById('lbNm').value='';document.getElementById('lbCP').value='';document.getElementById('lbInfo').innerText='';document.getElementById('lbRes').innerHTML='';};
+window.lbToggleDet=function(ri){
+  var det=document.getElementById('lb-det-'+ri);
+  var btn=document.getElementById('lb-btn-'+ri);
+  if(!det)return;
+  var open=det.style.display!=='none';
+  det.style.display=open?'none':'block';
+  btn.innerText=open?'+ Detalhes':'− Fechar';
+};
+window.doLlimpar=function(){
+  document.getElementById('lbNm').value='';
+  document.getElementById('lbCP').value='';
+  document.getElementById('lbInfo').innerText='';
+  document.getElementById('lbRes').innerHTML='';
+};
 window.doReimRel=function(id){var rl=JSON.parse(localStorage.getItem('dpe_rl')||'[]'),r=rl.find(function(x){return x.id===id;});if(r)prel(r);};
 
 /* ===== RELATÓRIO ===== */
