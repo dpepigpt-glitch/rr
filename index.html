@@ -167,7 +167,7 @@ body > *{display:none !important;}
 </div>
 
 <!-- PAINEL HISTORICO (senha DITI2027) -->
-<div id="lPanelHistórico" style="display:none;background:#fff;padding:22px;border-radius:0 0 8px 8px;box-shadow:0 4px 12px rgba(0,0,0,.12);">
+<div id="lPanelHistorico" style="display:none;background:#fff;padding:22px;border-radius:0 0 8px 8px;box-shadow:0 4px 12px rgba(0,0,0,.12);">
 <div id="lhAuth">
 <div style="font-size:13px;font-weight:700;color:var(--v3);margin-bottom:12px;">Acesso restrito - Histórico de Jornadas</div>
 <div style="display:flex;gap:8px;align-items:flex-end;">
@@ -222,8 +222,8 @@ body > *{display:none !important;}
 <div class="fg"><label>Sexo:</label><select id="rSX"><option value="">-</option><option value="Masculino">Masculino</option><option value="Feminino">Feminino</option><option value="Não-binário">Não-binário</option><option value="Não quer declarar">Não quer declarar</option></select></div>
 </div>
 <div class="row">
-<div class="fg"><label>Nome do Pai:</label><input id="rP" type="text" oninput="this.value=this.value.toUpperCase()"></div>
-<div class="fg"><label>Nome da Mãe:</label><input id="rM" type="text" oninput="this.value=this.value.toUpperCase()"></div>
+<div class="fg"><label>Nome do Pai:</label><input id="rP" type="text" oninput="this.value=ctit(this.value)"></div>
+<div class="fg"><label>Nome da Mãe:</label><input id="rM" type="text" oninput="this.value=ctit(this.value)"></div>
 </div>
 <div class="row">
 <div class="fg"><label>Profissão:</label><input id="rPr" type="text" oninput="this.value=ctit(this.value)"></div>
@@ -273,7 +273,7 @@ body > *{display:none !important;}
 <div style="background:#E8F5E9;border-radius:6px;padding:12px;margin-bottom:14px;">
 <div style="font-weight:700;font-size:13px;color:var(--v3);margin-bottom:8px;">Destino do Ofício</div>
 <div class="row" style="margin-bottom:0;">
-<div class="fg" style="flex:2;"><label>Cartório / Ofício:</label><input id="ofCartório" type="text" placeholder="Ex: 1 Ofício de Registro Civil" oninput="this.value=ctit(this.value)"></div>
+<div class="fg" style="flex:2;"><label>Cartório / Ofício:</label><input id="ofCartorio" type="text" placeholder="Ex: 1 Ofício de Registro Civil" oninput="this.value=ctit(this.value)"></div>
 <div class="fg"><label>Cidade / Comarca:</label><input id="ofCidade" type="text" placeholder="Ex: Teresina/PI" oninput="this.value=ctit(this.value)"></div>
 </div>
 </div>
@@ -305,7 +305,7 @@ body > *{display:none !important;}
 </div>
 <div id="tAvisoProprio" style="display:none;background:#E8F5E9;border-left:4px solid var(--v);padding:8px 12px;margin-bottom:8px;font-size:12px;color:var(--v3);border-radius:0 4px 4px 0;">Dados de nome, CPF e nascimento serao preenchidos automaticamente com os do requerente.</div>
 <div id="tCamposNome" class="row" style="display:none;">
-<div class="fg" style="flex:3;"><label>Nome do Titular:</label><input id="tNome" type="text" placeholder="Nome completo do titular" oninput="this.value=this.value.toUpperCase()"></div>
+<div class="fg" style="flex:3;"><label>Nome do Titular:</label><input id="tNome" type="text" placeholder="Nome completo do titular" oninput="this.value=ctit(this.value)"></div>
 </div>
 <div id="tCamposCPFNasc" class="row" style="display:none;">
 <div class="fg"><label>CPF do Titular:</label><input id="tCPF" type="text" maxlength="14" placeholder="000.000.000-00" oninput="mcpf(this)"></div>
@@ -458,7 +458,7 @@ body > *{display:none !important;}
 </div>
 
 <!-- SECAO: OFICIO -->
-<div id="pOfício" class="secprint qbra"></div>
+<div id="pOficio" class="secprint qbra"></div>
 
 <!-- SECAO: FICHA MANUAL -->
 <div id="pM" class="secprint qbra">
@@ -534,7 +534,7 @@ body > *{display:none !important;}
 <div class="meof-sec">
 <div class="meof-sec-tit">Destino do Ofício</div>
 <div class="row" style="margin-bottom:0;">
-<div class="fg" style="flex:2;"><label>Cartório / Ofício:</label><input id="meof-cartório" type="text" oninput="this.value=ctit(this.value)"></div>
+<div class="fg" style="flex:2;"><label>Cartório / Ofício:</label><input id="meof-cartorio" type="text" oninput="this.value=ctit(this.value)"></div>
 <div class="fg"><label>Cidade / Comarca:</label><input id="meof-cidade" type="text" oninput="this.value=ctit(this.value)"></div>
 </div>
 </div>
@@ -556,7 +556,7 @@ body > *{display:none !important;}
 <script>
 (function(){
 var PW='DITI2027';
-var LURL='https://raw.githubusercontent.com/dpepigpt-glitch/rr/main/logo-dpe.png';
+var LURL='https://raw.githubusercontent.com/dpepigpt-glitch/rr/main/defcalc.png';
 var LB='';
 var MSA=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 var PF=[
@@ -652,7 +652,7 @@ var t1=document.getElementById('ltab1'),t2=document.getElementById('ltab2'),t3=d
 if(t1)t1.style.background=t==='login'?'var(--v)':'#888';
 if(t2)t2.style.background=t==='busca'?'var(--v)':'#888';
 if(t3)t3.style.background=t==='histórico'?'var(--v)':'#555';
-var p1=document.getElementById('lPanelLogin'),p2=document.getElementById('lPanelBusca'),p3=document.getElementById('lPanelHistórico');
+var p1=document.getElementById('lPanelLogin'),p2=document.getElementById('lPanelBusca'),p3=document.getElementById('lPanelHistorico');
 if(p1)p1.style.display=t==='login'?'block':'none';
 if(p2)p2.style.display=t==='busca'?'block':'none';
 if(p3)p3.style.display=t==='histórico'?'block':'none';
@@ -855,7 +855,8 @@ var janela=window.open('','_blank','width=900,height=700');
 if(!janela){alert('Popup bloqueado. Habilite popups para este site e tente novamente. O relatorio esta salvo no Histórico.');return;}
 var linhas='';
 ats.forEach(function(a,i){
-var nome=a.req?(a.req.nome||a.nome||''):(a.nome||'');
+var nomeRaw=a.req?(a.req.nome||a.nome||''):(a.nome||'');
+var nome=nomeRaw.replace(/(?:^|[\s\-])\S/g,function(c){return c.toUpperCase();});
 var docs='';
 if(a.ofícios){
 var dd=[];a.ofícios.forEach(function(of){if(of.titulares)of.titulares.forEach(function(t){t.docs.forEach(function(d){dd.push(tlbl(d.tipo));});});});
@@ -871,11 +872,15 @@ linhas+='<tr style="background:'+(i%2===0?'#f9fbf9':'#fff')+';">'
 +'<td style="padding:4px 7px;border:1px solid #ddd;">'+docs+'</td>'
 +'</tr>';
 });
-var html='<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Relatorio - '+r.jnm+'</title></head>'
-+'<body style="font-family:Arial,sans-serif;font-size:9pt;padding:20px;">'
-+'<div style="border-bottom:3px solid #2E7D32;padding-bottom:10px;margin-bottom:16px;">'
-+'<div style="font-size:14pt;font-weight:700;color:#2E7D32;">Defensoria Pública do Estado do Piauí</div>'
-+'<div style="font-size:10pt;color:#43A047;font-weight:700;">Diretoria Itinerante</div>'
+var logoSrcRel=LB||LURL;
+var html='<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Relatório - '+r.jnm+'</title>'
++'<style>body{font-family:Arial,sans-serif;font-size:9pt;padding:20px;}@media print{.noprint{display:none;}}</style>'
++'</head>'
++'<body>'
++'<div style="display:flex;align-items:center;gap:14px;border-bottom:3px solid #2E7D32;padding-bottom:10px;margin-bottom:16px;">'
++'<img src="'+logoSrcRel+'" style="width:70px;height:auto;display:block;" alt="DPE-PI">'
++'<div><div style="font-size:14pt;font-weight:700;color:#2E7D32;">Defensoria Pública do Estado do Piauí</div>'
++'<div style="font-size:10pt;color:#43A047;font-weight:700;">Diretoria Itinerante</div></div>'
 +'</div>'
 +'<div style="font-size:12pt;font-weight:700;color:#1B5E20;margin-bottom:8px;">Relatório de Encerramento de Jornada</div>'
 +'<table style="width:100%;border-collapse:collapse;margin-bottom:12px;">'
@@ -1135,7 +1140,7 @@ var po=document.getElementById('pOu');if(po)po.innerText=(ou&&acs.indexOf('Outra
 var rdVal=rnum(rnd);
 var rdExt=rdVal>0?ext(rdVal)+' reais':'nao informada';
 var hoje=new Date();var dia=hoje.getDate();var mes=MSA[hoje.getMonth()];var ano=hoje.getFullYear();
-var nmCap=nm.charAt(0).toUpperCase()+nm.slice(1).toLowerCase();
+var nmCap=ctit(nm.toLowerCase());
 var pDecl=document.getElementById('pDecl');
 if(pDecl)pDecl.innerHTML='<strong>DECLARO</strong>, para fins de obtenção de <strong>ASSISTÊNCIA JURÍDICA</strong> pela <strong>DEFENSORIA PÚBLICA DO ESTADO DO PIAUÍ</strong>, que sou pessoa pobre na forma da lei, sendo incapaz de contratar advogado particular sem prejudicar o próprio sustento ou de minha família. Trabalho como <strong>'+(prof||'nao informado')+'</strong>, auferindo renda média de <strong>'+rnd+(rdVal>0?' ('+rdExt+')':'')+'</strong>.';
 var pNAs=document.getElementById('pNAs');if(pNAs)pNAs.innerText=nmCap;
@@ -1165,7 +1170,7 @@ html+='<div class="onr"><div class="onl">Ofício N. '+of.no+'</div><div class="o
 html+='<div class="ode">Ao(A) Excelentissimo(a) Sr.(a)<br><strong>'+of.cartório+'</strong><br>'+of.cidade+'</div>';
 html+='<div class="oas">Assunto: Solicitação de Documentos - Assistencia Juridica Gratuita</div>';
 /* Corpo */
-var nmFmt=nm.charAt(0).toUpperCase()+nm.slice(1).toLowerCase();
+var nmFmt=ctit(nm.toLowerCase());
 var rdVal=rnum(rnd);var rdExt=rdVal>0?ext(rdVal)+' reais':'';
 html+='<div class="op">A Defensoria Pública do Estado do Piauí, no exercicio de suas atribuicoes constitucionais previstas no art. 134 da Constituicao Federal, vem respeitosamente solicitar a V.Sa. a expedição dos documentos abaixo relacionados em favor de <strong>'+nmFmt+'</strong>'+(cpf?', CPF '+cpf:'')+(dn?', nascido(a) em '+dn:'')+'.</div>';
 html+='<div class="op">O(A) requerente e pessoa hipossuficiente, na condição de assistido(a) desta Defensoria Pública, fazendo jus à gratuidade nos termos do art. 1.512 do Código Civil e da Lei n. 9.534/1997, que assegura gratuidade no fornecimento de certidões de registro civil.'+(rdVal>0?' Sua renda familiar é de '+rnd+' ('+rdExt+').':'')+'</div>';
@@ -1193,9 +1198,9 @@ html+='<div class="op">Atenciosamente, aguardamos o retorno de V.Sa. no prazo de
 html+='<div class="osn"><div style="height:20px;"></div><div style="font-size:9.5pt;margin-bottom:30px;">'+SS.un+', '+dia+' de '+mes+' de '+ano+'.</div><div class="osl"></div><div class="osn2">'+SS.nm+'</div><div style="font-size:9pt;">Defensor(a) Público(a)</div><div style="font-size:9pt;">'+SS.un+'</div></div>';
 html+='<div class="ord">Ofício gerado pelo Sistema DPE-PI - Diretoria Itinerante</div>';
 html+='</div>';
-var cont=document.getElementById('pOfício');if(cont)cont.innerHTML=html;
+var cont=document.getElementById('pOficio');if(cont)cont.innerHTML=html;
 alogos();
-ativarSecao('pOfício');
+ativarSecao('pOficio');
 window.print();
 setTimeout(function(){desativarSecoes();},1000);
 };
@@ -1354,7 +1359,7 @@ d.appendChild(div);
 var meofIdx=-1;
 window.abrirEditarOfício=function(i){
 meofIdx=i;var of=ofíciosSalvos[i];
-document.getElementById('meof-cartório').value=of.cartório||'';
+document.getElementById('meof-cartorio').value=of.cartório||'';
 document.getElementById('meof-cidade').value=of.cidade||'';
 document.getElementById('meof-obs').value=of.obs||'';
 renderMeofTitulares(of.titulares||[]);
@@ -1384,7 +1389,7 @@ window.meofRemDoc=function(ti,di){if(meofIdx<0)return;ofíciosSalvos[meofIdx].ti
 window.meofNovoTitular=function(){if(meofIdx<0)return;ofíciosSalvos[meofIdx].titulares.push({nome:'(Novo)',proprio:false,par:'outro',docs:[{tipo:'nasc',nr:'',livro:'',folha:'',mat:''}]});renderMeofTitulares(ofíciosSalvos[meofIdx].titulares);};
 window.meofSalvar=function(){
 if(meofIdx<0)return;
-ofíciosSalvos[meofIdx].cartório=document.getElementById('meof-cartório').value||'';
+ofíciosSalvos[meofIdx].cartório=document.getElementById('meof-cartorio').value||'';
 ofíciosSalvos[meofIdx].cidade=document.getElementById('meof-cidade').value||'';
 ofíciosSalvos[meofIdx].obs=document.getElementById('meof-obs').value||'';
 meofFechar();renderOfListaView();renderBotoesGerar();
