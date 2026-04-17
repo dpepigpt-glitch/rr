@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -166,7 +165,7 @@ body > *{display:none !important;}
 </div>
 </div>
 
-<!-- PAINEL HISTORICO (senha DITI2027) -->
+<!-- PAINEL HISTORICO -->
 <div id="lPanelHistorico" style="display:none;background:#fff;padding:22px;border-radius:0 0 8px 8px;box-shadow:0 4px 12px rgba(0,0,0,.12);">
 <div id="lhAuth">
 <div style="font-size:13px;font-weight:700;color:var(--v3);margin-bottom:12px;">Acesso restrito - Histórico de Jornadas</div>
@@ -553,9 +552,10 @@ body > *{display:none !important;}
 </div>
 </div>
 </div>
+<script src="config.js"></script>
 <script>
 (function(){
-var PW='DITI2027';
+var PW=(typeof CONFIG!=='undefined'&&CONFIG.pw)?CONFIG.pw:'';
 var LURL='https://raw.githubusercontent.com/dpepigpt-glitch/rr/main/logo-dpe.png';
 var LB='';
 var MSA=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
@@ -572,8 +572,8 @@ var PFN=[
 var JD=[
 {id:'cantodoburiti',nm:'Jornada de Canto do Buriti',fix:false,pw:PW,perfil:null},
 {id:'saojosedopeixe',nm:'Jornada de São José do Peixe',fix:false,pw:PW,perfil:null},
-{id:'def1',nm:'1ª Defensoria Pública Itinerante',fix:true,pw:'MO2027',perfil:'adriano'},
-{id:'def2',nm:'2ª Defensoria Pública Itinerante',fix:true,pw:'RR2027',perfil:'robert'}
+{id:'def1',nm:'1ª Defensoria Pública Itinerante',fix:true,pw:(typeof CONFIG!=='undefined'&&CONFIG.pw1)?CONFIG.pw1:'',perfil:'adriano'},
+{id:'def2',nm:'2ª Defensoria Pública Itinerante',fix:true,pw:(typeof CONFIG!=='undefined'&&CONFIG.pw2)?CONFIG.pw2:'',perfil:'robert'}
 ];
 var SS=null;
 var CA=null;
