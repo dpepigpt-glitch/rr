@@ -552,10 +552,19 @@ body > *{display:none !important;}
 </div>
 </div>
 </div>
-<script src="config.js"></script>
 <script>
 (function(){
-var PW=(typeof CONFIG!=='undefined'&&CONFIG.pw)?CONFIG.pw:'';
+var H_PW='ee3901491a0ea8a40ec1bc3f991385ebe993a173883300ff55fcfc1eaf6b57ed';
+var H_PW1='752cdafa0f5c604889677df0a327148e6ca8d887182a5cf19c0e8975ae5e6141';
+var H_PW2='3fa35bccfbc58344dddb6d59f553dd7c254b65b87251b1f8e6ec5065c527a87d';
+function sha256hex(str){
+  var buf=new TextEncoder().encode(str);
+  return crypto.subtle.digest('SHA-256',buf).then(function(b){
+    return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0');}).join('');
+  });
+}
+function chkPw(input,hash){return sha256hex(input).then(function(h){return h===hash;});}
+var PW=null;
 var LURL='https://raw.githubusercontent.com/dpepigpt-glitch/rr/main/logo-dpe.png';
 var LB='';
 var MSA=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
@@ -572,8 +581,8 @@ var PFN=[
 var JD=[
 {id:'cantodoburiti',nm:'Jornada de Canto do Buriti',fix:false,pw:PW,perfil:null},
 {id:'saojosedopeixe',nm:'Jornada de São José do Peixe',fix:false,pw:PW,perfil:null},
-{id:'def1',nm:'1ª Defensoria Pública Itinerante',fix:true,pw:(typeof CONFIG!=='undefined'&&CONFIG.pw1)?CONFIG.pw1:'',perfil:'adriano'},
-{id:'def2',nm:'2ª Defensoria Pública Itinerante',fix:true,pw:(typeof CONFIG!=='undefined'&&CONFIG.pw2)?CONFIG.pw2:'',perfil:'robert'}
+{id:'def1',nm:'1ª Defensoria Pública Itinerante',fix:true,pw:H_PW1,perfil:'adriano'},
+{id:'def2',nm:'2ª Defensoria Pública Itinerante',fix:true,pw:H_PW2,perfil:'robert'}
 ];
 var SS=null;
 var CA=null;
@@ -662,11 +671,13 @@ if(t==='busca')carregarRelsLogin();
 /* ===== AUTENTICACAO HISTORICO ===== */
 window.doAutHistórico=function(){
 var s=(document.getElementById('lhSe').value||'').trim();
-if(s!==PW){var er=document.getElementById('lhErr');if(er){er.style.display='block';}return;}
+chkPw(s,H_PW).then(function(ok){
+if(!ok){var er=document.getElementById('lhErr');if(er){er.style.display='block';}return;}
 var er=document.getElementById('lhErr');if(er)er.style.display='none';
 var auth=document.getElementById('lhAuth');if(auth)auth.style.display='none';
 var pain=document.getElementById('lhPain');if(pain)pain.style.display='block';
 carregarHistóricoLogin();
+});
 };
 
 function carregarHistóricoLogin(){
@@ -718,13 +729,16 @@ var jid=document.getElementById('lgJ').value;
 var pw=document.getElementById('lgS').value;
 if(!jid||!pw){mostrarErro('Preencha todos os campos.');return;}
 var jj=gJ();var jorn=jj.find(function(j){return j.id===jid;});if(!jorn){mostrarErro('Jornada não encontrada.');return;}
-if(pw!==(jorn.pw||PW)){mostrarErro('Senha incorreta.');return;}
+var hashEsperado=jorn.pw||H_PW;
+chkPw(pw,hashEsperado).then(function(ok){
+if(!ok){mostrarErro('Senha incorreta.');return;}
 if(jorn.fix&&jorn.perfil&&pid!==jorn.perfil){mostrarErro('Este perfil não tem acesso a esta defensoria.');return;}
 limparErro();
 var dn=PFN.find(function(x){return x.id===pid;});
 SS={pid:pid,nm:dn?dn.nm:pf.nm,un:jorn.fix?jorn.nm:(dn?dn.un:pf.un),adm:pf.adm,jid:jid,jnm:jorn.nm};
 try{localStorage.setItem('dpe_ss',JSON.stringify(SS));}catch(e){}
 init();
+});
 };
 
 function mostrarErro(m){var el=document.getElementById('lerr');el.innerText=m;el.style.display='block';}
@@ -750,7 +764,9 @@ if(!pw){document.getElementById('rlErr').style.display='block';return;}
 var parts=sel.value.split('|');var jid=parts[0];
 var jj=gJ();var jorn=jj.find(function(j){return j.id===jid;});
 if(!jorn){alert('Jornada não encontrada.');return;}
-if(pw!==(jorn.pw||PW)){document.getElementById('rlErr').style.display='block';document.getElementById('rlPw').value='';return;}
+var hashEsperado2=jorn.pw||H_PW;
+chkPw(pw,hashEsperado2).then(function(ok2){
+if(!ok2){document.getElementById('rlErr').style.display='block';document.getElementById('rlPw').value='';return;}
 document.getElementById('rlErr').style.display='none';
 var sel2=document.querySelector('.pcard.sel');
 if(!sel2){alert('Selecione um perfil acima.');return;}
@@ -764,6 +780,7 @@ var rl=JSON.parse(localStorage.getItem('dpe_rl')||'[]');
 var relJ=rl.filter(function(r){return r.jid===jid;});
 if(relJ.length){var ult=relJ[relJ.length-1];if(ult.ats&&ult.ats.length){localStorage.setItem(kA(jid),JSON.stringify(ult.ats));localStorage.setItem(kS(jid),String(ult.seqFinal||0));}}
 init();
+});
 };
 
 function init(){
@@ -810,7 +827,8 @@ lista.appendChild(div);
 window.doEncerrar=function(){
 var s=prompt('Senha para encerrar jornada:');
 if(!s)return;
-if(s!==PW){alert('Senha incorreta.');return;}
+chkPw(s,H_PW).then(function(okEnc){
+if(!okEnc){alert('Senha incorreta.');return;}
 if(!confirm('Encerrar jornada "'+SS.jnm+'"? O relatório será salvo e os dados desta jornada serão removidos.'))return;
 /* Salvar relatorio antes de limpar */
 var ats=JSON.parse(localStorage.getItem(kA(SS.jid))||'[]');
@@ -844,6 +862,7 @@ localStorage.removeItem(kS(SS.jid));
 localStorage.removeItem('dpe_ss');
 location.reload();
 },500);
+});
 };
 
 /* ===== IMPRIMIR RELATORIO SALVO ===== */
@@ -1333,7 +1352,7 @@ if(!nm){alert('Informe um nome para a jornada.');return;}
 var jj=gJ();
 var id=nm.toLowerCase().replace(/\s+/g,'').replace(/[^a-z0-9]/g,'');
 if(jj.find(function(j){return j.id===id;})){alert('Jornada com este nome já existe.');return;}
-jj.push({id:id,nm:nm,fix:false,pw:PW,perfil:null});
+jj.push({id:id,nm:nm,fix:false,pw:H_PW,perfil:null});
 localStorage.setItem('dpe_j',JSON.stringify(jj));
 document.getElementById('nJN').value='';
 rListaJornadas();
