@@ -195,6 +195,8 @@ body > *{display:none !important;}
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
 <div class="badge" id="bdg">Proximo Ofício: 001</div>
 <button class="btn bv bsm" id="btnNJ" style="display:none;" onclick="abrirModal()">+ Nova Jornada</button>
+<button class="btn by bsm" id="btnAjSeq" style="display:none;" onclick="abrirAjustarSeq()" title="Ajustar numeração de ofícios">Ajustar Nº Ofício</button>
+<button class="btn bo bsm" onclick="abrirOfManual()" title="Registrar ofício feito fora do sistema">+ Ofício Manual</button>
 <button class="btn br bsm" onclick="doEncerrar()">Encerrar Jornada</button>
 <button class="btn bo bsm" onclick="doSair()">Sair</button>
 </div>
@@ -788,6 +790,7 @@ document.getElementById('loginScreen').style.display='none';
 document.getElementById('dashboard').style.display='block';
 document.getElementById('infoS').innerText=SS.nm+' | '+SS.jnm;
 var bn=document.getElementById('btnNJ');if(bn)bn.style.display=SS.adm?'inline-block':'none';
+var baj=document.getElementById('btnAjSeq');if(baj)baj.style.display=SS.adm?'inline-block':'none';
 updBdg();renderOfListaView();
 }
 
@@ -883,7 +886,7 @@ docs=dd.join('; ');
 }else if(a.certs){
 docs=(a.certs||[]).map(function(c){return tlbl(c.tipo);}).join('; ');
 }
-var nos=a.ofícios?(a.ofícios.map(function(o){return o.no?'Ofício '+o.no:'';}).filter(Boolean).join(', ')):'';
+var nos=a.ofícios?(a.ofícios.map(function(o){return o.no?(o.cartório==='(Manual)'?'Ofício '+o.no+' (manual)':'Ofício '+o.no):'';}).filter(Boolean).join(', ')):'';;
 linhas+='<tr style="background:'+(i%2===0?'#f9fbf9':'#fff')+';">'
 +'<td style="padding:4px 7px;border:1px solid #ddd;">'+(i+1)+'</td>'
 +'<td style="padding:4px 7px;border:1px solid #ddd;font-weight:700;">'+nome+'</td>'
@@ -924,7 +927,47 @@ var html='<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>R
 +'<div style="text-align:center;margin-top:20px;">'
 +'<button onclick="window.print()" style="background:#2E7D32;color:#fff;border:none;padding:10px 28px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;">Imprimir Relatório</button>'
 +'</div>'
-+'</body></html>';
++'
+<!-- MODAL: AJUSTAR NUMERACAO -->
+<div class="mbg" id="mAjSeq" style="display:none;">
+<div class="mbox">
+<h2 style="margin-bottom:10px;">Ajustar Numeração de Ofícios</h2>
+<div style="background:#fff8e1;border-left:4px solid #f9a825;padding:9px 12px;margin-bottom:14px;font-size:12px;color:#5d4037;border-radius:0 4px 4px 0;">Use quando ofícios foram feitos fora do sistema. Defina qual será o <strong>próximo</strong> número gerado.</div>
+<div class="fg" style="margin-bottom:14px;">
+<label>Próximo número de ofício:</label>
+<input type="number" id="ajSeqNum" min="1" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:5px;font-size:15px;font-weight:700;">
+</div>
+<div style="display:flex;gap:10px;">
+<button class="btn bv" style="flex:1;" onclick="salvarAjusteSeq()">Salvar</button>
+<button class="btn bo" style="flex:1;" onclick="fecharAjSeq()">Cancelar</button>
+</div>
+</div>
+</div>
+
+<!-- MODAL: OFICIO MANUAL -->
+<div class="mbg" id="mOfMan" style="display:none;">
+<div class="mbox" style="max-width:460px;">
+<h2 style="margin-bottom:10px;">Registrar Ofício Manual</h2>
+<div style="background:#e8f5e9;border-left:4px solid var(--v);padding:9px 12px;margin-bottom:14px;font-size:12px;color:var(--v3);border-radius:0 4px 4px 0;">Registre um ofício feito fora do sistema para manter o histórico completo e a numeração correta.</div>
+<div class="fg" style="margin-bottom:10px;">
+<label>Número do ofício manual:</label>
+<input type="number" id="ofManNum" min="1" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:5px;font-size:15px;font-weight:700;">
+</div>
+<div class="fg" style="margin-bottom:10px;">
+<label>Requerente (opcional):</label>
+<input type="text" id="ofManReq" placeholder="Nome do requerente" oninput="this.value=this.value.toUpperCase()" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;">
+</div>
+<div class="fg" style="margin-bottom:14px;">
+<label>Motivo / Observação:</label>
+<textarea id="ofManObs" rows="2" placeholder="Ex: Feito manualmente - falta de energia" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;"></textarea>
+</div>
+<div style="display:flex;gap:10px;">
+<button class="btn bv" style="flex:1;" onclick="salvarOfManual()">Registrar no Histórico</button>
+<button class="btn bo" style="flex:1;" onclick="fecharOfMan()">Cancelar</button>
+</div>
+</div>
+</div>
+</body></html>';
 janela.document.write(html);janela.document.close();
 };
 
@@ -1250,7 +1293,8 @@ lista.slice().reverse().forEach(function(a,i){
 var div=document.createElement('div');div.className='hi';
 var nms=a.req?a.req.nome:a.nome;
 var nos=(a.ofícios||[]).map(function(o){return o.no?'Ofício '+o.no:'';}).filter(Boolean).join(', ');
-div.innerHTML='<div><h3>'+nms+'</h3><p>'+(a.dt||'')+(nos?' | '+nos:'')+'</p></div>'
+var manTag=a.manual?'<span style="background:#f9a825;color:#fff;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;margin-left:6px;">MANUAL</span>':'';
+div.innerHTML='<div><h3>'+nms+manTag+'</h3><p>'+(a.dt||'')+(nos?' | '+nos:'')+'</p></div>'
 +'<div style="display:flex;gap:6px;flex-wrap:wrap;">'
 +'<button class="btn bv bsm" onclick="verAtend(\''+a.id+'\')">Ver/Imprimir</button>'
 +'<button class="btn br bsm" onclick="excluirAtend(\''+a.id+'\')">Excluir</button>'
@@ -1414,6 +1458,50 @@ ofíciosSalvos[meofIdx].obs=document.getElementById('meof-obs').value||'';
 meofFechar();renderOfListaView();renderBotoesGerar();
 };
 
+/* ===== AJUSTAR NUMERACAO ===== */
+window.abrirAjustarSeq=function(){
+document.getElementById('ajSeqNum').value=proxSeqNum();
+document.getElementById('mAjSeq').style.display='flex';
+};
+window.fecharAjSeq=function(){document.getElementById('mAjSeq').style.display='none';};
+window.salvarAjusteSeq=function(){
+var n=parseInt(document.getElementById('ajSeqNum').value,10);
+if(!n||n<1){alert('Informe um número válido.');return;}
+localStorage.setItem(kS(SS.jid),String(n-1));
+updBdg();fecharAjSeq();
+alert('Próximo ofício ajustado para: '+fmtNum(n));
+};
+
+/* ===== OFICIO MANUAL ===== */
+window.abrirOfManual=function(){
+document.getElementById('ofManNum').value=proxSeqNum();
+document.getElementById('ofManReq').value='';
+document.getElementById('ofManObs').value='';
+document.getElementById('mOfMan').style.display='flex';
+};
+window.fecharOfMan=function(){document.getElementById('mOfMan').style.display='none';};
+window.salvarOfManual=function(){
+var n=parseInt(document.getElementById('ofManNum').value,10);
+if(!n||n<1){alert('Informe um número válido.');return;}
+var req=(document.getElementById('ofManReq').value||'').trim()||'(Não informado)';
+var obs=(document.getElementById('ofManObs').value||'').trim()||'Ofício feito manualmente';
+var noFmt=fmtNumOfício(n);
+var at={
+  id:Date.now(),manual:true,
+  req:{nome:req},
+  ofícios:[{cartório:'(Manual)',cidade:'',no:noFmt,obs:obs,titulares:[]}],
+  dt:new Date().toLocaleDateString('pt-BR')
+};
+var lista=JSON.parse(localStorage.getItem(kA(SS.jid))||'[]');
+lista.push(at);
+try{localStorage.setItem(kA(SS.jid),JSON.stringify(lista));}catch(e){alert('Erro ao salvar.');return;}
+var atual=parseInt(localStorage.getItem(kS(SS.jid))||'0',10);
+if(n>atual){localStorage.setItem(kS(SS.jid),String(n));}
+updBdg();fecharOfMan();
+alert('Ofício '+noFmt+' registrado como manual no histórico.');
+if(document.getElementById('abaH')&&document.getElementById('abaH').style.display!=='none')rhist();
+};
+
 window.mcpf=mcpf;
 window.mdat=mdat;
 window.mtel=mtel;
@@ -1422,5 +1510,45 @@ window.mrnd=mrnd;
 
 })();
 </script>
+
+<!-- MODAL: AJUSTAR NUMERACAO -->
+<div class="mbg" id="mAjSeq" style="display:none;">
+<div class="mbox">
+<h2 style="margin-bottom:10px;">Ajustar Numeração de Ofícios</h2>
+<div style="background:#fff8e1;border-left:4px solid #f9a825;padding:9px 12px;margin-bottom:14px;font-size:12px;color:#5d4037;border-radius:0 4px 4px 0;">Use quando ofícios foram feitos fora do sistema. Defina qual será o <strong>próximo</strong> número gerado.</div>
+<div class="fg" style="margin-bottom:14px;">
+<label>Próximo número de ofício:</label>
+<input type="number" id="ajSeqNum" min="1" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:5px;font-size:15px;font-weight:700;">
+</div>
+<div style="display:flex;gap:10px;">
+<button class="btn bv" style="flex:1;" onclick="salvarAjusteSeq()">Salvar</button>
+<button class="btn bo" style="flex:1;" onclick="fecharAjSeq()">Cancelar</button>
+</div>
+</div>
+</div>
+
+<!-- MODAL: OFICIO MANUAL -->
+<div class="mbg" id="mOfMan" style="display:none;">
+<div class="mbox" style="max-width:460px;">
+<h2 style="margin-bottom:10px;">Registrar Ofício Manual</h2>
+<div style="background:#e8f5e9;border-left:4px solid var(--v);padding:9px 12px;margin-bottom:14px;font-size:12px;color:var(--v3);border-radius:0 4px 4px 0;">Registre um ofício feito fora do sistema para manter o histórico completo e a numeração correta.</div>
+<div class="fg" style="margin-bottom:10px;">
+<label>Número do ofício manual:</label>
+<input type="number" id="ofManNum" min="1" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:5px;font-size:15px;font-weight:700;">
+</div>
+<div class="fg" style="margin-bottom:10px;">
+<label>Requerente (opcional):</label>
+<input type="text" id="ofManReq" placeholder="Nome do requerente" oninput="this.value=this.value.toUpperCase()" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;">
+</div>
+<div class="fg" style="margin-bottom:14px;">
+<label>Motivo / Observação:</label>
+<textarea id="ofManObs" rows="2" placeholder="Ex: Feito manualmente - falta de energia" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;"></textarea>
+</div>
+<div style="display:flex;gap:10px;">
+<button class="btn bv" style="flex:1;" onclick="salvarOfManual()">Registrar no Histórico</button>
+<button class="btn bo" style="flex:1;" onclick="fecharOfMan()">Cancelar</button>
+</div>
+</div>
+</div>
 </body>
 </html>
