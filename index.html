@@ -195,8 +195,8 @@ body > *{display:none !important;}
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
 <div class="badge" id="bdg">Proximo Ofício: 001</div>
 <button class="btn bv bsm" id="btnNJ" style="display:none;" onclick="abrirModal()">+ Nova Jornada</button>
-<button class="btn by bsm" id="btnAjSeq" style="display:none;" onclick="abrirAjustarSeq()" title="Ajustar numeração de ofícios">Ajustar Nº Ofício</button>
-<button class="btn bo bsm" onclick="abrirOfManual()" title="Registrar ofício feito fora do sistema">+ Ofício Manual</button>
+<button class="btn by bsm" id="btnAjSeq" style="display:none;" onclick="abrirAjustarSeq()">Ajustar Nº Ofício</button>
+<button class="btn bo bsm" onclick="abrirOfManual()">+ Ofício Manual</button>
 <button class="btn br bsm" onclick="doEncerrar()">Encerrar Jornada</button>
 <button class="btn bo bsm" onclick="doSair()">Sair</button>
 </div>
@@ -556,17 +556,18 @@ body > *{display:none !important;}
 </div>
 <script>
 (function(){
+/* ===== SENHAS (hashes SHA-256 — texto original nunca exposto) ===== */
 var H_PW='4b51c13731a5cc2b685c3f4184d4720add6f3099a21f4497aef7c500efb7da94';
 var H_PW1='8e51764bd6b57b7d44eea1d9de83b327a1de264cb7468da1bb68a94ff5e6c5a0';
 var H_PW2='afc372b4965c0e44b121c590187481aaffbdbf017bd505d2679ac577b4ddfa6a';
-function sha256hex(str){
+var PW=H_PW;
+function _sha256(str){
   var buf=new TextEncoder().encode(str);
   return crypto.subtle.digest('SHA-256',buf).then(function(b){
     return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0');}).join('');
   });
 }
-function chkPw(input,hash){return sha256hex(input).then(function(h){return h===hash;});}
-var PW=null;
+function chkPw(input,hash){return _sha256(input).then(function(h){return h===hash;});}
 var LURL='https://raw.githubusercontent.com/dpepigpt-glitch/rr/main/logo-dpe.png';
 var LB='';
 var MSA=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
@@ -674,7 +675,7 @@ if(t==='busca')carregarRelsLogin();
 window.doAutHistórico=function(){
 var s=(document.getElementById('lhSe').value||'').trim();
 chkPw(s,H_PW).then(function(ok){
-if(!ok){var er=document.getElementById('lhErr');if(er){er.style.display='block';}return;}
+if(!ok){var er=document.getElementById('lhErr');if(er)er.style.display='block';return;}
 var er=document.getElementById('lhErr');if(er)er.style.display='none';
 var auth=document.getElementById('lhAuth');if(auth)auth.style.display='none';
 var pain=document.getElementById('lhPain');if(pain)pain.style.display='block';
@@ -731,8 +732,7 @@ var jid=document.getElementById('lgJ').value;
 var pw=document.getElementById('lgS').value;
 if(!jid||!pw){mostrarErro('Preencha todos os campos.');return;}
 var jj=gJ();var jorn=jj.find(function(j){return j.id===jid;});if(!jorn){mostrarErro('Jornada não encontrada.');return;}
-var hashEsperado=jorn.pw||H_PW;
-chkPw(pw,hashEsperado).then(function(ok){
+chkPw(pw,jorn.pw||PW).then(function(ok){
 if(!ok){mostrarErro('Senha incorreta.');return;}
 if(jorn.fix&&jorn.perfil&&pid!==jorn.perfil){mostrarErro('Este perfil não tem acesso a esta defensoria.');return;}
 limparErro();
@@ -766,9 +766,8 @@ if(!pw){document.getElementById('rlErr').style.display='block';return;}
 var parts=sel.value.split('|');var jid=parts[0];
 var jj=gJ();var jorn=jj.find(function(j){return j.id===jid;});
 if(!jorn){alert('Jornada não encontrada.');return;}
-var hashEsperado2=jorn.pw||H_PW;
-chkPw(pw,hashEsperado2).then(function(ok2){
-if(!ok2){document.getElementById('rlErr').style.display='block';document.getElementById('rlPw').value='';return;}
+chkPw(pw,jorn.pw||PW).then(function(ok){
+if(!ok){document.getElementById('rlErr').style.display='block';document.getElementById('rlPw').value='';return;}
 document.getElementById('rlErr').style.display='none';
 var sel2=document.querySelector('.pcard.sel');
 if(!sel2){alert('Selecione um perfil acima.');return;}
@@ -886,7 +885,7 @@ docs=dd.join('; ');
 }else if(a.certs){
 docs=(a.certs||[]).map(function(c){return tlbl(c.tipo);}).join('; ');
 }
-var nos=a.ofícios?(a.ofícios.map(function(o){return o.no?(o.cartório==='(Manual)'?'Ofício '+o.no+' (manual)':'Ofício '+o.no):'';}).filter(Boolean).join(', ')):'';;
+var nos=a.ofícios?(a.ofícios.map(function(o){return o.no?'Ofício '+o.no:'';}).filter(Boolean).join(', ')):'';
 linhas+='<tr style="background:'+(i%2===0?'#f9fbf9':'#fff')+';">'
 +'<td style="padding:4px 7px;border:1px solid #ddd;">'+(i+1)+'</td>'
 +'<td style="padding:4px 7px;border:1px solid #ddd;font-weight:700;">'+nome+'</td>'
@@ -932,41 +931,29 @@ var html='<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>R
 <div class="mbg" id="mAjSeq" style="display:none;">
 <div class="mbox">
 <h2 style="margin-bottom:10px;">Ajustar Numeração de Ofícios</h2>
-<div style="background:#fff8e1;border-left:4px solid #f9a825;padding:9px 12px;margin-bottom:14px;font-size:12px;color:#5d4037;border-radius:0 4px 4px 0;">Use quando ofícios foram feitos fora do sistema. Defina qual será o <strong>próximo</strong> número gerado.</div>
-<div class="fg" style="margin-bottom:14px;">
-<label>Próximo número de ofício:</label>
-<input type="number" id="ajSeqNum" min="1" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:5px;font-size:15px;font-weight:700;">
-</div>
+<div style="background:#fff8e1;border-left:4px solid #f9a825;padding:9px 12px;margin-bottom:14px;font-size:12px;color:#5d4037;border-radius:0 4px 4px 0;">Define qual será o <strong>próximo</strong> número gerado pelo sistema. Use quando ofícios foram feitos manualmente antes de usar o sistema.</div>
+<div class="fg" style="margin-bottom:14px;"><label>Próximo número de ofício:</label>
+<input type="number" id="ajSeqNum" min="1" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:5px;font-size:15px;font-weight:700;"></div>
 <div style="display:flex;gap:10px;">
 <button class="btn bv" style="flex:1;" onclick="salvarAjusteSeq()">Salvar</button>
 <button class="btn bo" style="flex:1;" onclick="fecharAjSeq()">Cancelar</button>
-</div>
-</div>
-</div>
+</div></div></div>
 
 <!-- MODAL: OFICIO MANUAL -->
 <div class="mbg" id="mOfMan" style="display:none;">
 <div class="mbox" style="max-width:460px;">
 <h2 style="margin-bottom:10px;">Registrar Ofício Manual</h2>
 <div style="background:#e8f5e9;border-left:4px solid var(--v);padding:9px 12px;margin-bottom:14px;font-size:12px;color:var(--v3);border-radius:0 4px 4px 0;">Registre um ofício feito fora do sistema para manter o histórico completo e a numeração correta.</div>
-<div class="fg" style="margin-bottom:10px;">
-<label>Número do ofício manual:</label>
-<input type="number" id="ofManNum" min="1" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:5px;font-size:15px;font-weight:700;">
-</div>
-<div class="fg" style="margin-bottom:10px;">
-<label>Requerente (opcional):</label>
-<input type="text" id="ofManReq" placeholder="Nome do requerente" oninput="this.value=this.value.toUpperCase()" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;">
-</div>
-<div class="fg" style="margin-bottom:14px;">
-<label>Motivo / Observação:</label>
-<textarea id="ofManObs" rows="2" placeholder="Ex: Feito manualmente - falta de energia" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;"></textarea>
-</div>
+<div class="fg" style="margin-bottom:10px;"><label>Número do ofício manual:</label>
+<input type="number" id="ofManNum" min="1" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:5px;font-size:15px;font-weight:700;"></div>
+<div class="fg" style="margin-bottom:10px;"><label>Requerente (opcional):</label>
+<input type="text" id="ofManReq" placeholder="Nome do requerente" oninput="this.value=this.value.toUpperCase()" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;"></div>
+<div class="fg" style="margin-bottom:14px;"><label>Motivo / Observação:</label>
+<textarea id="ofManObs" rows="2" placeholder="Ex: Feito manualmente - falta de energia" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;"></textarea></div>
 <div style="display:flex;gap:10px;">
 <button class="btn bv" style="flex:1;" onclick="salvarOfManual()">Registrar no Histórico</button>
 <button class="btn bo" style="flex:1;" onclick="fecharOfMan()">Cancelar</button>
-</div>
-</div>
-</div>
+</div></div></div>
 </body></html>';
 janela.document.write(html);janela.document.close();
 };
@@ -1293,8 +1280,8 @@ lista.slice().reverse().forEach(function(a,i){
 var div=document.createElement('div');div.className='hi';
 var nms=a.req?a.req.nome:a.nome;
 var nos=(a.ofícios||[]).map(function(o){return o.no?'Ofício '+o.no:'';}).filter(Boolean).join(', ');
-var manTag=a.manual?'<span style="background:#f9a825;color:#fff;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;margin-left:6px;">MANUAL</span>':'';
-div.innerHTML='<div><h3>'+nms+manTag+'</h3><p>'+(a.dt||'')+(nos?' | '+nos:'')+'</p></div>'
+var mTag=a.manual?'<span style="background:#f9a825;color:#fff;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;margin-left:6px;">MANUAL</span>':'';
+div.innerHTML='<div><h3>'+nms+mTag+'</h3><p>'+(a.dt||'')+(nos?' | '+nos:'')+'</p></div>'
 +'<div style="display:flex;gap:6px;flex-wrap:wrap;">'
 +'<button class="btn bv bsm" onclick="verAtend(\''+a.id+'\')">Ver/Imprimir</button>'
 +'<button class="btn br bsm" onclick="excluirAtend(\''+a.id+'\')">Excluir</button>'
@@ -1458,6 +1445,7 @@ ofíciosSalvos[meofIdx].obs=document.getElementById('meof-obs').value||'';
 meofFechar();renderOfListaView();renderBotoesGerar();
 };
 
+
 /* ===== AJUSTAR NUMERACAO ===== */
 window.abrirAjustarSeq=function(){
 document.getElementById('ajSeqNum').value=proxSeqNum();
@@ -1486,12 +1474,7 @@ if(!n||n<1){alert('Informe um número válido.');return;}
 var req=(document.getElementById('ofManReq').value||'').trim()||'(Não informado)';
 var obs=(document.getElementById('ofManObs').value||'').trim()||'Ofício feito manualmente';
 var noFmt=fmtNumOfício(n);
-var at={
-  id:Date.now(),manual:true,
-  req:{nome:req},
-  ofícios:[{cartório:'(Manual)',cidade:'',no:noFmt,obs:obs,titulares:[]}],
-  dt:new Date().toLocaleDateString('pt-BR')
-};
+var at={id:Date.now(),manual:true,req:{nome:req},ofícios:[{cartório:'(Manual)',cidade:'',no:noFmt,obs:obs,titulares:[]}],dt:new Date().toLocaleDateString('pt-BR')};
 var lista=JSON.parse(localStorage.getItem(kA(SS.jid))||'[]');
 lista.push(at);
 try{localStorage.setItem(kA(SS.jid),JSON.stringify(lista));}catch(e){alert('Erro ao salvar.');return;}
@@ -1515,40 +1498,28 @@ window.mrnd=mrnd;
 <div class="mbg" id="mAjSeq" style="display:none;">
 <div class="mbox">
 <h2 style="margin-bottom:10px;">Ajustar Numeração de Ofícios</h2>
-<div style="background:#fff8e1;border-left:4px solid #f9a825;padding:9px 12px;margin-bottom:14px;font-size:12px;color:#5d4037;border-radius:0 4px 4px 0;">Use quando ofícios foram feitos fora do sistema. Defina qual será o <strong>próximo</strong> número gerado.</div>
-<div class="fg" style="margin-bottom:14px;">
-<label>Próximo número de ofício:</label>
-<input type="number" id="ajSeqNum" min="1" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:5px;font-size:15px;font-weight:700;">
-</div>
+<div style="background:#fff8e1;border-left:4px solid #f9a825;padding:9px 12px;margin-bottom:14px;font-size:12px;color:#5d4037;border-radius:0 4px 4px 0;">Define qual será o <strong>próximo</strong> número gerado pelo sistema. Use quando ofícios foram feitos manualmente antes de usar o sistema.</div>
+<div class="fg" style="margin-bottom:14px;"><label>Próximo número de ofício:</label>
+<input type="number" id="ajSeqNum" min="1" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:5px;font-size:15px;font-weight:700;"></div>
 <div style="display:flex;gap:10px;">
 <button class="btn bv" style="flex:1;" onclick="salvarAjusteSeq()">Salvar</button>
 <button class="btn bo" style="flex:1;" onclick="fecharAjSeq()">Cancelar</button>
-</div>
-</div>
-</div>
+</div></div></div>
 
 <!-- MODAL: OFICIO MANUAL -->
 <div class="mbg" id="mOfMan" style="display:none;">
 <div class="mbox" style="max-width:460px;">
 <h2 style="margin-bottom:10px;">Registrar Ofício Manual</h2>
 <div style="background:#e8f5e9;border-left:4px solid var(--v);padding:9px 12px;margin-bottom:14px;font-size:12px;color:var(--v3);border-radius:0 4px 4px 0;">Registre um ofício feito fora do sistema para manter o histórico completo e a numeração correta.</div>
-<div class="fg" style="margin-bottom:10px;">
-<label>Número do ofício manual:</label>
-<input type="number" id="ofManNum" min="1" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:5px;font-size:15px;font-weight:700;">
-</div>
-<div class="fg" style="margin-bottom:10px;">
-<label>Requerente (opcional):</label>
-<input type="text" id="ofManReq" placeholder="Nome do requerente" oninput="this.value=this.value.toUpperCase()" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;">
-</div>
-<div class="fg" style="margin-bottom:14px;">
-<label>Motivo / Observação:</label>
-<textarea id="ofManObs" rows="2" placeholder="Ex: Feito manualmente - falta de energia" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;"></textarea>
-</div>
+<div class="fg" style="margin-bottom:10px;"><label>Número do ofício manual:</label>
+<input type="number" id="ofManNum" min="1" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:5px;font-size:15px;font-weight:700;"></div>
+<div class="fg" style="margin-bottom:10px;"><label>Requerente (opcional):</label>
+<input type="text" id="ofManReq" placeholder="Nome do requerente" oninput="this.value=this.value.toUpperCase()" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;"></div>
+<div class="fg" style="margin-bottom:14px;"><label>Motivo / Observação:</label>
+<textarea id="ofManObs" rows="2" placeholder="Ex: Feito manualmente - falta de energia" style="width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:5px;font-size:13px;"></textarea></div>
 <div style="display:flex;gap:10px;">
 <button class="btn bv" style="flex:1;" onclick="salvarOfManual()">Registrar no Histórico</button>
 <button class="btn bo" style="flex:1;" onclick="fecharOfMan()">Cancelar</button>
-</div>
-</div>
-</div>
+</div></div></div>
 </body>
 </html>
