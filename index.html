@@ -1156,17 +1156,8 @@ setTimeout(function(){desativarSecoes();},1000);
 };
 
 /* ===== GERAR OFICIO PDF ===== */
-window.gerarOfícioPDF=function(idx){
-var of=ofíciosSalvos[idx];if(!of)return;
-/* Consumir numero se ainda nao tem */
-if(!of.no){of.no=fmtNumOfício(consumirSeq());updBdg();}
-var nm=(document.getElementById('rN').value||'').trim();
-var cpf=(document.getElementById('rC').value||'').trim();
-var dn=(document.getElementById('rD').value||'').trim();
-var rnd=(document.getElementById('rR').value||'').trim();
-var prof=(document.getElementById('rPr').value||'').trim();
-var hoje=new Date();var dia=hoje.getDate();var mes=MSA[hoje.getMonth()];var ano=hoje.getFullYear();
-var logoSrc=LB||LURL;
+/* ===== HELPER: MONTA HTML DE UM OFICIO ===== */
+function _buildOficioHTML(of,nm,cpf,dn,rnd,dia,mes,ano,logoSrc){
 var html='<div class="ow">';
 html+='<div class="otp"><img class="lgOf" src="'+logoSrc+'" style="width:80px;height:auto;display:block;flex-shrink:0;" alt="DPE-PI"><div class="otx"><div class="ot1">Defensoria Pública do Estado do Piauí</div><div class="ot2">'+SS.un+'</div><div class="ot3">Diretoria Itinerante</div></div></div>';
 html+='<div class="onr"><div class="onl">Ofício N. '+of.no+'</div><div class="odt">'+SS.un+', '+dia+' de '+mes+' de '+ano+'</div></div>';
@@ -1180,9 +1171,9 @@ html+='<div class="op">A Defensoria Pública do Estado do Piauí, no exercicio d
 html+='<div class="op">O(A) requerente e pessoa hipossuficiente, na condição de assistido(a) desta Defensoria Pública, fazendo jus à gratuidade nos termos do art. 1.512 do Código Civil e da Lei n. 9.534/1997, que assegura gratuidade no fornecimento de certidões de registro civil.'+(rdVal>0?' Sua renda familiar é de '+rnd+' ('+rdExt+').':'')+'</div>';
 /* Documentos */
 html+='<div class="ofu"><strong>Documentos solicitados:</strong><ol>';
-of.titulares.forEach(function(t){
+(of.titulares||[]).forEach(function(t){
 var titNome=t.proprio?nm:(t.nome||'');
-t.docs.forEach(function(d){
+(t.docs||[]).forEach(function(d){
 var li='<strong>'+tlbl(d.tipo)+'</strong>';
 if(titNome)li+=' - Titular: '+titNome;
 if(t.nasc||(t.proprio&&dn))li+=' | Nasc.: '+(t.proprio?dn:t.nasc);
@@ -1202,11 +1193,20 @@ html+='<div class="op">Atenciosamente, aguardamos o retorno de V.Sa. no prazo de
 html+='<div class="osn"><div style="height:20px;"></div><div style="font-size:9.5pt;margin-bottom:30px;">'+SS.un+', '+dia+' de '+mes+' de '+ano+'.</div><div class="osl"></div><div class="osn2">'+SS.nm+'</div><div style="font-size:9pt;">Defensor(a) Público(a)</div><div style="font-size:9pt;">'+SS.un+'</div></div>';
 html+='<div class="ord">Ofício gerado pelo Sistema DPE-PI - Diretoria Itinerante</div>';
 html+='</div>';
-var cont=document.getElementById('pOficio');if(cont)cont.innerHTML=html;
-alogos();
-ativarSecao('pOficio');
-window.print();
-setTimeout(function(){desativarSecoes();},1000);
+return html;
+}
+
+window.gerarOfícioPDF=function(idx){
+var of=ofíciosSalvos[idx];if(!of)return;
+if(!of.no){of.no=fmtNumOfício(consumirSeq());updBdg();}
+var nm=(document.getElementById('rN').value||'').trim();
+var cpf=(document.getElementById('rC').value||'').trim();
+var dn=(document.getElementById('rD').value||'').trim();
+var rnd=(document.getElementById('rR').value||'').trim();
+var hoje=new Date();var dia=hoje.getDate();var mes=MSA[hoje.getMonth()];var ano=hoje.getFullYear();
+var cont=document.getElementById('pOficio');
+if(cont)cont.innerHTML=_buildOficioHTML(of,nm,cpf,dn,rnd,dia,mes,ano,LB||LURL);
+alogos();ativarSecao('pOficio');window.print();setTimeout(function(){desativarSecoes();},1000);
 };
 
 /* ===== SALVAR ATENDIMENTO NO HISTORICO ===== */
@@ -1319,61 +1319,26 @@ _limparForm();
 function gerarTudoAtual(){
 var nm=(document.getElementById('rN').value||'').trim();
 if(!nm){alert('Informe o nome do requerente.');return;}
-/* Run doGerarFicha inline to fill pF section */
 doGerarFicha();
-/* Build all ofícios into pOficio */
-var logoSrc=LB||LURL;
-var hoje=new Date();var dia=hoje.getDate();var mes=MSA[hoje.getMonth()];var ano=hoje.getFullYear();
 var cpf=(document.getElementById('rC').value||'').trim();
 var dn=(document.getElementById('rD').value||'').trim();
 var rnd=(document.getElementById('rR').value||'').trim();
-var rdVal=rnum(rnd);var rdExt=rdVal>0?ext(rdVal)+' reais':'';
-var nmFmt=ctit(nm.toLowerCase());
+var hoje=new Date();var dia=hoje.getDate();var mes=MSA[hoje.getMonth()];var ano=hoje.getFullYear();
+var logoSrc=LB||LURL;
 var ofHtml='';
 ofíciosSalvos.forEach(function(of,i){
 if(!of.no){of.no=fmtNumOfício(consumirSeq());updBdg();}
 if(i>0)ofHtml+='<div class="qbra"></div>';
-ofHtml+='<div class="ow">';
-ofHtml+='<div class="otp"><img class="lgOf" src="'+logoSrc+'" style="width:80px;height:auto;display:block;flex-shrink:0;" alt="DPE-PI"><div class="otx"><div class="ot1">Defensoria Pública do Estado do Piauí</div><div class="ot2">'+SS.un+'</div><div class="ot3">Diretoria Itinerante</div></div></div>';
-ofHtml+='<div class="onr"><div class="onl">Ofício N. '+of.no+'</div><div class="odt">'+SS.un+', '+dia+' de '+mes+' de '+ano+'</div></div>';
-ofHtml+='<div class="ode">Ao(A) Excelentissimo(a) Sr.(a)<br><strong>'+of.cartório+'</strong><br>'+of.cidade+'</div>';
-ofHtml+='<div class="oas">Assunto: Solicitação de Documentos - Assistencia Juridica Gratuita</div>';
-ofHtml+='<div class="op">A Defensoria Pública do Estado do Piauí, no exercicio de suas atribuicoes constitucionais previstas no art. 134 da Constituicao Federal, vem respeitosamente solicitar a V.Sa. a expedição dos documentos abaixo relacionados em favor de <strong>'+nmFmt+'</strong>'+(cpf?', CPF '+cpf:'')+(dn?', nascido(a) em '+dn:'')+'.</div>';
-ofHtml+='<div class="op">O(A) requerente e pessoa hipossuficiente, na condição de assistido(a) desta Defensoria Pública, fazendo jus à gratuidade nos termos do art. 1.512 do Código Civil e da Lei n. 9.534/1997, que assegura gratuidade no fornecimento de certidões de registro civil.'+(rdVal>0?' Sua renda familiar é de '+rnd+' ('+rdExt+').':'')+'</div>';
-ofHtml+='<div class="ofu"><strong>Documentos solicitados:</strong><ol>';
-(of.titulares||[]).forEach(function(t){
-var titNome=t.proprio?nm:(t.nome||'');
-(t.docs||[]).forEach(function(d){
-var li='<strong>'+tlbl(d.tipo)+'</strong>';
-if(titNome)li+=' - Titular: '+titNome;
-if(t.nasc||(t.proprio&&dn))li+=' | Nasc.: '+(t.proprio?dn:t.nasc);
-var campos=[];
-if(d.mat)campos.push('Matricula: '+d.mat);
-if(d.nr)campos.push('Registro/Termo: '+d.nr);
-if(d.livro)campos.push('Livro: '+d.livro);
-if(d.folha)campos.push('Folha: '+d.folha);
-if(campos.length)li+=' | '+campos.join(' | ');
-if(t.par&&t.par!=='proprio'&&t.par!=='outro')li+=' | Vínculo: '+(PAR_LABEL[t.par]||t.par)+' do(a) requerente';
-ofHtml+='<li>'+li+'</li>';
-});
-});
-ofHtml+='</ol></div>';
-if(of.obs)ofHtml+='<div class="oob">Observação: '+of.obs+'</div>';
-ofHtml+='<div class="op">Atenciosamente, aguardamos o retorno de V.Sa. no prazo de 30 (trinta) dias, nos termos da legislação vigente.</div>';
-ofHtml+='<div class="osn"><div style="height:20px;"></div><div style="font-size:9.5pt;margin-bottom:30px;">'+SS.un+', '+dia+' de '+mes+' de '+ano+'.</div><div class="osl"></div><div class="osn2">'+SS.nm+'</div><div style="font-size:9pt;">Defensor(a) Público(a)</div><div style="font-size:9pt;">'+SS.un+'</div></div>';
-ofHtml+='<div class="ord">Ofício gerado pelo Sistema DPE-PI - Diretoria Itinerante</div>';
-ofHtml+='</div>';
+ofHtml+=_buildOficioHTML(of,nm,cpf,dn,rnd,dia,mes,ano,logoSrc);
 });
 var pOf=document.getElementById('pOficio');if(pOf)pOf.innerHTML=ofHtml;
 alogos();
-/* Show pF + pOficio together */
 var allSec=document.querySelectorAll('.secprint');allSec.forEach(function(s){s.style.display='none';});
 var pF=document.getElementById('pF');var pOfEl=document.getElementById('pOficio');
 if(pF)pF.style.display='block';if(pOfEl)pOfEl.style.display='block';
 var ip=document.querySelectorAll('.iprint');ip.forEach(function(el){el.style.display='block';});
 var np=document.querySelectorAll('.noprint');np.forEach(function(el){el.style.display='none';});
-window.print();
-setTimeout(function(){desativarSecoes();},1000);
+window.print();setTimeout(function(){desativarSecoes();},1000);
 }
 
 window.doFichaManual=function(){
@@ -1502,8 +1467,6 @@ var a=lista.find(function(x){return String(x.id)===String(atId);});
 if(!a)return;
 var of=(a.ofícios||[])[ofIdx];if(!of)return;
 var req=a.req||{};
-var nm=req.nome||'';var cpf=req.cpf||'';var dn=req.dn||'';var rnd=req.rnd||'';
-/* Assign number if missing, save back to localStorage */
 if(!of.no){
 of.no=fmtNumOfício(consumirSeq());
 lista=lista.map(function(x){if(String(x.id)===String(atId)){x.ofícios[ofIdx].no=of.no;}return x;});
@@ -1511,39 +1474,8 @@ try{localStorage.setItem(kA(SS.jid),JSON.stringify(lista));}catch(e){}
 updBdg();
 }
 var hoje=new Date();var dia=hoje.getDate();var mes=MSA[hoje.getMonth()];var ano=hoje.getFullYear();
-var logoSrc=LB||LURL;
-var html='<div class="ow">';
-html+='<div class="otp"><img class="lgOf" src="'+logoSrc+'" style="width:80px;height:auto;display:block;flex-shrink:0;" alt="DPE-PI"><div class="otx"><div class="ot1">Defensoria Pública do Estado do Piauí</div><div class="ot2">'+SS.un+'</div><div class="ot3">Diretoria Itinerante</div></div></div>';
-html+='<div class="onr"><div class="onl">Ofício N. '+of.no+'</div><div class="odt">'+SS.un+', '+dia+' de '+mes+' de '+ano+'</div></div>';
-html+='<div class="ode">Ao(A) Excelentissimo(a) Sr.(a)<br><strong>'+(of.cartório||'')+'</strong><br>'+(of.cidade||'')+'</div>';
-html+='<div class="oas">Assunto: Solicitação de Documentos - Assistencia Juridica Gratuita</div>';
-var nmFmt=ctit(nm.toLowerCase());var rdVal=rnum(rnd);var rdExt=rdVal>0?ext(rdVal)+' reais':'';
-html+='<div class="op">A Defensoria Pública do Estado do Piauí, no exercicio de suas atribuicoes constitucionais previstas no art. 134 da Constituicao Federal, vem respeitosamente solicitar a V.Sa. a expedição dos documentos abaixo relacionados em favor de <strong>'+nmFmt+'</strong>'+(cpf?', CPF '+cpf:'')+(dn?', nascido(a) em '+dn:'')+'.</div>';
-html+='<div class="op">O(A) requerente e pessoa hipossuficiente, na condição de assistido(a) desta Defensoria Pública, fazendo jus à gratuidade nos termos do art. 1.512 do Código Civil e da Lei n. 9.534/1997, que assegura gratuidade no fornecimento de certidões de registro civil.'+(rdVal>0?' Sua renda familiar é de '+rnd+' ('+rdExt+').':'')+'</div>';
-html+='<div class="ofu"><strong>Documentos solicitados:</strong><ol>';
-(of.titulares||[]).forEach(function(t){
-var titNome=t.proprio?nm:(t.nome||'');
-(t.docs||[]).forEach(function(d){
-var li='<strong>'+tlbl(d.tipo)+'</strong>';
-if(titNome)li+=' - Titular: '+titNome;
-if(t.nasc||(t.proprio&&dn))li+=' | Nasc.: '+(t.proprio?dn:t.nasc);
-var campos=[];
-if(d.mat)campos.push('Matricula: '+d.mat);
-if(d.nr)campos.push('Registro/Termo: '+d.nr);
-if(d.livro)campos.push('Livro: '+d.livro);
-if(d.folha)campos.push('Folha: '+d.folha);
-if(campos.length)li+=' | '+campos.join(' | ');
-if(t.par&&t.par!=='proprio'&&t.par!=='outro')li+=' | Vínculo: '+(PAR_LABEL[t.par]||t.par)+' do(a) requerente';
-html+='<li>'+li+'</li>';
-});
-});
-html+='</ol></div>';
-if(of.obs)html+='<div class="oob">Observação: '+of.obs+'</div>';
-html+='<div class="op">Atenciosamente, aguardamos o retorno de V.Sa. no prazo de 30 (trinta) dias, nos termos da legislação vigente.</div>';
-html+='<div class="osn"><div style="height:20px;"></div><div style="font-size:9.5pt;margin-bottom:30px;">'+SS.un+', '+dia+' de '+mes+' de '+ano+'.</div><div class="osl"></div><div class="osn2">'+SS.nm+'</div><div style="font-size:9pt;">Defensor(a) Público(a)</div><div style="font-size:9pt;">'+SS.un+'</div></div>';
-html+='<div class="ord">Ofício gerado pelo Sistema DPE-PI - Diretoria Itinerante</div>';
-html+='</div>';
-var cont=document.getElementById('pOficio');if(cont)cont.innerHTML=html;
+var cont=document.getElementById('pOficio');
+if(cont)cont.innerHTML=_buildOficioHTML(of,req.nome||'',req.cpf||'',req.dn||'',req.rnd||'',dia,mes,ano,LB||LURL);
 document.getElementById('mHistView').style.display='none';
 alogos();ativarSecao('pOficio');window.print();setTimeout(function(){desativarSecoes();},1000);
 };
@@ -1585,9 +1517,7 @@ var prof=req.prof||'';var rnd=req.rnd||'';var end=req.end||'';
 var cor=req.cor||'';var acs=req.acs||[];var ou=req.ou||'';
 /* Assign numbers to ofícios without one, save back */
 var needSave=false;
-(a.ofícios||[]).forEach(function(of,i){
-if(!of.no){of.no=fmtNumOfício(consumirSeq());needSave=true;}
-});
+(a.ofícios||[]).forEach(function(of){if(!of.no){of.no=fmtNumOfício(consumirSeq());needSave=true;}});
 if(needSave){
 lista=lista.map(function(x){if(String(x.id)===String(atId)){return a;}return x;});
 try{localStorage.setItem(kA(SS.jid),JSON.stringify(lista));}catch(e){}
@@ -1606,42 +1536,12 @@ var pDecl=document.getElementById('pDecl');
 if(pDecl)pDecl.innerHTML='<strong>DECLARO</strong>, para fins de obtenção de <strong>ASSISTÊNCIA JURÍDICA</strong> pela <strong>DEFENSORIA PÚBLICA DO ESTADO DO PIAUÍ</strong>, que sou pessoa pobre na forma da lei, sendo incapaz de contratar advogado particular sem prejudicar o próprio sustento ou de minha família. Trabalho como <strong>'+(prof||'nao informado')+'</strong>, auferindo renda média de <strong>'+rnd+(rdVal>0?' ('+rdExt+')':'')+'</strong>.';
 var pNAs=document.getElementById('pNAs');if(pNAs)pNAs.innerText=nmCap;
 var pDtF=document.getElementById('pDtF');if(pDtF)pDtF.innerText=SS.un+', '+dia+' de '+mes+' de '+ano+'.';
-/* Build each ofício into pOficio with page breaks */
+/* Build each ofício using shared helper */
 var logoSrc=LB||LURL;
 var ofHtml='';
 (a.ofícios||[]).forEach(function(of,i){
 if(i>0)ofHtml+='<div class="qbra"></div>';
-ofHtml+='<div class="ow">';
-ofHtml+='<div class="otp"><img class="lgOf" src="'+logoSrc+'" style="width:80px;height:auto;display:block;flex-shrink:0;" alt="DPE-PI"><div class="otx"><div class="ot1">Defensoria Pública do Estado do Piauí</div><div class="ot2">'+SS.un+'</div><div class="ot3">Diretoria Itinerante</div></div></div>';
-ofHtml+='<div class="onr"><div class="onl">Ofício N. '+(of.no||'')+'</div><div class="odt">'+SS.un+', '+dia+' de '+mes+' de '+ano+'</div></div>';
-ofHtml+='<div class="ode">Ao(A) Excelentissimo(a) Sr.(a)<br><strong>'+(of.cartório||'')+'</strong><br>'+(of.cidade||'')+'</div>';
-ofHtml+='<div class="oas">Assunto: Solicitação de Documentos - Assistencia Juridica Gratuita</div>';
-var nmFmt=ctit(nm.toLowerCase());var rdv=rnum(rnd);var rdE=rdv>0?ext(rdv)+' reais':'';
-ofHtml+='<div class="op">A Defensoria Pública do Estado do Piauí, no exercicio de suas atribuicoes constitucionais previstas no art. 134 da Constituicao Federal, vem respeitosamente solicitar a V.Sa. a expedição dos documentos abaixo relacionados em favor de <strong>'+nmFmt+'</strong>'+(cpf?', CPF '+cpf:'')+(dn?', nascido(a) em '+dn:'')+'.</div>';
-ofHtml+='<div class="op">O(A) requerente e pessoa hipossuficiente, na condição de assistido(a) desta Defensoria Pública, fazendo jus à gratuidade nos termos do art. 1.512 do Código Civil e da Lei n. 9.534/1997, que assegura gratuidade no fornecimento de certidões de registro civil.'+(rdv>0?' Sua renda familiar é de '+rnd+' ('+rdE+').':'')+'</div>';
-ofHtml+='<div class="ofu"><strong>Documentos solicitados:</strong><ol>';
-(of.titulares||[]).forEach(function(t){
-var titNome=t.proprio?nm:(t.nome||'');
-(t.docs||[]).forEach(function(d){
-var li='<strong>'+tlbl(d.tipo)+'</strong>';
-if(titNome)li+=' - Titular: '+titNome;
-if(t.nasc||(t.proprio&&dn))li+=' | Nasc.: '+(t.proprio?dn:t.nasc);
-var campos=[];
-if(d.mat)campos.push('Matricula: '+d.mat);
-if(d.nr)campos.push('Registro/Termo: '+d.nr);
-if(d.livro)campos.push('Livro: '+d.livro);
-if(d.folha)campos.push('Folha: '+d.folha);
-if(campos.length)li+=' | '+campos.join(' | ');
-if(t.par&&t.par!=='proprio'&&t.par!=='outro')li+=' | Vínculo: '+(PAR_LABEL[t.par]||t.par)+' do(a) requerente';
-ofHtml+='<li>'+li+'</li>';
-});
-});
-ofHtml+='</ol></div>';
-if(of.obs)ofHtml+='<div class="oob">Observação: '+of.obs+'</div>';
-ofHtml+='<div class="op">Atenciosamente, aguardamos o retorno de V.Sa. no prazo de 30 (trinta) dias, nos termos da legislação vigente.</div>';
-ofHtml+='<div class="osn"><div style="height:20px;"></div><div style="font-size:9.5pt;margin-bottom:30px;">'+SS.un+', '+dia+' de '+mes+' de '+ano+'.</div><div class="osl"></div><div class="osn2">'+SS.nm+'</div><div style="font-size:9pt;">Defensor(a) Público(a)</div><div style="font-size:9pt;">'+SS.un+'</div></div>';
-ofHtml+='<div class="ord">Ofício gerado pelo Sistema DPE-PI - Diretoria Itinerante</div>';
-ofHtml+='</div>';
+ofHtml+=_buildOficioHTML(of,nm,cpf,dn,rnd,dia,mes,ano,logoSrc);
 });
 var pOf=document.getElementById('pOficio');if(pOf)pOf.innerHTML=ofHtml;
 document.getElementById('mHistView').style.display='none';
@@ -1651,8 +1551,7 @@ var pF=document.getElementById('pF');var pOfEl=document.getElementById('pOficio'
 if(pF)pF.style.display='block';if(pOfEl)pOfEl.style.display='block';
 var ip=document.querySelectorAll('.iprint');ip.forEach(function(el){el.style.display='block';});
 var np=document.querySelectorAll('.noprint');np.forEach(function(el){el.style.display='none';});
-window.print();
-setTimeout(function(){desativarSecoes();},1000);
+window.print();setTimeout(function(){desativarSecoes();},1000);
 };
 /* ===== HISTORICO: EDITAR (recarregar no formulário) ===== */
 window.editarAtend=function(id){
